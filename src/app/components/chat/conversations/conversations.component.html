@@ -1,0 +1,73 @@
+@if(isOpen()){<!-- Main modal -->
+<div class="fixed inset-0 z-50 flex justify-center items-center">
+    <div id="modalBackground" class="fixed inset-0 bg-slate-800 opacity-50"></div>
+    <div id="modalchats" tabindex="-1" aria-hidden="true" class="modal-container w-1/2">
+        <div class="windowconver relative p-4">
+            <!-- Modal content -->
+            <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
+                <!-- Modal header -->
+                <div class="flex items-center justify-between border-b rounded-t dark:border-gray-600">
+                    <h3 class="text-lg font-semibold text-gray-900 dark:text-white">
+                        <span id="chatsicon" class="material-symbols-outlined text-green-400 p-3">deployed_code</span>
+                    </h3>
+                    <button type="button"
+                        class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm h-8 w-8 ms-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white"
+                        (click)="closeModal()">
+                        <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"
+                            viewBox="0 0 14 14">
+                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6" />
+                        </svg>
+                        <span class="sr-only">Close modal</span>
+                    </button>
+                </div>
+                <!-- Modal body -->
+                <div class="p-4 md:p-5" style="height: auto; max-height: 40dvh; overflow-y: auto;">
+                    <ul class="my-4 space-y-3">
+                        @for(groupchat of this.groupchats; track $index){
+                            <li>
+                                <button (click)="openGroupChat(groupchat)"
+                                    class="flex flex-row justify-between items-center w-full p-3 text-base font-bold text-pink-500 rounded-lg bg-gray-50 hover:bg-gray-100 group hover:shadow dark:bg-gray-600 dark:hover:bg-gray-500 dark:text-white">
+                                    <div class="flex flex-row items-center">
+                                        <p class="pe-2 pt-1">
+                                            <span class="material-symbols-outlined">
+                                                link
+                                            </span>
+                                        </p>
+                                        <p>{{groupchat.conversationname}}</p>
+                                    </div>
+                                </button>
+                            </li>
+                        }
+                        @for(chat of this.chats; track $index){
+                            <li>
+                                <button (click)="openChat(chat)"
+                                    class="flex flex-row justify-between items-center w-full p-3 text-base font-bold text-gray-900 rounded-lg bg-gray-50 hover:bg-gray-100 group hover:shadow dark:bg-gray-600 dark:hover:bg-gray-500 dark:text-white">
+                                    <div class="flex flex-row items-center">
+                                        <p class="pe-2 pt-1">
+                                            <span class="material-symbols-outlined">
+                                                link
+                                            </span>
+                                        </p>
+                                        <p>{{chat.conversationname}}</p>
+                                    </div>
+                                    @if(this.countMessagesUnread(chat.messages) > 0){
+                                        <div class="notreadcount"><p>{{this.countMessagesUnread(chat.messages)}}</p></div>   
+                                    }
+                                </button>
+                            </li>
+                        }@empty {
+                            <li>
+                                <p>No tienes conversaciones pendientes...</p>
+                            </li>
+                        }
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+}
+
+<ng-container #chatcompoContainer></ng-container>
+<ng-container #groupChatContainer></ng-container>

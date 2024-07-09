@@ -1,0 +1,227 @@
+
+<div class="p-6 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700" style="width: 330px;">
+    <h1 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">Idiomas 🗣️</h1>
+    <div class="flex flex-col">
+        <label class="mb-5">Tus idiomas</label>
+        <select name="mylanguages" multiple (change)="this.addUserLang($event)" #selectUserLangs>
+            <option value="Afrikáans">Afrikáans</option>
+            <option value="Albanés">Albanés</option>
+            <option value="Alemán">Alemán</option>
+            <option value="Amárico">Amárico</option>
+            <option value="Árabe">Árabe</option>
+            <option value="Armenio">Armenio</option>
+            <option value="Azerí">Azerí</option>
+            <option value="Euskera">Euskera</option>
+            <option value="Bengalí">Bengalí</option>
+            <option value="Bosnio">Bosnio</option>
+            <option value="Búlgaro">Búlgaro</option>
+            <option value="Birmano">Birmano</option>
+            <option value="Camboyano">Camboyano</option>
+            <option value="Catalán">Catalán</option>
+            <option value="Cebuano">Cebuano</option>
+            <option value="Chichewa">Chichewa</option>
+            <option value="Chino(simplificado)">Chino (simplificado)</option>
+            <option value="Chino(tradicional)">Chino (tradicional)</option>
+            <option value="Cingalés">Cingalés</option>
+            <option value="Coreano">Coreano</option>
+            <option value="Criollo haitiano">Criollo haitiano</option>
+            <option value="Croata">Croata</option>
+            <option value="Danés">Danés</option>
+            <option value="Eslovaco">Eslovaco</option>
+            <option value="Esloveno">Esloveno</option>
+            <option value="Español">Español</option>
+            <option value="Esperanto">Esperanto</option>
+            <option value="Estonio">Estonio</option>
+            <option value="Euskera">Euskera</option>
+            <option value="Filipino">Filipino</option>
+            <option value="Finlandés">Finlandés</option>
+            <option value="Francés">Francés</option>
+            <option value="Gaélico escocés">Gaélico escocés</option>
+            <option value="Gallego">Gallego</option>
+            <option value="Galés">Galés</option>
+            <option value="Georgiano">Georgiano</option>
+            <option value="Griego">Griego</option>
+            <option value="Gujarati">Gujarati</option>
+            <option value="Hausa">Hausa</option>
+            <option value="Hebreo">Hebreo</option>
+            <option value="Hindi">Hindi</option>
+            <option value="Hmong">Hmong</option>
+            <option value="Húngaro">Húngaro</option>
+            <option value="Igbo">Igbo</option>
+            <option value="Indonesio">Indonesio</option>
+            <option value="Inglés">Inglés</option>
+            <option value="Irlandés">Irlandés</option>
+            <option value="Islandés">Islandés</option>
+            <option value="Italiano">Italiano</option>
+            <option value="Japonés">Japonés</option>
+            <option value="Javanés">Javanés</option>
+            <option value="Kannada">Kannada</option>
+            <option value="Kazajo">Kazajo</option>
+            <option value="Kurdo">Kurdo</option>
+            <option value="Kirguís">Kirguís</option>
+            <option value="Lao">Lao</option>
+            <option value="Latín">Latín</option>
+            <option value="Letón">Letón</option>
+            <option value="Lituano">Lituano</option>
+            <option value="Luxemburgués">Luxemburgués</option>
+            <option value="Macedonio">Macedonio</option>
+            <option value="Malayalam">Malayalam</option>
+            <option value="Malayo">Malayo</option>
+            <option value="Malgache">Malgache</option>
+            <option value="Maltés">Maltés</option>
+            <option value="Maorí">Maorí</option>
+            <option value="Maratí">Maratí</option>
+            <option value="Mongol">Mongol</option>
+            <option value="Nepalí">Nepalí</option>
+            <option value="Neerlandés">Neerlandés</option>
+            <option value="Noruego">Noruego</option>
+            <option value="Uzbeko">Uzbeko</option>
+            <option value="Panyabí">Panyabí</option>
+            <option value="Pastún">Pastún</option>
+            <option value="Persa">Persa</option>
+            <option value="Polaco">Polaco</option>
+            <option value="Portugués">Portugués</option>
+            <option value="Rumano">Rumano</option>
+            <option value="Ruso">Ruso</option>
+            <option value="Samoano">Samoano</option>
+            <option value="Serbio">Serbio</option>
+            <option value="Sesotho">Sesotho</option>
+            <option value="Sindhi">Sindhi</option>
+            <option value="Somalí">Somalí</option>
+            <option value="Sundanés">Sundanés</option>
+            <option value="Suajili">Suajili</option>
+            <option value="Sueco">Sueco</option>
+            <option value="Tayiko">Tayiko</option>
+            <option value="Tailandés">Tailandés</option>
+            <option value="Tamil">Tamil</option>
+            <option value="Checo">Checo</option>
+            <option value="Telugu">Telugu</option>
+            <option value="Turco">Turco</option>
+            <option value="Ucraniano">Ucraniano</option>
+            <option value="Urdu">Urdu</option>
+            <option value="Vietnamita">Vietnamita</option>
+            <option value="Xhosa">Xhosa</option>
+            <option value="Yidis">Yidis</option>
+        </select>
+        <div class="flex flex-wrap">
+            @for(lang of this.userLangList() ; track $index){
+            <button (click)="this.removeUserLang(lang)" class="bg-green-300 text-green-600 w-fit flex flex-row px-2">
+                <p>{{lang}}</p>
+                <p class="font-extrabold ps-3">x</p>
+            </button>
+            }
+        </div>
+    </div>
+    <div class="flex flex-col mt-8">
+        <label class="mb-5">Idiomas en los que quieres hablar con tus linxes</label>
+        <select name="theirlanguages" multiple (change)="this.addUserLangPref()" #selectUserLangPrefs>
+            <option value="Afrikáans">Afrikáans</option>
+            <option value="Albanés">Albanés</option>
+            <option value="Alemán">Alemán</option>
+            <option value="Amárico">Amárico</option>
+            <option value="Árabe">Árabe</option>
+            <option value="Armenio">Armenio</option>
+            <option value="Azerí">Azerí</option>
+            <option value="Euskera">Euskera</option>
+            <option value="Bengalí">Bengalí</option>
+            <option value="Bosnio">Bosnio</option>
+            <option value="Búlgaro">Búlgaro</option>
+            <option value="Birmano">Birmano</option>
+            <option value="Camboyano">Camboyano</option>
+            <option value="Catalán">Catalán</option>
+            <option value="Cebuano">Cebuano</option>
+            <option value="Chichewa">Chichewa</option>
+            <option value="Chino(simplificado)">Chino (simplificado)</option>
+            <option value="Chino(tradicional)">Chino (tradicional)</option>
+            <option value="Cingalés">Cingalés</option>
+            <option value="Coreano">Coreano</option>
+            <option value="Criollo haitiano">Criollo haitiano</option>
+            <option value="Croata">Croata</option>
+            <option value="Danés">Danés</option>
+            <option value="Eslovaco">Eslovaco</option>
+            <option value="Esloveno">Esloveno</option>
+            <option value="Español">Español</option>
+            <option value="Esperanto">Esperanto</option>
+            <option value="Estonio">Estonio</option>
+            <option value="Euskera">Euskera</option>
+            <option value="Filipino">Filipino</option>
+            <option value="Finlandés">Finlandés</option>
+            <option value="Francés">Francés</option>
+            <option value="Gaélico escocés">Gaélico escocés</option>
+            <option value="Gallego">Gallego</option>
+            <option value="Galés">Galés</option>
+            <option value="Georgiano">Georgiano</option>
+            <option value="Griego">Griego</option>
+            <option value="Gujarati">Gujarati</option>
+            <option value="Hausa">Hausa</option>
+            <option value="Hebreo">Hebreo</option>
+            <option value="Hindi">Hindi</option>
+            <option value="Hmong">Hmong</option>
+            <option value="Húngaro">Húngaro</option>
+            <option value="Igbo">Igbo</option>
+            <option value="Indonesio">Indonesio</option>
+            <option value="Inglés">Inglés</option>
+            <option value="Irlandés">Irlandés</option>
+            <option value="Islandés">Islandés</option>
+            <option value="Italiano">Italiano</option>
+            <option value="Japonés">Japonés</option>
+            <option value="Javanés">Javanés</option>
+            <option value="Kannada">Kannada</option>
+            <option value="Kazajo">Kazajo</option>
+            <option value="Kurdo">Kurdo</option>
+            <option value="Kirguís">Kirguís</option>
+            <option value="Lao">Lao</option>
+            <option value="Latín">Latín</option>
+            <option value="Letón">Letón</option>
+            <option value="Lituano">Lituano</option>
+            <option value="Luxemburgués">Luxemburgués</option>
+            <option value="Macedonio">Macedonio</option>
+            <option value="Malayalam">Malayalam</option>
+            <option value="Malayo">Malayo</option>
+            <option value="Malgache">Malgache</option>
+            <option value="Maltés">Maltés</option>
+            <option value="Maorí">Maorí</option>
+            <option value="Maratí">Maratí</option>
+            <option value="Mongol">Mongol</option>
+            <option value="Nepalí">Nepalí</option>
+            <option value="Neerlandés">Neerlandés</option>
+            <option value="Noruego">Noruego</option>
+            <option value="Uzbeko">Uzbeko</option>
+            <option value="Panyabí">Panyabí</option>
+            <option value="Pastún">Pastún</option>
+            <option value="Persa">Persa</option>
+            <option value="Polaco">Polaco</option>
+            <option value="Portugués">Portugués</option>
+            <option value="Rumano">Rumano</option>
+            <option value="Ruso">Ruso</option>
+            <option value="Samoano">Samoano</option>
+            <option value="Serbio">Serbio</option>
+            <option value="Sesotho">Sesotho</option>
+            <option value="Sindhi">Sindhi</option>
+            <option value="Somalí">Somalí</option>
+            <option value="Sundanés">Sundanés</option>
+            <option value="Suajili">Suajili</option>
+            <option value="Sueco">Sueco</option>
+            <option value="Tayiko">Tayiko</option>
+            <option value="Tailandés">Tailandés</option>
+            <option value="Tamil">Tamil</option>
+            <option value="Checo">Checo</option>
+            <option value="Telugu">Telugu</option>
+            <option value="Turco">Turco</option>
+            <option value="Ucraniano">Ucraniano</option>
+            <option value="Urdu">Urdu</option>
+            <option value="Vietnamita">Vietnamita</option>
+            <option value="Xhosa">Xhosa</option>
+            <option value="Yidis">Yidis</option>
+        </select>
+        <div class="flex flex-wrap">
+            @for(lang of this.userLangPrefsList() ; track $index){
+                <button (click)="this.removeUserLangPref(lang)" class="bg-violet-300 text-violet-600 w-fit flex flex-row px-2">
+                    <p>{{lang}}</p>
+                    <p class="font-extrabold ps-3">x</p>
+                </button>
+                }
+        </div>
+    </div>
+        
+</div>

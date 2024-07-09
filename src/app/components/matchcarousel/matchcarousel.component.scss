@@ -1,0 +1,146 @@
+
+.linxname{
+    font-family: "Ubuntu Mono", monospace;
+    font-weight: 400;
+    font-style:normal;
+    font-size: 3rem;
+}
+
+.carouselContainer{
+    display: flex; 
+    flex-direction: row; 
+    align-items: center; 
+    justify-content: center;
+    height: 100vh; 
+}
+.overflowarticle{
+    flex-grow: 0.5; 
+    display: flex;
+    flex-direction: column;   
+    overflow-y: hidden;
+}
+.linxnamecontainer{
+    margin-top: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-self: center;
+    text-align: center;
+}
+
+.linxnameNoART{
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    height: 100%;
+    align-items: center;
+    justify-content: center;
+    position:static; 
+    top: 0; 
+    left: 0; 
+    right: 0;
+    bottom: 0;
+    background-image: url('../../../assets/imgs/bacteria/racimo_violeta.png'); 
+    background-size: cover; 
+    background-position: center; 
+    opacity:80%;
+}
+
+#next {
+    font-size: 50px;
+}
+
+#linxname:hover{
+    filter: brightness(150%);
+}
+
+#next:hover {
+    filter: brightness(150%);
+}
+
+#thumb {
+    font-size: 50px;
+}
+
+#thumb:hover {
+    filter: brightness(150%);
+}
+
+.nolinxfound {
+    position: relative;
+    display: inline-block;
+    text-align: center;
+    font-size: large;
+    margin-bottom: 20%;
+}
+
+.nolinxfound img {
+    width: 100%;
+    height: auto;
+    opacity: 0.5;
+    /* Ajusta la opacidad de la imagen */
+}
+
+.nolinxfoundtext {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.nolinxfound p {
+    font-size: 3rem;
+    padding-top: 10%;
+    padding-bottom: 5%;
+    letter-spacing: 10px;
+    font-weight: 600;
+}
+
+.candidateCard {
+    width: 28rem; 
+    margin-bottom: 2.5rem; 
+    background-color: #ffffff; 
+    border: 1px solid #e5e7eb; 
+    border-radius: 0.5rem; 
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05), 0 1px 3px rgba(0, 0, 0, 0.1); 
+    height: 24rem; 
+    display: flex; 
+    flex-direction: column; 
+    align-content: center;
+}
+
+.article{
+    font-family: "Kanit", sans-serif;
+    font-weight: 200;
+    font-style: normal;
+    font-size: large;
+    padding: 0.75rem;
+    width: 100%;
+    height: 80%;
+}
+
+.article h1 {
+    font-family: "Kanit", sans-serif;
+    font-weight: 500;
+    font-style: normal;
+    font-size: xx-large;
+}
+
+.artimg{
+    display: flex;
+    justify-content: center;
+}
+
+@media only screen and (max-width: 768px) {
+    .candidateCard {
+        width: 18rem; 
+        margin-bottom: 2.5rem; 
+        background-color: #ffffff; 
+        border: 1px solid #e5e7eb; 
+        border-radius: 0.5rem; 
+        box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05), 0 1px 3px rgba(0, 0, 0, 0.1); 
+        height: 28rem; 
+        display: flex; 
+        flex-direction: column; 
+        align-content: center;
+    }
+}

@@ -1,0 +1,63 @@
+
+<div class="max-w-sm p-6 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
+    <h1 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">Trabajo 💸</h1>
+    <div class="flex flex-col">
+        <label class="mb-5">Tu sector profesional</label>
+        <select id="sector" name="myjob" class="w-fit" [value]="this.userProfile.work.industry" (input)="this.userProfile.work.industry = $any($event.target).value">
+            <option value="agriculture">Agricultura</option>
+            <option value="food">Alimentación</option>
+            <option value="art">Arte y diseño</option>
+            <option value="audiovisual">Audiovisual</option>
+            <option value="automotive">Automotriz</option>
+            <option value="bank">Banca y finanzas</option>
+            <option value="beauty">Belleza y cuidado personal</option>
+            <option value="biotech">Biotecnología</option>
+            <option value="commerce">Comercio y ventas</option>
+            <option value="construction">Construcción</option>
+            <option value="consulting">Consultoría</option>
+            <option value="education">Educación</option>
+            <option value="energy">Energía</option>
+            <option value="entertainment">Entretenimiento</option>
+            <option value="realstate">Inmobiliaria</option>
+            <option value="engineering">Ingeniería</option>
+            <option value="legal">Legal</option>
+            <option value="logistic">Logística y cadena de suministro</option>
+            <option value="manufacture">Manufactura</option>
+            <option value="marketing">Marketing y publicidad</option>
+            <option value="medicine">Medicina y salud</option>
+            <option value="fashion">Moda y textil</option>
+            <option value="newtech">Nuevas tecnologías</option>
+            <option value="dirtyenergy">Petróleo y gas</option>
+            <option value="humanresources">Recursos humanos</option>
+            <option value="security">Seguridad y vigilancia</option>
+            <option value="services">Servicios empresariales</option>
+            <option value="telecomm">Telecomunicaciones</option>
+            <option value="transportation">Transporte y logística</option>
+            <option value="turism">Turismo y hostelería</option>
+            <option value="other">Otro</option>
+        </select>
+        @if(this.userProfile.work.industry === 'other'){
+            <label class="mt-8">Sentimos no conocer tu sector, ¿en qué sector trabajas?</label>
+            <input type="text" [value]="this.userProfile.work.other" name="otherindustry" (input)="this.userProfile.work.other = $any($event.target).value">
+        }
+    </div>
+    <div class="flex flex-col mt-8">
+        <label class="mb-5">¿Quieres que encontremos a gente que trabaja en tu sector?</label>
+        <fieldset>
+            <div>
+                <input type="radio" name="sharejob" value="true" [checked]="this.userProfile.preferences.shareIndustry === 'true'" (change)="this.setUserWorkPref($event)">
+                <label class="ms-2 me-5">Sí, deseo conocer a gente de mi sector</label>
+            </div>
+            <div>
+                <input type="radio" name="sharejob" value="false" [checked]="this.userProfile.preferences.shareIndustry === 'false'" (change)="this.setUserWorkPref($event)">
+                <label class="ms-2 me-5">No me importa</label>
+            </div>
+            <div>
+                <input type="radio" name="sharejob" value="avoid" [checked]="this.userProfile.preferences.shareIndustry === 'avoid'" (change)="this.setUserWorkPref($event)">
+                <label class="ms-2 me-5">Deseo evitar a gente que trabaje en el mismo sector</label>
+            </div>
+        </fieldset>
+    </div>
+        
+    
+</div>

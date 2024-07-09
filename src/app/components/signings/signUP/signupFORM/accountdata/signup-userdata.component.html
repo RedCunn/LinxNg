@@ -1,0 +1,175 @@
+<div class="mx-auto max-w-6xl px-5">
+    <form [formGroup]="userDataForm" (ngSubmit)="signup()">
+
+        @if(this.filtersFormShowing){
+
+
+        @if(this.sectionPag() === 0){
+        <div style="max-width: 600px; margin-top: 10px;" class="font-sans text-base text-indigo-800 border border-indigo-700 border-y-8 border-double rounded-xl px-10 py-5 my-10 bg-indigo-200">
+            
+           <p>Al registrarte en LINX deberás completar una serie de preguntas que nos ayudarán a encontrar gente con
+                preferencias similares a las tuyas.</p>
+            <p>Los datos recogido son empleados por nuestro algoritmo para sugerirte perfiles compatibles.</p>
+        </div>
+        }
+
+        <div class="flex justify-center mt-10">
+
+            @switch (this.sectionPag()) {
+            @case (0) {
+            <app-agefilter formControlName="userAge" [validateAgeForm]="validateAge" [userProfile]="this.UserProfile"
+                (userProfileChange)="this.onUserProfileChange($event)"></app-agefilter>
+            }
+            @case (1) {
+            <app-proxyfilter [userProfile]="this.UserProfile" (userProfileChange)="this.onUserProfileChange($event)"></app-proxyfilter>
+            }
+            @case (2) {
+            <app-genderfilter [userProfile]="this.UserProfile" (userProfileChange)="this.onUserProfileChange($event)" (isValidGenders)="this.onValidGenders($event)"></app-genderfilter>
+            }
+            @case (3) {
+            <app-politicsfilter [userProfile]="this.UserProfile" (userProfileChange)="this.onUserProfileChange($event)"></app-politicsfilter>
+            }
+            @case (4) {
+            <app-dietfilter [userProfile]="this.UserProfile" (userProfileChange)="this.onUserProfileChange($event)"></app-dietfilter>
+            }
+            @case (5) {
+            <app-langfilter [userProfile]="this.UserProfile" (userProfileChange)="this.onUserProfileChange($event)"></app-langfilter>
+            }
+            @case (6) {
+            <app-workfilter [userProfile]="this.UserProfile" (userProfileChange)="this.onUserProfileChange($event)"></app-workfilter>
+            }
+            @case (7) {
+            <div class="bg-purple-600 rounded-xl p-20">
+                <h1 class="font-bold text-lg text-lime-400">LO TENEMOS CASI 🥳🎊 </h1>
+            </div>
+            }
+            }
+
+        </div>
+
+        <div class="mt-5 flex flex-row justify-center">
+            @if(this.sectionPag() > 0){
+            <button type="button" (click)="this.prevPag()"
+                class="inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white bg-blue-400 rounded-lg hover:bg-blue-500 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+                <mat-icon>arrow_back</mat-icon>
+            </button>
+            }
+            @if (this.sectionPag() < 7) { <button type="button" (click)="this.nextPag()"
+                class="inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+                Siguiente
+                <mat-icon>arrow_forward</mat-icon>
+                </button>
+                }
+        </div>
+
+        }
+
+        @if(this.userProfFormShowing){
+                <div class="w-full mt-8">
+                    <label for="linxname" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+                        Nombre de LINX (nombre que será visible en tu perfil)</label>
+                    <input type="text" id="linxname" formControlName="linxname"
+                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                        placeholder="Nombre LINX" required />
+                        <div style="height: 20px; width: 320px;">
+                            @if(!this.userDataForm.get('linxname')?.pristine && this.userDataForm.get('linxname')?.errors !== null){
+                                <span class="text-red-600">Necesitas nombre de linx</span>
+                            }
+                        </div>
+                </div>
+            
+                <div class="w-full mt-8">
+                    <label for="name"
+                        class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Nombre</label>
+                    <input type="text" id="name" formControlName="name"
+                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                        placeholder="Nombre" required />
+                        <div style="height: 20px;  width: 320px;">
+                            @if(!this.userDataForm.get('name')?.pristine && this.userDataForm.get('name')?.errors !== null){
+                                <span class="text-red-600">Necesitamos saber tu nombre</span>
+                            }
+                        </div>
+                </div>
+            
+            
+                <div class="w-full mt-8">
+                    <label for="lastname"
+                        class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Apellidos</label>
+                    <input type="text" id="lastname" formControlName="lastname"
+                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                        placeholder="Apellidos" required />
+                        <div style="height: 20px;  width: 320px;">
+                            @if(!this.userDataForm.get('lastname')?.pristine && this.userDataForm.get('lastname')?.errors !== null){
+                                <span class="text-red-600">Necesitamos saber tus apellidos</span>
+                            }
+                        </div>
+                </div>
+            
+            
+                <div class="w-full mt-8">
+                    <label for="email"
+                        class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Email</label>
+                    <input type="text" id="email" formControlName="email"
+                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                        placeholder="mail@mail.com" required />
+                        <div style="height: 20px;  width: 320px;">
+                            @if(!this.userDataForm.get('email')?.pristine && this.userDataForm.get('email')?.errors !== null){
+                                <span class="text-red-600">Necesitas un email válido para registrarte</span>
+                            }
+                        </div>
+                </div>
+            
+                <div class="w-full mt-8">
+                    <label for="password"
+                        class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Contraseña</label>
+                    <input type="password" id="password" formControlName="password"
+                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                        placeholder="Contraseña" required />
+                        <div style="height: 20px;  width: 320px;">
+                            @if(!this.userDataForm.get('password')?.pristine && this.userDataForm.get('password')?.errors !== null){
+                                <span class="text-red-600">Se requiere contraseña, min. 8 caracteres max. 30 caracteres</span>
+                            }
+                        </div>
+                </div>
+            
+                <div class="w-full mt-8">
+                    <label for="reppassword" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Repite
+                        la contraseña</label>
+                    <input type="password" id="reppassword" formControlName="reppassword"
+                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                        placeholder="Repite tu contraseña" required />
+                    <div style="height: 10px;  width: 320px;">
+                        @if(!this.userDataForm.get('reppassword')?.pristine && this.userDataForm.get('reppassword')?.errors !== null){
+                            <span class="text-red-600">Repite la contraseña</span>
+                        }
+                    </div>
+                </div>
+
+        
+
+        <div class="flex justify-around mt-8">
+            <button type="button" (click)="this.showFiltersForm()"
+                class="py-2.5 px-5 me-2 mb-2 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-full border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-100 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700">
+                Volver
+            </button>
+            <button type="submit"
+                class="text-white bg-purple-400 hover:bg-purple-500 focus:outline-none focus:ring-4 focus:ring-purple-300 font-medium rounded-full text-sm px-5 py-2.5 text-center mb-2 dark:bg-purple-600 dark:hover:bg-purple-700 dark:focus:ring-purple-900">
+                Registrarme
+            </button>
+        </div>
+        }
+
+
+
+    </form>
+    @if( sectionPag() === 7 && this.filtersFormShowing){
+    <div class="flex justify-end">
+
+        <button type="button" (click)="this.showUserProfForm()"
+            class="text-white bg-green-400 hover:bg-green-500 focus:outline-none focus:ring-4 focus:ring-green-300 font-medium rounded-full text-sm px-5 py-2.5 text-center me-2 mb-2 dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800">
+            Siguiente
+        </button>
+    </div>
+    }
+
+</div>

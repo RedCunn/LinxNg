@@ -1,0 +1,120 @@
+@if(isOpen()){
+<!-- Main modal -->
+<div class="fixed inset-0 z-50 flex justify-center items-center">
+    <div id="modalBackground" class="fixed inset-0 bg-slate-800 opacity-50"></div>
+    <div id="modalinter" tabindex="-1" aria-hidden="true" class="modal-container w-1/2">
+        <div class="windowinter relative p-4">
+            <!-- Modal content -->
+            <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
+                <!-- Modal header -->
+                <div class="flex items-center justify-between border-b rounded-t dark:border-gray-600">
+                    <h3 class="text-lg font-semibold text-gray-900 dark:text-white">
+                        <span id="intericon" class="material-symbols-outlined text-purple-500 p-3">bubble_chart</span>
+                    </h3>
+                    <button type="button"
+                        class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm h-8 w-8 ms-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white"
+                        (click)="closeModal()">
+                        <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"
+                            viewBox="0 0 14 14">
+                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6" />
+                        </svg>
+                        <span class="sr-only">Close modal</span>
+                    </button>
+                </div>
+                <!-- Modal body -->
+                <div class="p-4 md:p-5" style="height: auto; max-height: 30dvh; overflow-y: auto;">
+                    <ul class="my-4 space-y-3">
+                        @if(this.interactions.chainedAccounts!.length > 0 || this.interactions.matchingAccounts!.length
+                        > 0|| this.interactions.chainInvitations!.length >
+                        0){
+                        @for(item of interactions.chainInvitations ; track item.fromaccount.userid){
+                        <li>
+                            <div
+                                class="flex flex-col justify-between w-full p-3 text-base font-bold text-gray-900 rounded-lg bg-gray-50 dark:bg-gray-600 dark:text-white">
+                                <p>💌
+                                    <button (click)="this.goToProfile(item.fromaccount)"
+                                        style="color: rgb(251, 9, 190);">{{item.fromaccount.linxname}}</button>
+                                    te invita a unirte a {{item.chain.chainid === 'new' ? ' una nueva ' : " la "}}
+                                    cadena <span style="color: rgb(91, 2, 116);">{{item.chain.chainname}}</span>
+                                </p>
+                                <p class="font-light flex justify-end">
+                                    <small>
+                                        {{item.daysOfRequest !== 0 ? 'Hace ' : ''}}
+                                        {{item.daysOfRequest !== 0 ? item.daysOfRequest : ''}}
+                                        {{item.daysOfRequest === 0 ? ' Hoy' : ' días'}}
+                                    </small>
+                                </p>
+                                @if(openChainInvitationAlert()[item.chain.chainid]){
+                                <div class="flex flex-row justify-between items-center text-center">
+                                    <button class="text-black text-xs font-light underline"
+                                        (click)="showChainInvitationAlert(false, item.chain.chainid)">Cerrar</button>
+                                    <div class="flex flex-row justify-end items-center text-center">
+                                        <button type="button" (click)="rejectUnion(item.chain)"
+                                            class="alertbutt text-red-700 bg-white border border-red-600 hover:bg-red-100 font-normal rounded-lg text-sm px-2 me-2 mb-2 ">
+                                            Rechazar
+                                        </button>
+                                        <button type="button" (click)="acceptUnion(item.fromaccount , item.chain)"
+                                            class="alertbutt text-violet-600 bg-white border border-violet-600 hover:bg-violet-200 font-normal rounded-lg text-sm px-2 me-2 mb-2">
+                                            Unirse
+                                        </button>
+                                    </div>
+                                </div>
+                                }@else {
+                                <div class="w-full flex justify-start">
+                                    <button class="font-light text-fuchsia-500 text-xs"
+                                        (click)="showChainInvitationAlert(true, item.chain.chainid)">Contestar</button>
+                                </div>
+                                }
+
+                            </div>
+                        </li>
+                        }
+                        @for(item of interactions.matchingAccounts ; track item.userid){
+                        <li>
+                            <div
+                                class="flex flex-col items-start w-full p-3 text-base font-bold text-gray-900 rounded-lg bg-gray-50">
+                                <p>✨ Has hecho match con <button (click)="this.goToProfile(item)"
+                                        style="color: purple;">{{item.linxname}}</button></p>
+                                @if(signalOpenUnMatchAlert()[item.userid]){
+                                <div class="w-full flex flex-row justify-between font-light">
+                                    <button class="text-red-500 text-xs" (click)="unMatch(item.userid)">Deshacer match
+                                        con {{item.linxname}}</button>
+                                    <button class="text-black text-xs"
+                                        (click)="showUnMatchAlert(false, item.userid)">X</button>
+                                </div>
+                                }@else {
+                                <div class="w-full flex justify-end">
+                                    <button class="font-light text-fuchsia-500 text-xs"
+                                        (click)="showUnMatchAlert(true, item.userid)">Deshacer</button>
+                                </div>
+                                }
+                            </div>
+                        </li>
+                        }
+                        @for(item of interactions.chainedAccounts ; track item.account.userid){
+                        <li>
+                            <div class="flex flex-col justify-start w-full p-3 text-base font-bold text-gray-900 rounded-lg bg-gray-50 dark:bg-gray-600 dark:text-white">
+                                <p>⛓️ Te has unido a la cadena <span style="color: rgb(34, 189, 34);">{{item.chain.chainname}}</span> de <button (click)="this.goToProfile(item.account)"
+                                        style="color: rgb(25, 136, 25);">{{item.account.linxname}}</button></p>
+                                <p>{{item.chain.chainname}}</p>
+                            </div>
+                        </li>
+                        }
+                        }@else {
+                        <li>
+                            <div
+                                class="flex items-center w-full p-3 text-base font-bold text-gray-900 rounded-lg bg-gray-50 dark:bg-gray-600 dark:text-white">
+                                <p>No hay nuevas interacciones...</p>
+                            </div>
+                        </li>
+                        }
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+}

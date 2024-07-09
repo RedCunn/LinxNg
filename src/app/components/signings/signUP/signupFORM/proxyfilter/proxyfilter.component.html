@@ -1,0 +1,23 @@
+<div id="container">
+    <div id="card" class=" max-w-sm p-6 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
+        <h1 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">Proximidad 🌍</h1>
+        <div class="mb-8">
+            <label>Actualmente te encuentras en </label>
+            <div class="p-2 bg-indigo-400 rounded-lg w-fit">
+                <p class="font-semibold">{{this.userCurrentAddress}}</p>
+            </div>
+        </div>
+        <label class="mb-5">Área en la que quieres hacer linxes</label>
+        <select name="proximity" class="w-fit" [value]="this.userProfile.preferences.proxyRange" (input)="this.userProfile.preferences.proxyRange = $any($event.target).value"
+        (change)="this.onProxyRangeChange()">
+            <option value="city">Mi ciudad</option>
+            <option value="area2">Mi provincia</option>
+            <option value="area1">Mi comunidad</option>
+            <option value="country">Mi país</option>
+            <option value="continent">Mi continente</option>
+            <option value="global">El mundo</option>
+        </select>
+            
+        
+    </div>
+</div>

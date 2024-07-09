@@ -1,0 +1,22 @@
+<header class="gridhead">
+    <div class="companyname">
+        <p class="greenp text-5xl text-lime-400">LINX</p>
+        <button (click)="this.goInit()"><p class="text-5xl text-purple-600">LINX</p></button>
+    </div>
+    <div class="sessionheader">
+        <div class="text-violet-300">
+            <button (click)="toggleMyChainModal()" class="me-2 text-5xl">
+                <img src="../../../../assets/imgs/logos/mychainicon.png" id="mychainimg"
+                    class="rounded-lg opacity-30 hover:opacity-70 rotate-90">
+            </button>
+        </div>
+        <div class="userhome rounded-lg opacity-30 hover:opacity-70 hover:text-lime-400">
+            <button (click)="this.goHome()" class="me-2 text-5xl">
+                <img src="../../../../assets/imgs/account/circleblackhomeuser.png" id="myaccountimg"
+                    class="rounded-lg opacity-70 hover:opacity-100">
+            </button>
+        </div>
+    </div>
+</header>
+
+<app-mychain [isOpen]="isMyChainOpen" [isMyChain]="this.isMyChain" [isSharedChain]="isSharedChain" [isAdminGroups]="isAllChains" [adminGroups]="this.allChains"></app-mychain>
