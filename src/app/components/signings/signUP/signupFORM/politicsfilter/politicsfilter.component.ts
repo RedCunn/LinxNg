@@ -1,5 +1,7 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, EventEmitter, inject, Input, Output } from '@angular/core';
 import { IUser } from '../../../../../models/account/IUser';
+import { USER_TOKEN } from '../tokens/constants';
+
 
 @Component({
   selector: 'app-politicsfilter',
@@ -10,7 +12,7 @@ import { IUser } from '../../../../../models/account/IUser';
 })
 export class PoliticsfilterComponent {
   
-  @Input() userProfile! : IUser;
+  userProfile = inject(USER_TOKEN);
   @Output() userProfileChange = new EventEmitter<IUser>();
 
   setUserPolitics(event : any){

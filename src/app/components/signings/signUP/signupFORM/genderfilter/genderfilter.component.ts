@@ -1,6 +1,7 @@
-import { Component, EventEmitter, Input, Output, signal } from '@angular/core';
+import { Component, EventEmitter, inject, Input, Output, signal } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
 import { IUser } from '../../../../../models/account/IUser';
+import { USER_TOKEN } from '../tokens/constants';
 
 @Component({
   selector: 'app-genderfilter',
@@ -13,7 +14,7 @@ import { IUser } from '../../../../../models/account/IUser';
 export class GenderfilterComponent {
   
   @Input() validateGender! : boolean;
-  @Input() userProfile! : IUser;
+  userProfile = inject(USER_TOKEN);
   @Output() userProfileChange = new EventEmitter<IUser>();
   @Output() isValidGenders = new EventEmitter<boolean>;
 

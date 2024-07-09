@@ -1,0 +1,81 @@
+<form [formGroup]="userDataForm" (ngSubmit)="signup($event)">
+
+    <div class="w-full mt-8">
+        <label for="linxname" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+            Nombre de LINX (nombre que será visible en tu perfil)</label>
+        <input type="text" id="linxname" formControlName="linxname"
+            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+            placeholder="Nombre LINX" required />
+        <div style="height: 20px; width: 320px;">
+            @if(!this.userDataForm.get('linxname')?.pristine && this.userDataForm.get('linxname')?.errors !== null){
+            <span class="text-red-600">Necesitas nombre de linx</span>
+            }
+        </div>
+    </div>
+
+    <div class="w-full mt-8">
+        <label for="name" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Nombre</label>
+        <input type="text" id="name" formControlName="name"
+            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+            placeholder="Nombre" required />
+        <div style="height: 20px;  width: 320px;">
+            @if(!this.userDataForm.get('name')?.pristine && this.userDataForm.get('name')?.errors !== null){
+            <span class="text-red-600">Necesitamos saber tu nombre</span>
+            }
+        </div>
+    </div>
+
+
+    <div class="w-full mt-8">
+        <label for="lastname" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Apellidos</label>
+        <input type="text" id="lastname" formControlName="lastname"
+            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+            placeholder="Apellidos" required />
+        <div style="height: 20px;  width: 320px;">
+            @if(!this.userDataForm.get('lastname')?.pristine && this.userDataForm.get('lastname')?.errors !== null){
+            <span class="text-red-600">Necesitamos saber tus apellidos</span>
+            }
+        </div>
+    </div>
+
+
+    <div class="w-full mt-8">
+        <label for="email" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Email</label>
+        <input type="text" id="email" formControlName="email"
+            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+            placeholder="mail@mail.com" required />
+        <div style="height: 20px;  width: 320px;">
+            @if(!this.userDataForm.get('email')?.pristine && this.userDataForm.get('email')?.errors !== null){
+            <span class="text-red-600">Necesitas un email válido para registrarte</span>
+            }
+        </div>
+    </div>
+
+    <div class="w-full mt-8">
+        <label for="password"
+            class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Contraseña</label>
+        <input type="password" id="password" formControlName="password"
+            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+            placeholder="Contraseña" required />
+        <div style="height: 20px;  width: 320px;">
+            @if(!this.userDataForm.get('password')?.pristine && this.userDataForm.get('password')?.errors !== null){
+            <span class="text-red-600">Se requiere contraseña, min. 8 caracteres max. 30 caracteres</span>
+            }
+        </div>
+    </div>
+
+    <div class="w-full mt-8">
+        <label for="reppassword" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Repite
+            la contraseña</label>
+        <input type="password" id="reppassword" formControlName="reppassword"
+            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+            placeholder="Repite tu contraseña" required />
+        <div style="height: 10px;  width: 320px;">
+            @if(!this.userDataForm.get('reppassword')?.pristine && this.userDataForm.get('reppassword')?.errors !==
+            null){
+            <span class="text-red-600">Repite la contraseña</span>
+            }
+        </div>
+    </div>
+    <button class="sendbutt">Registrarme</button>
+</form>

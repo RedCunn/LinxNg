@@ -1,0 +1,5 @@
+@import '../../../../../scss/base/base.scss';
+
+.sendbutt{
+    @extend .mainbutt;
+}

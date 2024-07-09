@@ -1,10 +1,9 @@
-import { Component, Input, Output , EventEmitter, forwardRef} from '@angular/core';
+import { Component, Input, Output , EventEmitter, forwardRef, ChangeDetectionStrategy, inject} from '@angular/core';
 import { MatSliderModule } from '@angular/material/slider';
 import { AbstractControl, ControlValueAccessor, FormBuilder, FormGroup, NG_VALIDATORS, NG_VALUE_ACCESSOR, ReactiveFormsModule, ValidationErrors, Validator, Validators } from '@angular/forms';
 import { debounceTime } from 'rxjs';
 import { IUser } from '../../../../../models/account/IUser';
-
-
+import { USER_TOKEN } from '../tokens/constants';
 
 @Component({
   selector: 'app-agefilter',
@@ -19,8 +18,7 @@ import { IUser } from '../../../../../models/account/IUser';
 })
 export class AgefilterComponent implements ControlValueAccessor, Validator{
   
-  @Input() validateAgeForm! : boolean;
-  @Input() userProfile !: IUser;
+  userProfile = inject(USER_TOKEN);
   @Output() userProfileChange = new EventEmitter<IUser>();
 
   private _onChange : Function = (_value : {year: number, month : number , day : number}) => {}

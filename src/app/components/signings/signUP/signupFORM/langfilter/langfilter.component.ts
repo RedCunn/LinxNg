@@ -1,5 +1,6 @@
-import { Component, ElementRef, EventEmitter, Input, OnInit, Output, ViewChild, signal } from '@angular/core';
+import { Component, ElementRef, EventEmitter, Input, OnInit, Output, ViewChild, inject, signal } from '@angular/core';
 import { IUser } from '../../../../../models/account/IUser';
+import { USER_TOKEN } from '../tokens/constants';
 
 @Component({
   selector: 'app-langfilter',
@@ -10,7 +11,7 @@ import { IUser } from '../../../../../models/account/IUser';
 })
 export class LangfilterComponent implements OnInit{
   
-  @Input() userProfile! : IUser;
+  userProfile = inject(USER_TOKEN);
   @Output() userProfileChange = new EventEmitter<IUser>();
   @ViewChild('selectUserLangs') selectUserLangs !: ElementRef;
   @ViewChild('selectUserLangPrefs') selectUserLangPrefs !: ElementRef;

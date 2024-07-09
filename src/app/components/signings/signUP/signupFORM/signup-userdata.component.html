@@ -1,0 +1,47 @@
+<div class="formcont">
+
+        @if(!activeForm()){
+        <div class="noticecard">
+            <p>Al registrarte en LINX deberás completar una serie de preguntas que nos ayudarán a encontrar gente con
+                preferencias similares a las tuyas. Los datos recogidos son empleados por nuestro algoritmo para
+                sugerirte perfiles compatibles.</p>
+        </div>
+        }
+        @if(activeForm()){
+        <ng-container *ngFor="let component of components$ | async">
+            @if(this.sectionPag.value < this.componentArray.length && !hideWarning()){ <ng-container
+                *ngComponentOutlet="component; injector: myInjector"></ng-container>
+            }@else {
+            <div class="bg-purple-600 rounded-xl p-20">
+                <h1 class="font-bold text-lg text-lime-400">LO TENEMOS CASI 🥳🎊 </h1>
+            </div>
+            }
+        </ng-container>
+        <div class="mt-5 flex flex-row justify-center">
+            @if(this.sectionPag.value > 0){
+            <button type="button" (click)="this.moveSection('back')"
+                class="inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white bg-blue-400 rounded-lg hover:bg-blue-500 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+                <mat-icon>arrow_back</mat-icon>
+            </button>
+            }
+            @if(this.sectionPag.value < this.componentArray.length - 1 ){ <button type="button"
+                (click)="this.moveSection('forward')"
+                class="inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+                Siguiente
+                <mat-icon>arrow_forward</mat-icon>
+                </button>
+            }
+        </div>
+        }
+
+    <div class="flex justify-center mt-5">
+
+        @if(!activeForm()){
+        <button class="accessbutt" (click)="initForm()">Continuar</button>
+        }@else{
+        <button class="endformbutt" (click)="hideWarning.set(true)">Siguiente</button>
+        }
+    </div>
+
+
+</div>

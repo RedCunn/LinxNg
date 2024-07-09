@@ -2,6 +2,8 @@ import { Component, EventEmitter, Input, OnInit, Output, inject } from '@angular
 import { RestnodeService } from '../../../../../services/restnode.service';
 import { IRestMessage } from '../../../../../models/IRestMessage';
 import { IUser } from '../../../../../models/account/IUser';
+import { USER_TOKEN } from '../tokens/constants';
+
 
 @Component({
   selector: 'app-proxyfilter',
@@ -13,7 +15,7 @@ import { IUser } from '../../../../../models/account/IUser';
 export class ProxyfilterComponent implements OnInit{
 
   private restnodeSvc : RestnodeService = inject(RestnodeService);
-  @Input() userProfile! : IUser;
+  userProfile = inject(USER_TOKEN);
   @Output() userProfileChange = new EventEmitter<IUser>();
 
   public userCurrentLocation = {latitude : 0, longitude : 0}

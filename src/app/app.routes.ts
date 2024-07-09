@@ -26,7 +26,7 @@ export const routes: Routes = [
             },
             {
                 path: 'Registro',
-                loadComponent : ()=> import('./components/signings/signUP/signupFORM/accountdata/signup-userdata.component').then(c => c.SignupUserdataComponent)
+                loadComponent : ()=> import('./components/signings/signUP/signupFORM/signup-userdata.component').then(c => c.SignupUserdataComponent)
             },
             {
                 path:'registrada',
