@@ -13,7 +13,7 @@ import { FlowbiteService } from './services/flowbite.service';
   standalone: true,
   imports: [RouterModule, MainheaderComponent, FooterComponent, LoggedheaderComponent],
   templateUrl: './app.component.html',
-  styleUrl: './app.component.scss'
+  styleUrls: ['./app.component.scss', './scss/base/base.scss']
 })
 export class AppComponent implements OnInit, OnDestroy{
   title = 'Linx_angular';

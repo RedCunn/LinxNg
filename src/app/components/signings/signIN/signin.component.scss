@@ -1,6 +1,33 @@
-/* .background {
-    background-image: url('../../../../assets/imgs/logos/steelchainbg.png');
-    background-size: cover; 
-    background-position: center; 
-   
-  } */
+@import '../../../scss/base/base.scss';
+@import '../../../scss/modules/cards';
+
+.forgotpwd{
+    @extend .secondarylink;
+}
+
+.enterbutt{
+    @extend .mainbutt;
+}
+
+.logincard{
+    @extend .logincard;
+}
+
+.logincont{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 75vh;
+    width: 80vw;
+}
+
+#remember{
+    background-color: #faf5ff;     
+    width: 20px;
+
+    &:checked{
+        background-color: #8b5cf6;
+    }
+
+}

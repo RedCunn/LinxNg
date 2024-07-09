@@ -1,0 +1,13 @@
+@import '../../../scss/base/base.scss';
+@import '../../../scss/layouts/footer.scss';
+
+.accessbutt{
+    @extend .mainbutt;
+    margin-right: 8rem;
+    width: 225px;
+    font-size: 20px;
+}
+
+
+
+

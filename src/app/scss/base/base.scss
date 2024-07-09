@@ -1,0 +1,61 @@
+@import 'variables';
+
+.ubuntu-regular {
+    font-family: $font-ubuntu;
+    font-weight: 400;
+    font-style: normal;
+}
+
+body{
+    margin: 0;
+    padding: 0;
+    height: 100vh;
+    background: $basebgcolor;
+    color: $baseplaintextcolor;
+    @extend .ubuntu-regular;
+}
+
+a{
+    text-decoration: none;
+    color:  $linkcolor;
+    
+    &:hover {
+        color: $linkhovercolor;
+    }
+}
+
+.secondarylink{
+    font-weight: 200;
+    font-size: 12px;
+    color: rgb(152, 150, 150);
+    
+    a {
+        color: inherit;
+
+        &:hover {
+            color: rgb(114, 114, 114);
+        }
+    }
+}
+
+
+.mainbutt{
+    color: $buttoncolor;                    
+    background-color: $buttonbgcolor;       
+    font-weight: 500;                 
+    border-radius: 0.375rem;          
+    font-size: 0.875rem;              
+    width: 100%;                      
+    padding: 0.625rem 1.25rem;     
+    text-align: center;            
+    transition: background-color 0.3s;
+
+    @media (min-width: 640px) {       
+        width: auto;
+    }
+
+    &:hover {
+        color:$buttonhovercolor;
+        background-color: $buttonbghover;   
+    }
+}

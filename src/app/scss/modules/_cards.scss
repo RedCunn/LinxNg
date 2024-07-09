@@ -1,0 +1,44 @@
+$cardpadding : 2rem 1rem 2rem 1rem;
+$inputtextcolor : lime;
+$loginbgcolor : rgb(70, 54, 101);
+$loginlabelcolor : #9970f9;
+
+.logincard {
+    padding: $cardpadding;              
+    box-sizing: border-box; /* Para incluir el padding en el ancho total */
+    display: flex;                 
+    flex-direction: column;        
+    justify-content: center;       
+    align-items: center;           
+    background-color: $loginbgcolor;     
+    box-shadow: 0 0 20px rgba(252, 146, 146, 0.1); 
+    border-radius: 0.5rem;       
+    width: 400px;
+    
+    label{
+        display: block;               
+        margin-bottom: 0.5rem;        
+        font-size: 0.875rem;          
+        font-weight: 500;             
+        color: $loginlabelcolor;                
+    }
+
+    input{
+        background-color: #cb99fc;     
+        border: 1px solid #d1d5db;     
+        color: $inputtextcolor;                
+        font-size: 0.875rem;           
+        border-radius: 0.5rem;         
+        display: block;                
+        width: 300px;                   
+        padding: 0.25rem;              
+    
+        &:focus {
+            outline: none;             
+            box-shadow: 0 0 0 4px rgba(139, 92, 246, 0.5); 
+            border-color: #8b5cf6;    
+        }
+
+    }
+}
+

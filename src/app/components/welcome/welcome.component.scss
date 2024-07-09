@@ -1,12 +1,18 @@
 @import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;1,100;1,200;1,300;1,400;1,500;1,600;1,700&family=Jacquard+12&family=Kanit:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Lexend+Tera:wght@100..900&family=Noto+Sans+Duployan:wght@400;700&family=Noto+Sans+Hanunoo&family=Noto+Sans+Mono:wght@100..900&family=Oswald:wght@200..700&family=Roboto+Mono:ital,wght@0,100..700;1,100..700&family=Ubuntu+Mono:ital,wght@0,400;0,700;1,400;1,700&family=Varela+Round&family=Yarndings+20&display=swap');
 
-.container {
-    width: 80vw;
+.container{
     height: 80vh;
     display: grid;
     grid-template-columns: repeat(8, minmax(0, 1fr));
     align-items: center;
     justify-content: center;
+    overflow-y: scroll; 
+    overflow-x: hidden;
+}
+
+.container::-webkit-scrollbar{
+    width: 0;
+    background: transparent;    
 }
 
 .welcometextcont {
@@ -27,9 +33,10 @@
     letter-spacing: 2rem;
     font-size: 2rem;
     opacity: 0.7;
-    color: blueviolet;
     grid-column: span 3 / span 3;
+    color: lime;
 }
+
 @media only screen and (max-width: 768px) {
     .container {
         margin-top: 5rem;

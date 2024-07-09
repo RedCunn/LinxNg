@@ -9,7 +9,7 @@ import { FlowbiteService } from '../../services/flowbite.service';
   standalone: true,
   imports: [MatchcarouselComponent],
   templateUrl: './getstarted.component.html',
-  styleUrl: './getstarted.component.scss'
+  styleUrls: ['./getstarted.component.scss']
 })
 export class GetstartedComponent implements AfterViewInit, OnInit{
   public showMeetingZone = signal(false);

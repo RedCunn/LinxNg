@@ -1,41 +1,31 @@
-<div class="background p-5 flex flex-col justify-center items-center h-screen">
-  <form #loginForm="ngForm" (ngSubmit)="Signin(loginForm)" class="bg-slate-200 p-7 rounded-lg shadow-lg"
-    style="width: 350px;">
+<div class="logincont">
+  <form #loginForm="ngForm" (ngSubmit)="Signin(loginForm)" class="logincard">
     <div class="mb-5">
-      <label for="emailorlinxname" class="block mb-2 text-sm font-medium text-purple-600 dark:text-white">Email o
-        linxname</label>
-      <input type="text" name="emailorlinxname"
-        class="bg-purple-100 border border-gray-300 text-green-600 text-sm rounded-lg focus:ring-purple-500 focus:border-purple-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white"
-        placeholder="introduce tu email o tu linxname" required [(ngModel)]="credentials.emailorlinxname"
+      <label for="emailorlinxname">Email o linxname</label>
+      <input type="text" name="emailorlinxname" placeholder="introduce tu email o tu linxname" required [(ngModel)]="credentials.emailorlinxname"
         #emailorlinxname="ngModel" />
     </div>
     <div class="mb-1">
-      <label for="password" class="block mb-2 text-sm font-medium text-purple-600 dark:text-white">Contraseña</label>
-      <input type="password" name="password"
-        class="bg-purple-100 border border-gray-300 text-green-600 text-sm rounded-lg focus:ring-purple-500 focus:border-purple-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white"
-        required [(ngModel)]="credentials.password" #password="ngModel" />
+      <label for="password">Contraseña</label>
+      <input type="password" name="password" required [(ngModel)]="credentials.password" #password="ngModel" />
     </div>
-    <a href="#" class="font-light text-blue-600 hover:underline dark:text-blue-500">¿Has olvidado tu contraseña?</a>
+    <p class="forgotpwd"><a href="#">¿Has olvidado tu contraseña?</a></p>
     @if(loginerrors()){
     <p class="text-pink-600">Credenciales incorrectas.</p>
     }
     <div class="flex items-start mt-5 mb-5">
       <div class="flex items-center h-5">
-        <input id="remember" type="checkbox" value=""
-          class="w-4 h-4 border focus:ring-0 checked:bg-purple-400 border-gray-300 rounded bg-gray-50 dark:bg-gray-700 dark:border-gray-600 " />
+        <input id="remember" type="checkbox"/>
       </div>
-      <label for="remember" class="ms-2 text-sm font-medium text-purple-400 dark:text-gray-300">Recuérdame</label>
+      <label for="remember" class="ms-2 text-sm font-medium text-purple-400">Recuérdame</label>
     </div>
-    <div class="flex justify-end">
-      <button type="submit"
-        class="text-white bg-purple-400 hover:bg-purple-500  font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center ">Iniciar
-        sesión</button>
+    <div class="flex justify-center">
+      <button type="submit" class="enterbutt">Iniciar sesión</button>
     </div>
   </form>
   <div class="max-w-sm mx-auto mt-5">
     <div class="flex items-center h-5 mt-5">
-      <p id="helper-text-explanation" class="mt-2 text-base text-gray-500 dark:text-gray-400">¿Todavía no tienes cuenta?
-        <a (click)="this.goToSignup()" class="font-semibold text-xl text-purple-500 hover:underline ">Regístrate</a></p>
+      <p class="mt-2">¿Todavía no tienes cuenta? <a href="#" (click)="this.goToSignup()" class="text-xl font-bold">Regístrate</a></p>
     </div>
   </div>
 </div>

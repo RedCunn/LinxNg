@@ -1,0 +1,9 @@
+CATEGORIES : 
+    1. Base : defaults.
+    2. Layout : divide the page into sections, holding one or more modules. 
+    3. Module : reusable parts.
+    4. State : decribes how our modules or layouts should look on a certain state.
+    5. Theme : another layer of state. 
+
+
+
