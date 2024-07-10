@@ -1,15 +1,21 @@
-<div id="container">
-    <div id="card" class=" max-w-sm p-6 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
-        <h1 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">Proximidad 🌍</h1>
-        <div class="mb-8">
+<div class="card">
+    <div class="cardcontent">
+        <h1>Proximidad 🌍</h1>
+        <div class="mt-8 mb-8 flex flex-col items-center">
             <label>Actualmente te encuentras en </label>
-            <div class="p-2 bg-indigo-400 rounded-lg w-fit">
-                <p class="font-semibold">{{this.userCurrentAddress}}</p>
-            </div>
+            @if(disableSelection()){
+                <div class="mt-5 p-2 bg-indigo-400 rounded-lg w-fit flex items-center"></div>
+            }@else {
+                <div class="mt-5 p-2 bg-indigo-400 rounded-lg w-fit h-14 flex items-center">
+                    <p class="font-semibold">{{this.userCurrentAddress}}</p>
+                </div>
+            }
         </div>
-        <label class="mb-5">Área en la que quieres hacer linxes</label>
-        <select name="proximity" class="w-fit" [value]="this.userProfile.preferences.proxyRange" (input)="this.userProfile.preferences.proxyRange = $any($event.target).value"
+        <label class="mb-5">Área en la que quieres conocer gente</label>
+        <select name="proximity" [disabled]="disableSelection()" class="w-fit" 
+        [value]="disableSelection() ? 'country' : this.userProfile.preferences.proxyRange" (input)="this.userProfile.preferences.proxyRange = $any($event.target).value"
         (change)="this.onProxyRangeChange()">
+
             <option value="city">Mi ciudad</option>
             <option value="area2">Mi provincia</option>
             <option value="area1">Mi comunidad</option>
@@ -17,7 +23,10 @@
             <option value="continent">Mi continente</option>
             <option value="global">El mundo</option>
         </select>
-            
-        
+        <div class="h-28 flex items-center">
+            @if(this.browserBlocked()){
+                <p class="font-light text-pink-500 flex text-center px-2">👹 No hemos podido localizarte, se ha establecido una localización por defecto en el centro de España, y un área de proximidad que comprende todo el país.</p>
+            }
+        </div>
     </div>
 </div>

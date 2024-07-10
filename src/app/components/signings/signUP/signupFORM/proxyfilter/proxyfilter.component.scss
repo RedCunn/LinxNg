@@ -1,0 +1,9 @@
+@import '../../../../../scss/modules/cards';
+
+.card{
+    @extend .formCard;
+}
+
+.cardcontent{
+    @extend .formCardContent;
+}

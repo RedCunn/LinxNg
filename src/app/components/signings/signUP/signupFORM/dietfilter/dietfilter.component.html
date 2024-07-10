@@ -1,36 +1,36 @@
 
-<div class="max-w-sm p-6 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
-    <h1 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">Dieta 🥕</h1>
-    <div class="flex flex-col">
-        <label>Tu dieta</label>
-        <fieldset class="mt-5">
-            <div>
-                <input type="radio" name="mydiet" value="omnivore" [checked]="this.userProfile.diet === 'omnivore'" (change)="this.setUserDiet($event)">
-                <label class="ms-2 me-5">Omnívora</label>
-            </div>
-            <div>
-                <input type="radio" name="mydiet" value="vegetarian" [checked]="this.userProfile.diet === 'vegetarian'" (change)="this.setUserDiet($event)">
-                <label class="ms-2 me-5">Vegetariana</label>
-            </div>
-            <div>
-                <input type="radio" name="mydiet" value="vegane" [checked]="this.userProfile.diet === 'vegane'" (change)="this.setUserDiet($event)">
-                <label class="ms-2 me-5">Vegana</label>
-            </div>
-        </fieldset>
-    </div>
-    <div class="flex flex-col mt-8">
-        <label>¿Buscas gente que comparta tu dieta?</label>
-        <fieldset>
-            <div>
-                <input type="radio" name="sharediet" value="true" [checked]="this.userProfile.preferences.shareDiet" (change)="this.setUserDietPref($event)">
-                <label class="ms-2 me-5">Sí, quiero que compartan mi dieta</label>
-            </div>
-            <div>
-                <input type="radio" name="sharediet" value="false" [checked]="!this.userProfile.preferences.shareDiet" (change)="this.setUserDietPref($event)">
-                <label class="ms-2 me-5">No me importa</label>
-            </div>
-        </fieldset>
-    </div>
-        
-
+<div class="card">
+    <div class="cardcontent">
+        <h1>Dieta 🥕</h1>
+        <div class="flex flex-col mt-5">
+            <label>Tu dieta</label>
+            <fieldset class="mt-3">
+                <div>
+                    <input type="radio" name="mydiet" value="omnivore" [checked]="this.userProfile.diet === 'omnivore'" (change)="this.setUserDiet($event)">
+                    <label class="ms-2 me-5">Omnívora</label>
+                </div>
+                <div>
+                    <input type="radio" name="mydiet" value="vegetarian" [checked]="this.userProfile.diet === 'vegetarian'" (change)="this.setUserDiet($event)">
+                    <label class="ms-2 me-5">Vegetariana</label>
+                </div>
+                <div>
+                    <input type="radio" name="mydiet" value="vegane" [checked]="this.userProfile.diet === 'vegane'" (change)="this.setUserDiet($event)">
+                    <label class="ms-2 me-5">Vegana</label>
+                </div>
+            </fieldset>
+        </div>
+        <div class="flex flex-col mt-8">
+            <label>¿Buscas gente que comparta tu dieta?</label>
+            <fieldset class="mt-3">
+                <div>
+                    <input type="radio" name="sharediet" value="true" [checked]="this.userProfile.preferences.shareDiet" (change)="this.setUserDietPref($event)">
+                    <label class="ms-2 me-5">Sí, quiero que compartan mi dieta</label>
+                </div>
+                <div>
+                    <input type="radio" name="sharediet" value="false" [checked]="!this.userProfile.preferences.shareDiet" (change)="this.setUserDietPref($event)">
+                    <label class="ms-2 me-5">No me importa</label>
+                </div>
+            </fieldset>
+        </div>
+    </div>    
 </div>

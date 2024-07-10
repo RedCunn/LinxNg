@@ -1,7 +1,12 @@
+
 $cardpadding : 2rem 1rem 2rem 1rem;
 $inputtextcolor : lime;
 $loginbgcolor : rgb(70, 54, 101);
 $loginlabelcolor : #9970f9;
+
+$formcardbgcolor : rgb(176, 135, 252); 
+$formcardtitlecolor :rgb(124, 221, 253);
+$formcardinputcolor : rgb(2, 144, 192);
 
 .logincard {
     padding: $cardpadding;              
@@ -42,3 +47,37 @@ $loginlabelcolor : #9970f9;
     }
 }
 
+.formCard {
+    width: 40vw;
+    height: 70vh;
+    padding: 1.5rem; 
+    background-color: $formcardbgcolor; 
+    border-radius: 0.5rem; 
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.05);
+    color : white;
+
+    h1{
+        margin-bottom: 0.5rem; 
+        font-size: 1.5rem; 
+        font-weight: 700; 
+        letter-spacing: -0.025em; 
+        color: $formcardtitlecolor; 
+    }
+
+    input{
+        color : $formcardinputcolor;
+    }
+
+    select{
+        color : $formcardinputcolor;
+    }
+}
+
+.formCardContent{
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}

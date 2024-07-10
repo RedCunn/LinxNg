@@ -1,0 +1,18 @@
+@import '../../../../../scss/modules/cards';
+
+.card{
+    @extend .formCard;
+}
+
+.cardcontent{
+    @extend .formCardContent;
+
+    select{
+        width: 400px;
+    }
+}
+
+.langbox{
+    height: 100%;
+    width: 400px;
+}

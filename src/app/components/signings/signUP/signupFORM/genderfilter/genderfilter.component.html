@@ -1,45 +1,50 @@
 
-    <div class="max-w-sm p-6 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
-        <h1 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">Género 🐌</h1>
-        
-            <div class="flex flex-col">
-                <label class="mb-5">Género con el que te identificas</label>
-                <select class="w-fit" [value]="this.userProfile.gender" (input)="this.userProfile.gender = $any($event.target).value">
-                    <option value="" selected disabled>-tu género-</option>
-                    <option value="woman">Mujer</option>
-                    <option value="man">Hombre</option>
-                    <option value="nonbin">No binarie</option>
-                    <option value="fluid">Género fluido</option>
-                </select>
+    <div class="card">
+        <div class="cardcontent">
+            <h1>Género 🐌</h1>
+            <div class="flex flex-row w-full justify-evenly mt-3">
+                <div class="flex flex-col items-center text-center">
+                    <label class="mb-5">👾 ¿Cómo te identificas?</label>
+                    <select class="w-fit" [value]="this.userProfile.gender" (input)="this.userProfile.gender = $any($event.target).value">
+                        <option value="" selected disabled>-tu género-</option>
+                        <option value="woman">Mujer</option>
+                        <option value="man">Hombre</option>
+                        <option value="nonbin">No binarie</option>
+                        <option value="fluid">Género fluido</option>
+                    </select>
+                </div>
+                <div class="flex flex-col items-center">
+                    <label>👥 Géneros que buscas</label>
+                    <fieldset class="flex flex-col mt-5">
+                        <div>
+                            <input id="checkwoman" [checked]="this.userProfile.preferences.genders.includes('woman')" type="checkbox" value="woman" (change)="this.setGenderPref($event)"
+                            class="w-4 h-4 text-orange-500 bg-gray-100 border-gray-300 rounded ">
+                            <label class="ms-3">Mujer</label>
+                        </div>
+                        <div>
+                            <input id="checkman" [checked]="this.userProfile.preferences.genders.includes('man')" type="checkbox"  value="man" (change)="this.setGenderPref($event)"
+                            class="w-4 h-4 text-orange-500 bg-gray-100 border-gray-300 rounded ">
+                            <label class="ms-3">Hombre</label>
+                        </div>
+                        <div>
+                            <input id="checknonbin" [checked]="this.userProfile.preferences.genders.includes('nonbin')" type="checkbox"  value="nonbin" (change)="this.setGenderPref($event)"
+                            class="w-4 h-4 text-orange-500 bg-gray-100 border-gray-300 rounded ">
+                            <label class="ms-3">No binarie</label>
+                        </div>
+                        <div>
+                            <input id="checkfluid" [checked]="this.userProfile.preferences.genders.includes('fluid')" type="checkbox" value="fluid" (change)="this.setGenderPref($event)"
+                            class="w-4 h-4 text-orange-500 bg-gray-100 border-gray-300 rounded ">
+                            <label class="ms-3">Género fluido</label>
+                        </div>
+                    </fieldset>
+                </div>    
             </div>
-            <div class="flex flex-col mt-8">
-                <label>Géneros que buscas</label>
-                <fieldset class="flex flex-col mt-5">
-                    <div>
-                        <input id="checkwoman" [checked]="this.userProfile.preferences.genders.includes('woman')" type="checkbox" value="woman" (change)="this.setGenderPref($event)"
-                        class="w-4 h-4 text-orange-500 bg-gray-100 border-gray-300 rounded focus:ring-orange-500 dark:focus:ring-orange-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
-                        <label class="ms-3">Mujer</label>
-                    </div>
-                    <div>
-                        <input id="checkman" [checked]="this.userProfile.preferences.genders.includes('man')" type="checkbox"  value="man" (change)="this.setGenderPref($event)"
-                        class="w-4 h-4 text-orange-500 bg-gray-100 border-gray-300 rounded focus:ring-orange-500 dark:focus:ring-orange-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
-                        <label class="ms-3">Hombre</label>
-                    </div>
-                    <div>
-                        <input id="checknonbin" [checked]="this.userProfile.preferences.genders.includes('nonbin')" type="checkbox"  value="nonbin" (change)="this.setGenderPref($event)"
-                        class="w-4 h-4 text-orange-500 bg-gray-100 border-gray-300 rounded focus:ring-orange-500 dark:focus:ring-orange-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
-                        <label class="ms-3">No binarie</label>
-                    </div>
-                    <div>
-                        <input id="checkfluid" [checked]="this.userProfile.preferences.genders.includes('fluid')" type="checkbox" value="fluid" (change)="this.setGenderPref($event)"
-                        class="w-4 h-4 text-orange-500 bg-gray-100 border-gray-300 rounded focus:ring-orange-500 dark:focus:ring-orange-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
-                        <label class="ms-3">Género fluido</label>
-                    </div>
-                </fieldset>
-            </div>    
-        @if(validateGender && !isValid){
-            <span class="text-red-600">Necesitamos conocer tu género y los géneros que buscas... 👹</span>    
-        }
+            
+            @if(validateGender && !isValid){
+                <span class="text-red-600">Necesitamos conocer tu género y los géneros que buscas... 👹</span>    
+            }
+        </div>
+        
     </div>
     
 

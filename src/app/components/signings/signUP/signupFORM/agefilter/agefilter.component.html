@@ -1,8 +1,9 @@
 
-    <div id="card" class="max-w-sm p-6 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
-        <h1 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">Edad 🎂</h1>
+    <div class="card">
+        <div [formGroup]="ageForm" class="cardcontent">
+            <h1>Edad 🎂</h1>
             <label>¿Cuándo es tu cumpleaños?</label>
-            <div [formGroup]="ageForm" class="flex flex-row mt-5">
+            <div class="flex flex-row mt-5">
                 <div class="flex flex-col">
                     <label>Año</label>
                     <select id="anio" formControlName="year" class="w-fit">
@@ -32,17 +33,17 @@
                     </select>
         
                 </div>
-        
             </div>
-            
             <span class="text-red-600">Necesitamos saber tu edad 👹</span>    
             
-        <div class="flex flex-col mt-8">
-            <label class="mb-8" for="agerange">Rango de edad que quieres encontrar</label>
-            <mat-slider min="18" max="120" step="1" discrete value="1.5">
-                <input matSliderStartThumb [value]="this.userProfile.preferences.ageRange.fromAge" (change)="this.setFromAgeRange($event)">
-                <input matSliderEndThumb [value]="this.userProfile.preferences.ageRange.toAge" (change)="this.setToAgeRange($event)">
-            </mat-slider>
+            <div class="flex flex-col mt-8">
+                <label class="mb-8" for="agerange">Rango de edad que quieres encontrar</label>
+                <mat-slider min="18" max="120" step="1" discrete value="1.5">
+                    <input matSliderStartThumb [value]="this.userProfile.preferences.ageRange.fromAge" (change)="this.setFromAgeRange($event)">
+                    <input matSliderEndThumb [value]="this.userProfile.preferences.ageRange.toAge" (change)="this.setToAgeRange($event)">
+                </mat-slider>
+            </div>
+
         </div>
 
     </div>

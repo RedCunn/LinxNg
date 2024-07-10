@@ -1,5 +1,5 @@
-import { AfterViewInit, ChangeDetectionStrategy, Component, inject, Injector, OnChanges, signal, SimpleChanges } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { ChangeDetectionStrategy, Component, inject, Injector, OnChanges, OnInit, signal, SimpleChanges } from '@angular/core';
+import { ReactiveFormsModule} from '@angular/forms';
 import { MatIconModule } from '@angular/material/icon';
 import { Router } from '@angular/router';
 import { AgefilterComponent } from './agefilter/agefilter.component';
@@ -13,11 +13,11 @@ import { RestnodeService } from '../../../../services/restnode.service';
 import { IAccount } from '../../../../models/account/IAccount';
 import { IUser } from '../../../../models/account/IUser';
 import { IRestMessage } from '../../../../models/IRestMessage';
-import { compareToValidator } from '../../../../validators/compareTo';
 import { AsyncPipe, NgComponentOutlet, NgFor} from '@angular/common';
 import { BehaviorSubject, map, Observable } from 'rxjs';
 import { createUserInjectorFn } from './tokens/injectors';
 import { AccountformComponent } from './accountdata/accountform.component';
+import { FormsValidationService } from '../../../../services/forms-validation.service';
 
 type DynamicComponentType =
   typeof AgefilterComponent |
@@ -49,11 +49,13 @@ type DynamicComponentType =
   styleUrl: './signup-userdata.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class SignupUserdataComponent implements AfterViewInit, OnChanges {
+export class SignupUserdataComponent implements OnChanges, OnInit {
 
+  private router : Router = inject(Router);
   private restnodeSvc: RestnodeService = inject(RestnodeService);
+  private formSvc : FormsValidationService = inject(FormsValidationService);
 
-  public userDataForm!: FormGroup;
+  public isChildFormValid = signal(false);
   public activeForm = signal(false);
   public hideWarning = signal(false);
 
@@ -67,12 +69,12 @@ export class SignupUserdataComponent implements AfterViewInit, OnChanges {
 
   componentArray: DynamicComponentType[] = [
     AgefilterComponent,
+    ProxyfilterComponent,
     GenderfilterComponent,
     PoliticsfilterComponent,
     DietfilterComponent,
     LangfilterComponent,
     WorkfilterComponent,
-    ProxyfilterComponent,
     AccountformComponent
   ];
 
@@ -82,9 +84,11 @@ export class SignupUserdataComponent implements AfterViewInit, OnChanges {
   myInjector!: Injector;
   createUserInjector = createUserInjectorFn();
 
-  ngAfterViewInit(): void { 
+  ngOnInit(): void { 
+    this.formSvc.formValidity$.subscribe(isValid => {
+      this.isChildFormValid.set(isValid);
+    })    
   }
-
 
   ngOnChanges(changes: SimpleChanges): void {
     this.myInjector = this.createUserInjector(changes['user'].currentValue)
@@ -157,39 +161,8 @@ export class SignupUserdataComponent implements AfterViewInit, OnChanges {
       other: ''
     }
   }
-  constructor(private _formBuilder: FormBuilder, private router: Router) {
-
-    this.userDataForm = this._formBuilder.group({
-      userAge: this._formBuilder.control({
-        year: 0,
-        month: 0,
-        day: 0
-      }),
-      linxname: new FormControl('', [Validators.required, Validators.minLength(3), Validators.maxLength(20)]),
-      name: new FormControl('', [Validators.required, Validators.minLength(2), Validators.maxLength(30)]),
-      lastname: new FormControl('', [Validators.required, Validators.minLength(2), Validators.maxLength(30)]),
-      email: new FormControl('', [Validators.required, Validators.email]),
-      password: new FormControl('', [Validators.required, Validators.minLength(8), Validators.maxLength(30)]),
-      reppassword: new FormControl('', [Validators.required, compareToValidator('password')])
-    });
-
-  }
 
   async signup() {
-
-    if (this.userDataForm.valid) {
-      const _userAge = this.userDataForm.get('userAge')?.value;
-      const _year = _userAge.year;
-      const _month = _userAge.month;
-      const _day = _userAge.day;
-      this.UserProfile.birthday = new Date(_year, _month - 1, _day).toISOString();
-      this.UserAccount.linxname = this.userDataForm.get('linxname')?.value;
-      this.UserAccount.email = this.userDataForm.get('email')?.value;
-      this.UserAccount.password = this.userDataForm.get('password')?.value;
-      this.UserAccount.createdAt = new Date().toISOString();
-      this.UserProfile.name = this.userDataForm.get('name')?.value;
-      this.UserProfile.lastname = this.userDataForm.get('lastname')?.value;
-      this.UserProfile.account = this.UserAccount;
 
       try {
         const _response: IRestMessage = await this.restnodeSvc.signupNewUser(this.UserProfile);
@@ -197,52 +170,10 @@ export class SignupUserdataComponent implements AfterViewInit, OnChanges {
         if (_response.code === 0) {
           this.router.navigateByUrl('/Linx/registrada');
         }
-
-
       } catch (error) {
         this.router.navigateByUrl('/Linx/error');
       }
 
-    } else {
-      console.log('INVALID FORM : ')
-      this.showFormErrors(this.userDataForm);
-    }
-
   }
-
-  private showFormErrors(formGroup: FormGroup): void {
-    Object.keys(formGroup.controls).forEach(controlName => {
-      const control = formGroup.get(controlName);
-      if (control instanceof FormGroup) {
-        this.showFormErrors(control);
-      } else {
-        if (control && control.errors) {
-          Object.keys(control.errors).forEach(errorKey => {
-            console.log(`Campo: ${controlName}, Error: ${errorKey}`);
-          });
-        }
-      }
-    });
-  }
-
-
-  onValidGenders(valid: boolean) {
-    this.isValidGenders = valid;
-  }
-
-  onUserProfileChange(newProf: any) {
-    this.UserProfile = newProf;
-  }
-
-  showFiltersForm() {
-    this.filtersFormShowing = true;
-    this.userProfFormShowing = false;
-  }
-
-  showUserProfForm() {
-    this.userProfFormShowing = true;
-    this.filtersFormShowing = false;
-  }
-
 
 }

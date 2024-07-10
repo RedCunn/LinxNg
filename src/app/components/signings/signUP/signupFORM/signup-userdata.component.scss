@@ -6,12 +6,29 @@
     align-items: center;
     justify-content: center;
     height: 75vh;
-    width: 40vw;
+    width: 90vw;
+    position: relative; /* Añadir posición relativa al contenedor principal */
+}
+
+.imgcont{
+    position: relative;
+    width: 100%; 
+}
+
+.image-container img {
+    width: 100%; 
+    transform: translateX(20%);
 }
 
 .noticecard{
-    padding: 2rem;
-    background-color: rgba(246, 2, 246, 0.49);
+    position: absolute; /* Posiciona el noticecard de forma absoluta */
+    top: 50%; /* Ajusta la posición superior según necesites */
+    left: 50%; /* Ajusta la posición izquierda según necesites */
+    transform: translate(-50%, -50%); /* Centra el noticecard */
+    padding: 3rem 2rem 3rem 2rem ;
+    background-color: rgba(246, 2, 246, 0.562);
+    width: 40vw;
+    border-radius: 30px;
 }
 
 .accessbutt{
