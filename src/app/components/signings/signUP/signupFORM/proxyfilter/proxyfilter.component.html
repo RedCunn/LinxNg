@@ -3,8 +3,8 @@
         <h1>Proximidad 🌍</h1>
         <div class="mt-8 mb-8 flex flex-col items-center">
             <label>Actualmente te encuentras en </label>
-            @if(disableSelection()){
-                <div class="mt-5 p-2 bg-indigo-400 rounded-lg w-fit flex items-center"></div>
+            @if(disableSelection() || !hasTrackedLocation()){
+                <div class="mt-5 p-2 bg-indigo-400 rounded-lg w-fit flex items-center animate-pulse"></div>
             }@else {
                 <div class="mt-5 p-2 bg-indigo-400 rounded-lg w-fit h-14 flex items-center">
                     <p class="font-semibold">{{this.userCurrentAddress}}</p>

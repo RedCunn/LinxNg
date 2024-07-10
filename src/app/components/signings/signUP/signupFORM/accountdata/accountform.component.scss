@@ -1,5 +1,30 @@
 @import '../../../../../scss/base/base.scss';
+@import '../../../../../scss/modules/forms';
 
 .sendbutt{
     @extend .mainbutt;
+
+    font-size: 20px;
+    margin-top: 2rem;
+}
+
+.accountForm{
+    @extend .accountForm;
+}
+
+.inputitem{
+    display: flex;
+    flex-direction: column;
+    justify-content: start;
+    width : 20vw;
+    label{
+        color : $labelaccountForm;
+    }
+    input{
+        width: 100%;
+    }
+}
+
+.warning{
+    height: 30px;  width: 40vw;
 }

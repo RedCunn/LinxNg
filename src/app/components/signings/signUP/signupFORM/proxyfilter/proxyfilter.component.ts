@@ -26,6 +26,7 @@ export class ProxyfilterComponent implements OnInit{
   public browserBlocked = signal(false);
   public userCurrentAddress : string = '';
 
+  public hasTrackedLocation = signal(false);
   private _locationData! : any;
 
   public disableSelection = signal(false);
@@ -60,6 +61,7 @@ export class ProxyfilterComponent implements OnInit{
       if(_res.code === 0){
         this._locationData = _res.others;
         this.userCurrentAddress = _res.others.formatAddr;
+        this.hasTrackedLocation.set(true);
         this.userProfile.geolocation = this._locationData.fullLoc;
         this.userProfileChange.emit(this.userProfile);
       }else{
@@ -81,6 +83,7 @@ export class ProxyfilterComponent implements OnInit{
         if(_res.code === 0){
           this._locationData = _res.others;
           this.userCurrentAddress = _res.others.formatAddr;
+          this.hasTrackedLocation.set(true);
           this.userProfile.geolocation = this._locationData.fullLoc;
           this.userProfileChange.emit(this.userProfile);
           console.log('DEFAULT LOC : ', this.userCurrentAddress)

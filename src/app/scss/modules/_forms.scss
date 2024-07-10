@@ -1,0 +1,34 @@
+@import './variables';
+
+.accountForm {
+    display: flex;                 
+    flex-direction: column;        
+    justify-content: center;       
+    align-items: center;           
+    border-radius: 0.5rem;       
+    width: 40vw;
+    
+    label{
+        display: block;               
+        margin-bottom: 0.5rem;        
+        font-size: 1rem;          
+        font-weight: 500;             
+        color: $loginlabelcolor;                
+    }
+
+    input{
+        background-color: #cb99fc;     
+        border: 1px solid #d1d5db;     
+        color: $otherinputtext;                
+        font-size: 0.875rem;           
+        border-radius: 0.5rem;         
+        display: block;                
+        width: 300px;
+        height: 35px;                   
+        padding: 0.25rem;              
+    }
+
+    span{
+        color : $warningValidation
+    }
+}

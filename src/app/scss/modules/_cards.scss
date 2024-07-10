@@ -1,12 +1,4 @@
-
-$cardpadding : 2rem 1rem 2rem 1rem;
-$inputtextcolor : lime;
-$loginbgcolor : rgb(70, 54, 101);
-$loginlabelcolor : #9970f9;
-
-$formcardbgcolor : rgb(176, 135, 252); 
-$formcardtitlecolor :rgb(124, 221, 253);
-$formcardinputcolor : rgb(2, 144, 192);
+@import './variables';
 
 .logincard {
     padding: $cardpadding;              
@@ -66,10 +58,12 @@ $formcardinputcolor : rgb(2, 144, 192);
 
     input{
         color : $formcardinputcolor;
+        border-radius: 18px;
     }
 
     select{
         color : $formcardinputcolor;
+        border-radius: 18px;
     }
 }
 

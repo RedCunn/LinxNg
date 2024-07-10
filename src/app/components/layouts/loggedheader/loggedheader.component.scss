@@ -1,3 +1,9 @@
+@import '../../../scss/layouts/header.scss';
+
+.sitename{
+    @extend .sitename;
+}
+
 .lettering{
     font-size: 1.125rem;
     line-height: 1.75rem;
@@ -25,30 +31,6 @@
     justify-content: center;
     width: 100px;
     height: 100px;
-}
-.companyname{
-    position: relative;
-    grid-column: 1 / span 8;
-    margin-top: 20px;
-    margin-left: 20px;
-    display: flex;
-    flex-direction: column;
-    height: 100%;
-    opacity: 85%;
-}
-
-.companyname button {
-    position: absolute;
-    top: 0;
-    left: 0;
-}
-.companyname p {
-    letter-spacing: 50px;
-    text-shadow: 2px 2px 5px rgba(70, 250, 61, 0.5);
-}
-.greenp {
-    left: 5px; 
-    top: 5px;  
 }
 
 #mychainimg{

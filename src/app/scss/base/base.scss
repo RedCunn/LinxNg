@@ -15,6 +15,10 @@ body{
     @extend .ubuntu-regular;
 }
 
+body::-webkit-scrollbar {
+    display: none; /* Para Chrome, Safari y Opera */
+}
+
 a{
     text-decoration: none;
     color:  $linkcolor;

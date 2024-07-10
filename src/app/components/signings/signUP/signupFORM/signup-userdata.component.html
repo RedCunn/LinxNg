@@ -22,7 +22,7 @@
             }
         </ng-container>
         <div class="mt-5 flex flex-row justify-center">
-            @if(this.sectionPag.value > 0){
+            @if(this.sectionPag.value > 0 && this.sectionPag.value < this.componentArray.length - 1 ){
             <button type="button" (click)="this.moveSection('back')"
                 class="inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white bg-blue-400 rounded-lg hover:bg-blue-500 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
                 <mat-icon>arrow_back</mat-icon>

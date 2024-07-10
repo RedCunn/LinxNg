@@ -1,4 +1,5 @@
 @import '../../../../../scss/modules/cards';
+@import '../../../../../scss/modules/variables';
 
 .card{
     @extend .formCard;
@@ -28,5 +29,5 @@
 }
 
 .textother{
-    color : #d504fa;
+    color : $otherinputtext;
 }

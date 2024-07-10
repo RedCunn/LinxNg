@@ -1,21 +1,21 @@
 <app-conversations [isOpen]="isChatsOpen" [chats]="this.compressedChats" [groupchats]="this.groupchats"></app-conversations>
 <app-interactions [isOpen]="isInteractionsOpen"></app-interactions>
 
-<footer class="fixed bottom-0 left-0 right-0 z-50 bg-white border-t border-gray-200 flex flex-row justify-around py-5">
+<footer>
     <button (click)="toggleChatsModal()" class="text-green-300" data-tooltip-target="tooltip-animation-chats" data-tooltip-style="light">
         <span class="material-symbols-outlined">
             deployed_code
         </span>
     </button>
     <div id="tooltip-animation-chats" role="tooltip"
-          class="absolute z-10 invisible inline-block px-3 py-2 text-sm font-extralight text-green-600 transition-opacity duration-300 rounded-lg shadow-sm opacity-0 tooltip ">
+          class="absolute z-10 invisible inline-block px-3 py-2 text-green-300 transition-opacity duration-300 rounded-lg shadow-sm opacity-0 tooltip ">
           Conversaciones
     </div>
     <button (click)="goLinxme()" data-tooltip-target="tooltip-animation-linxme" data-tooltip-style="light">
         <mat-icon class="text-pink-500">bolt</mat-icon>
     </button>
     <div id="tooltip-animation-linxme" role="tooltip"
-          class="absolute z-10 invisible inline-block px-3 py-2 text-sm font-extralight text-pink-700 transition-opacity duration-300 rounded-lg shadow-sm opacity-0 tooltip ">
+          class="absolute z-10 invisible inline-block px-3 py-2 text-pink-500 transition-opacity duration-300 rounded-lg shadow-sm opacity-0 tooltip ">
           Linxear
     </div>
     <button (click)="toggleInteractionsModal()" class="text-purple-400" data-tooltip-target="tooltip-animation-interactions" data-tooltip-style="light">
@@ -24,7 +24,7 @@
         </span>
     </button>
     <div id="tooltip-animation-interactions" role="tooltip"
-          class="absolute z-10 invisible inline-block px-3 py-2 text-sm font-extralight text-purple-700 transition-opacity duration-300 rounded-lg shadow-sm opacity-0 tooltip ">
+          class="absolute z-10 invisible inline-block px-3 py-2 text-purple-400 transition-opacity duration-300 rounded-lg shadow-sm opacity-0 tooltip ">
           Interacciones
     </div>
 </footer>

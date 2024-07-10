@@ -1,3 +1,5 @@
+$footercolor : rgb(90, 62, 141);
+
 footer{
     position: fixed;
     bottom: 0;
@@ -7,6 +9,6 @@ footer{
     display: flex;
     flex-direction: row;
     padding-top: 1.25rem;
-    justify-content: flex-end;
     padding-bottom: 1.25rem; 
 }
+
