@@ -1,0 +1,25 @@
+@import '../../scss/base/mixins.scss';
+
+.container{
+    @include contentcenter;
+    justify-content: center;
+    align-content: center;
+}
+
+.tooltips, .swipe{
+    @include flexrowbet;
+    height: 100%;
+    width: 70%;
+    justify-items: stretch;
+    align-items: center;
+}
+
+.tip{
+    @include flexrowbet(space-around);
+}
+
+.swipebutt{
+    @include flexcolcent;
+    width: 100%;
+}
+

@@ -2,6 +2,7 @@ import { AfterViewInit, Component, inject, Inject, OnInit, PLATFORM_ID, signal }
 import {initTooltips } from 'flowbite';
 import { MatchcarouselComponent} from '../matchcarousel/matchcarousel.component';
 import { FlowbiteService } from '../../services/flowbite.service';
+import { Router } from '@angular/router';
 
 
 @Component({
@@ -12,11 +13,16 @@ import { FlowbiteService } from '../../services/flowbite.service';
   styleUrls: ['./getstarted.component.scss']
 })
 export class GetstartedComponent implements AfterViewInit, OnInit{
-  public showMeetingZone = signal(false);
+  
   private flowbitesvc = inject(FlowbiteService);
 
-  constructor(){}
+  constructor(private router : Router){}
   
+
+  goToMeeting(){
+    this.router.navigateByUrl('/Linx/matching')
+  }
+
   ngOnInit(): void {
     this.flowbitesvc.loadFlowbite()
   }

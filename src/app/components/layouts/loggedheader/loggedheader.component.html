@@ -1,21 +1,23 @@
-<header class="gridhead">
+<header>
     <div class="sitename">
         <button (click)="this.goInit()">
             <img src="../../../../assets/imgs/logos/LINXyellowblack.png" alt="LINX">
         </button>
     </div>
-    <div class="sessionheader">
-        <div class="text-violet-300">
-            <button (click)="toggleMyChainModal()" class="me-2 text-5xl">
-                <img src="../../../../assets/imgs/logos/mychainicon.png" id="mychainimg"
-                    class="rounded-lg opacity-30 hover:opacity-70 rotate-90">
-            </button>
-        </div>
-        <div class="userhome rounded-lg opacity-30 hover:opacity-70 hover:text-lime-400">
-            <button (click)="this.goHome()" class="me-2 text-5xl">
-                <img src="../../../../assets/imgs/account/circleblackhomeuser.png" id="myaccountimg"
-                    class="rounded-lg opacity-70 hover:opacity-100">
-            </button>
+    <div class="headerlinks">
+        <div class="linkscont">
+            <div class="text-violet-300">
+                <button (click)="toggleMyChainModal()" class="me-2 text-5xl">
+                    <img src="../../../../assets/imgs/logos/mychainicon.png" id="mychainimg"
+                        class="rounded-lg opacity-30 hover:opacity-70 rotate-90">
+                </button>
+            </div>
+            <div class="userhome rounded-lg opacity-30 hover:opacity-70 hover:text-lime-400">
+                <button (click)="this.goHome()" class="me-2 text-5xl">
+                    <img src="../../../../assets/imgs/account/circleblackhomeuser.png" id="myaccountimg"
+                        class="rounded-lg opacity-70 hover:opacity-100">
+                </button>
+            </div>
         </div>
     </div>
 </header>

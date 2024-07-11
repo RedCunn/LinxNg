@@ -1,67 +1,69 @@
-@if(showMeetingZone()){
-    <app-matchcarousel></app-matchcarousel>
-    }@else {
-    <div class="tooltips">
-        <div class="matchtip hover:shadow-2xl hover:shadow-pink-400 px-5" data-tooltip-target="tooltip-animation-match"
-            data-tooltip-style="light" data-tooltip-placement="bottom">
-            <span class="material-symbols-outlined" id="thumb">
-                lightning_stand
-            </span>
-            <p class="ms-3 text-xl">Match</p>
-        </div>
-        <div id="tooltip-animation-match" role="tooltip"
-            class="absolute z-10 invisible inline-block px-3 py-2 text-sm font-medium text-pink-400 bg-gray-900 rounded-lg shadow-sm opacity-0 tooltip dark:bg-gray-700">
-            <p class="text-xl"><strong>El juego empieza haciendo MATCH</strong></p>
-            <p>deslizando <span class="material-symbols-outlined">swipe</span> encontrarás los perfiles que hemos encontrado para tí</p>
-            <p>basándonos en tus preferencias y vuestra compatibilidad.</p>
-            <p>Se hará match cuando dos usuarixs se den mutuamente match <span class="material-symbols-outlined">lightning_stand</span></p>
-            <p>a partir de entonces podréis enviaros mensajes  <span class="material-symbols-outlined"> deployed_code</span></p>
-            <div class="tooltip-arrow" data-popper-arrow></div>
-        </div>
-        <div class="linxtip hover:shadow-2xl hover:shadow-yellow-300 px-5" data-tooltip-target="tooltip-animation-linx"
-            data-tooltip-style="light" data-tooltip-placement="bottom">
-            <img style="width: 40px; height: auto;" src="../../../../assets/imgs/logos/joinchainbutt.png">
-            <p class="ms-3 text-xl">Linx</p>
-        </div>
-        <div id="tooltip-animation-linx" role="tooltip"
-            class="absolute z-10 invisible inline-block px-3 py-2 text-sm font-medium text-lime-200 bg-gray-900 rounded-lg shadow-sm opacity-0 tooltip dark:bg-gray-700">
-            <p class="text-xl"><strong>La oportunidad de haceros LINX</strong></p>
-            <p>Revisa tus interacciones <span class="material-symbols-outlined">bubble_chart</span> para saber si has hecho match con alguien.</p>
-            <p>Una vez que hagáis match podéis proponer una unión de cadenas,</p>
-            <p>esto os hace linxs, y como linxs, tendréis acceso a la cadena del otrx.</p>
-            <p>Estar en cadena os permite ver los perfiles y comunicaros con lxs otrxs linxs de esa cadena.</p>
-            <p>Seréis notificadxs de los eventos <span class="material-symbols-outlined">local_activity</span> e intercambiables <span class="material-symbols-outlined"> handshake</span> que se muevan en esa cadena.</p>
-            <div class="tooltip-arrow" data-popper-arrow></div>
-        </div>
-        <div class="chaintip hover:shadow-2xl hover:shadow-purple-400 px-5" data-tooltip-target="tooltip-animation-chain"
-            data-tooltip-style="light" data-tooltip-placement="bottom">
-            <img src="../../../assets/imgs/logos/mychainicon.png" style="width: 40px ; height: auto;opacity: 80%;">
-            <p class="ms-3 text-xl">Cadena</p>
-        </div>
-        <div id="tooltip-animation-chain" role="tooltip"
-            class="absolute z-10 invisible inline-block px-3 py-2 text-sm font-medium text-purple-300 bg-gray-900 rounded-lg shadow-sm opacity-0 tooltip dark:bg-gray-700">
-            <p class="text-xl"><strong>Todxs tus linxs forman tu CADENA</strong></p>
-            <p>os encontraréis reunidxs en las cadenas que tú hayas creado o a las que tú hayas sido invitadx por ellxs,</p>
-            <p>en vuestras cadenas podréis intercambiar pertenencias <span class="material-symbols-outlined"> handshake</span> y publicar eventos <span class="material-symbols-outlined">local_activity</span></p>
-            <p>y ser notificadx de las publicaciones de todxs lxs linxs en cadena.</p>
-            <p>Recuerda mirar tus interacciones para estar al día <span class="material-symbols-outlined">bubble_chart</span> </p>
-            <div class="tooltip-arrow" data-popper-arrow></div>
-        </div>
-    </div>
-    <div class="swipe">
-        <button (click)="showMeetingZone.set(!showMeetingZone())" data-tooltip-target="tooltip-animation-swipe"
-        data-tooltip-style="light" data-tooltip-placement="top"
-            class="hover:shadow-none hover:bg-violet-300 hover:text-violet-500 hover:border-collapse shadow-2xl text-violet-300 bg-violet-200 border-b-8 border-r-4 border-violet-300 p-8 px-10 py-5 rounded-lg flex flex-col items-center">
-            <div class="pt-5 pb-1 px-3 text-3xl">
-                <span id="divers" class="material-symbols-outlined">
-                    swipe
+
+    <div class="container">
+        <div class="tooltips">
+            <div class="tip hover:shadow-2xl hover:shadow-pink-400 px-5" data-tooltip-target="tooltip-animation-match"
+                data-tooltip-style="light" data-tooltip-placement="bottom">
+                <span class="material-symbols-outlined" id="thumb" style="font-size: 60px;">
+                    lightning_stand
                 </span>
+                <p class="ms-3 text-xl">Match</p>
             </div>
-        </button>
-        <div id="tooltip-animation-swipe" role="tooltip"
-            class="absolute z-10 invisible inline-block px-3 py-2 text-sm font-extralight text-violet-500 transition-opacity duration-300 rounded-lg shadow-sm opacity-0 tooltip ">
-            <p>Empieza a deslizar...</p>
-            <div class="tooltip-arrow" data-popper-arrow></div>
+            <div id="tooltip-animation-match" role="tooltip"
+                class="absolute z-10 invisible inline-block px-3 py-2 text-sm font-medium text-pink-400 bg-gray-900 rounded-lg shadow-sm opacity-0 tooltip dark:bg-gray-700">
+                <p class="text-xl"><strong>El juego empieza haciendo MATCH</strong></p>
+                <p>deslizando <span class="material-symbols-outlined">swipe</span> encontrarás los perfiles que hemos encontrado para tí</p>
+                <p>basándonos en tus preferencias y vuestra compatibilidad.</p>
+                <p>Se hará match cuando dos usuarixs se den mutuamente match <span class="material-symbols-outlined">lightning_stand</span></p>
+                <p>a partir de entonces podréis enviaros mensajes  <span class="material-symbols-outlined"> deployed_code</span></p>
+                <div class="tooltip-arrow" data-popper-arrow></div>
+            </div>
+            <div class="tip hover:shadow-2xl hover:shadow-yellow-300 px-5" data-tooltip-target="tooltip-animation-linx"
+                data-tooltip-style="light" data-tooltip-placement="bottom">
+                <img style="width: 40px; height: auto;" src="../../../../assets/imgs/logos/joinchainbutt.png">
+                <p class="ms-3 text-xl">Linx</p>
+            </div>
+            <div id="tooltip-animation-linx" role="tooltip"
+                class="absolute z-10 invisible inline-block px-3 py-2 text-sm font-medium text-lime-200 bg-gray-900 rounded-lg shadow-sm opacity-0 tooltip dark:bg-gray-700">
+                <p class="text-xl"><strong>La oportunidad de haceros LINX</strong></p>
+                <p>Revisa tus interacciones <span class="material-symbols-outlined">bubble_chart</span> para saber si has hecho match con alguien.</p>
+                <p>Una vez que hagáis match podéis proponer una unión de cadenas,</p>
+                <p>esto os hace linxs, y como linxs, tendréis acceso a la cadena del otrx.</p>
+                <p>Estar en cadena os permite ver los perfiles y comunicaros con lxs otrxs linxs de esa cadena.</p>
+                <p>Seréis notificadxs de los eventos <span class="material-symbols-outlined">local_activity</span> e intercambiables <span class="material-symbols-outlined"> handshake</span> que se muevan en esa cadena.</p>
+                <div class="tooltip-arrow" data-popper-arrow></div>
+            </div>
+            <div class="tip hover:shadow-2xl hover:shadow-purple-400 px-5" data-tooltip-target="tooltip-animation-chain"
+                data-tooltip-style="light" data-tooltip-placement="bottom">
+                <img src="../../../assets/imgs/logos/mychainicon.png" style="width: 40px ; height: auto;opacity: 80%;">
+                <p class="ms-3 text-xl">Cadena</p>
+            </div>
+            <div id="tooltip-animation-chain" role="tooltip"
+                class="absolute z-10 invisible inline-block px-3 py-2 text-sm font-medium text-purple-300 bg-gray-900 rounded-lg shadow-sm opacity-0 tooltip dark:bg-gray-700">
+                <p class="text-xl"><strong>Todxs tus linxs forman tu CADENA</strong></p>
+                <p>os encontraréis reunidxs en las cadenas que tú hayas creado o a las que tú hayas sido invitadx por ellxs,</p>
+                <p>en vuestras cadenas podréis intercambiar pertenencias <span class="material-symbols-outlined"> handshake</span> y publicar eventos <span class="material-symbols-outlined">local_activity</span></p>
+                <p>y ser notificadx de las publicaciones de todxs lxs linxs en cadena.</p>
+                <p>Recuerda mirar tus interacciones para estar al día <span class="material-symbols-outlined">bubble_chart</span> </p>
+                <div class="tooltip-arrow" data-popper-arrow></div>
+            </div>
+        </div>
+        <div class="swipe">
+            <div class="swipebutt">
+                <button (click)="goToMeeting()" data-tooltip-target="tooltip-animation-swipe"
+                data-tooltip-style="light" data-tooltip-placement="top"
+                    class="hover:shadow-none hover:bg-violet-400 hover:text-violet-700 hover:border-collapse shadow-2xl text-violet-500 bg-violet-300 border-b-8 border-r-4 border-violet-400 p-8 px-10 py-5 rounded-lg flex flex-col items-center">
+                    <div class="pt-5 pb-1 px-3 text-3xl">
+                        <span id="divers" class="material-symbols-outlined" style="font-size: 50px;">
+                            swipe
+                        </span>
+                    </div>
+                </button>
+                <div id="tooltip-animation-swipe" role="tooltip"
+                    class="absolute z-10 invisible inline-block px-3 py-2 text-sm font-extralight text-violet-500 transition-opacity duration-300 rounded-lg shadow-sm opacity-0 tooltip ">
+                    <p style="font-size: 20px;">Empieza a deslizar...</p>
+                    <div class="tooltip-arrow" data-popper-arrow></div>
+                </div>
+            </div>
         </div>
     </div>
-    }
+    

@@ -1,0 +1,49 @@
+
+@mixin centered{
+    margin: 0px auto;
+}
+
+@mixin contentcenter{
+    height: 80vh;
+    width: 80vw;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+@mixin basegrid{
+    display: grid;
+    width: 90vw;
+    grid-template-columns: 2fr 4fr 1fr 1fr;
+}
+
+@mixin flexrowbet($content:space-between){
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+}
+
+@mixin flexcolcent{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    text-align: center;
+}
+
+@mixin logo($img , $w : 100% , $padd : 0 0 0 0,$marg : 0 0 0 0){
+    background-image: url($img);
+    background-position: center;
+    width: $w;
+    padding: $padd;
+    margin: $marg;
+}
+
+@mixin rotate($deg){
+    -webkit-transform: rotate(#{$deg + "deg"});
+    -ms-transform:  rotate(#{$deg + "deg"});
+    transform:  rotate(#{$deg + "deg"});
+}
+
+

@@ -20,6 +20,11 @@ export const routes: Routes = [
                 canActivate: [authGuard]
             },
             {
+                path : 'matching',
+                loadComponent : () => import('./components/matchcarousel/matchcarousel.component').then(c => c.MatchcarouselComponent),
+                canActivate: [authGuard]
+            },
+            {
                 path:'linxme',
                 loadComponent : () => import('./components/matchcarousel/matchcarousel.component').then(c => c.MatchcarouselComponent),
                 canActivate: [authGuard]

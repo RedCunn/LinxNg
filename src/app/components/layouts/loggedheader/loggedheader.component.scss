@@ -1,40 +1,34 @@
 @import '../../../scss/layouts/header.scss';
+@import '../../../scss/base/mixins.scss';
 
 .sitename{
-    @extend .sitename;
+    @extend .sitenamesmall;
 }
 
-.lettering{
-    font-size: 1.125rem;
-    line-height: 1.75rem;
-}
-.gridhead {
-    display: grid;
-    grid-template-columns: repeat(12, minmax(0, 1fr));
-    position : fixed;
-    top : 0; 
-    left : 0;
-    right : 0;
-    align-items: center;
+header{
+    @extend .baseheader;
+    @include flexrowbet;
 }
 
-.sessionheader {
-    grid-column: 10 / span 2;
+.headerlinks{
+    width: 100%;
     display: flex;
     flex-direction: row;
-    justify-content: center;
-    align-items: center;
+    justify-content: end;
 }
+
+.linkscont{
+    width: 20%;
+    @include flexrowbet(space-around);
+}
+
 .userhome{
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 100px;
-    height: 100px;
+    flex-grow: 1;
+    margin-left: 2rem;
 }
 
 #mychainimg{
-    width: 65px;
+    width: 55px;
 }
 
 #myaccountimg{
@@ -42,26 +36,10 @@
 }
 
 @media screen and (max-width: 767px) {
-    
-    .lettering {
-        font-size: 1.125rem; 
-        line-height: 1.75rem;
-    }
-    .gridhead {
-        display: grid;
-        grid-template-columns: repeat(4, minmax(0, 1fr));
-        position : fixed;
-        top : 0; 
-        left : 0;
-        right : 0;
-    }
 
-    .companyname p {
-        font-size: 1rem;
-    }
 
     #mychainimg{
-        width: 45px;
+        width: 35px;
     }
     
     #myaccountimg{
