@@ -1,5 +1,6 @@
 @import '../../../scss/modules/cards';
 @import '../../../scss/base/mixins.scss';
+@import '../../../scss/base/variables';
 
 #chatsicon{
     font-size: 50px;
@@ -7,15 +8,22 @@
 
 .modalcard{
     @include ModalCard;
+
 }
 
-.windowconver{
-    width: 70%;
-    padding: 1rem;
-    max-width: 100%;
-    margin-left: auto;
-    margin-right: auto;
-    height: 90vh;
+ul{
+    width: 100%;
+    li{
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        button{
+            @include converbutton;
+            &.group{
+                color: $ligtherbgcolor; 
+            }
+        }
+    }
 }
 
 .notreadcount{
@@ -29,19 +37,5 @@
 }
 
 @media only screen and (max-width: 768px) {
-    .windowconver {
-        width: 100%;
-        margin: 0;
-    }
 
-    .modal-container {
-        top: 0;
-        left: 0;
-        transform: none;
-        width: 100%; 
-        height: 100%;
-        display: flex; 
-        justify-content: center; 
-        align-items: center; 
-    }
 }  

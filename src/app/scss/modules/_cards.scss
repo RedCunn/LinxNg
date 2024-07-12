@@ -1,5 +1,6 @@
 @import './variables';
 @import '../base/mixins.scss';
+@import '../base/variables';
 @import './mixins.scss';
 
 .logincard {
@@ -78,7 +79,7 @@
     align-items: center;
 }
 
-@mixin ModalCard($modalwidth : 60vw, $modalheight : 100vh,  $contwidth : 40vw , $contheight : 35vh , $bodywidth : 40vw, $bodyheight : 35vh){
+@mixin ModalCard($modalwidth : 60vw, $modalheight : 100vh,  $contwidth : 40vw , $contheight : 38vh , $bodywidth : 40vw, $bodyheight : 28vh, $bgcolor : $darkerbgcolor){
     
     .modalcard{
         @include modalcard($modalwidth , $modalheight);
@@ -88,7 +89,7 @@
         @include modalbg;
     }
     .modalcontainer{
-        @include modalcontainer ($contwidth, $contheight);
+        @include modalcontainer ($contwidth, $contheight, $bgcolor);
     }
     .modalbody{
         @include modalbody ($bodywidth, $bodyheight);

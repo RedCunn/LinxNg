@@ -1,6 +1,16 @@
 @import '../../../scss/base/base.scss';
 @import '../../../scss/modules/cards';
 
+.signuplink{
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: #d805fd;
+
+    &:hover{
+        color: #00ff2f;
+    }
+}
+
 .forgotpwd{
     @extend .secondarylink;
 }
