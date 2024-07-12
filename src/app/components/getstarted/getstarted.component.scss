@@ -9,15 +9,22 @@
     position: relative;
 }
 
+.oneimgcontainer{
+    @include imgbg($top : 35% , $left : 0%, $imgwidth : 15vw);
+    img{
+        @include rotate(10);
+    }
+}
+
 .firstimgcontainer{
-    @include imgbg($top : 0% , $left : 0%, $imgwidth : 30vw);
+    @include imgbg($top : 8% , $left : 0%, $imgwidth : 13vw);
     img{
         @include rotate(45);
     }
 }
 
 .secondimgcontainer{
-    @include imgbg($top : 35% , $left : 70%, $imgwidth : 15vw);
+    @include imgbg($top : 30% , $left : 70%, $imgwidth : 15vw);
     display: flex;
     flex-direction: row;
 
@@ -29,20 +36,27 @@
 }
 
 .thirdimgcontainer{
-    @include imgbg($top : 25% , $left : 30%, $imgwidth : 15vw);
+    @include imgbg($top : 75% , $left : 10%, $imgwidth : 10vw);
     img{
-        @include rotate(40);
+        @include rotate(160);
+    }
+}
+
+.twoimgcontainer{
+    @include imgbg($top : 45% , $left : 20%, $imgwidth :13vw);
+    img{
+        @include rotate(60);
     }
 }
 
 .fourthimgcontainer{
-    @include imgbg($top : 60% , $left : 75%, $imgwidth :100%);
+    @include imgbg($top : 55% , $left : 70%, $imgwidth :20vw);
 }
 
 .siximgcontainer{
-    @include imgbg($top : 30% , $left : 45%, $imgwidth :25vw);
+    @include imgbg($top : 40% , $left : 45%, $imgwidth :15vw);
     img{
-        @include rotate(140);
+        @include rotate(150);
     }
 }
 
