@@ -1,7 +1,7 @@
 @if(isOpen()){<!-- Main modal -->
-<div class="fixed inset-0 z-50 flex justify-center items-center">
-    <div id="modalBackground" class="fixed inset-0 bg-slate-800 opacity-50"></div>
-    <div id="modalchats" tabindex="-1" aria-hidden="true" class="modal-container w-1/2">
+<div class="modalcard">
+    <div id="modalBackground" class="modalbg"></div>
+    <div id="modalchats" tabindex="-1" aria-hidden="true" class="modalcontainer">
         <div class="windowconver relative p-4">
             <!-- Modal content -->
             <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
@@ -22,12 +22,12 @@
                     </button>
                 </div>
                 <!-- Modal body -->
-                <div class="p-4 md:p-5" style="height: auto; max-height: 40dvh; overflow-y: auto;">
+                <div class="modalbody">
                     <ul class="my-4 space-y-3">
                         @for(groupchat of this.groupchats; track $index){
                             <li>
                                 <button (click)="openGroupChat(groupchat)"
-                                    class="flex flex-row justify-between items-center w-full p-3 text-base font-bold text-pink-500 rounded-lg bg-gray-50 hover:bg-gray-100 group hover:shadow dark:bg-gray-600 dark:hover:bg-gray-500 dark:text-white">
+                                    class="flex flex-row justify-between items-center p-3 text-base font-bold text-pink-500 rounded-lg bg-gray-50 hover:bg-gray-100 group hover:shadow">
                                     <div class="flex flex-row items-center">
                                         <p class="pe-2 pt-1">
                                             <span class="material-symbols-outlined">
@@ -42,7 +42,7 @@
                         @for(chat of this.chats; track $index){
                             <li>
                                 <button (click)="openChat(chat)"
-                                    class="flex flex-row justify-between items-center w-full p-3 text-base font-bold text-gray-900 rounded-lg bg-gray-50 hover:bg-gray-100 group hover:shadow dark:bg-gray-600 dark:hover:bg-gray-500 dark:text-white">
+                                    class="flex flex-row justify-between items-center p-3 text-base font-bold text-gray-900 rounded-lg bg-gray-50 hover:bg-gray-100 group hover:shadow">
                                     <div class="flex flex-row items-center">
                                         <p class="pe-2 pt-1">
                                             <span class="material-symbols-outlined">

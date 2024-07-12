@@ -57,3 +57,16 @@
     }
 
 }
+
+@mixin no-scrollbar {
+    overflow-y: scroll;
+    overflow-x: hidden;
+  
+    &::-webkit-scrollbar {
+      width: 0;
+      background: transparent;
+    }
+}
+
+
+  

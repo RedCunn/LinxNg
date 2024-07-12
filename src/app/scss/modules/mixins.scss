@@ -1,0 +1,42 @@
+@mixin modalcard($width, $height){
+    position: fixed;
+    top: 10%;
+    right: 0;
+    left: 0;
+    z-index: 50;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: $width;
+    height: $height;
+}
+
+@mixin modalbg{
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    background-color: #1e293b; 
+    opacity: 0.5;
+}
+
+@mixin modalcontainer($width, $height){
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 50%;
+    width: $width;
+    height: $height;
+}
+
+@mixin modalbody($width, $height){
+    padding: 1rem;
+    @media (min-width: 768px) {
+      padding: 1.25rem;
+    }
+    width: $width;
+    height: $height;
+    @include no-scrollbar;
+}

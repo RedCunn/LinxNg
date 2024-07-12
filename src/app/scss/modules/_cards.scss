@@ -1,4 +1,6 @@
 @import './variables';
+@import '../base/mixins.scss';
+@import './mixins.scss';
 
 .logincard {
     padding: $cardpadding;              
@@ -75,3 +77,21 @@
     justify-content: center;
     align-items: center;
 }
+
+@mixin ModalCard($modalwidth : 60vw, $modalheight : 100vh,  $contwidth : 40vw , $contheight : 35vh , $bodywidth : 40vw, $bodyheight : 35vh){
+    
+    .modalcard{
+        @include modalcard($modalwidth , $modalheight);
+    }
+
+    .modalbg{
+        @include modalbg;
+    }
+    .modalcontainer{
+        @include modalcontainer ($contwidth, $contheight);
+    }
+    .modalbody{
+        @include modalbody ($bodywidth, $bodyheight);
+    }
+}
+
