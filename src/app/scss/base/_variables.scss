@@ -1,5 +1,5 @@
 // DEFAULT BODY, COLOR , FONT , LINKS , BUTTS VARIABLES 
-$basebgcolor : rgb(95, 72, 138);
+$basebgcolor : linear-gradient(135deg, rgb(135, 86, 226) 10%, #ec81fe 90%);
 $baseplaintextcolor : rgb(204, 188, 215);
 $greenfontcolor : rgb(8, 245, 8);
 $font-ubuntu: "Ubuntu", monospace;
@@ -12,3 +12,5 @@ $buttonhovercolor : #9b01b6;
 // STANDARD SIZES 
 $iconsizes: (40px , 80px, 160px);
 $breakpoints: (576px, 768px, 992px );
+
+$pointercolor : rgb(195, 159, 1);

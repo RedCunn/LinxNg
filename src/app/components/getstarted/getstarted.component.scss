@@ -1,4 +1,50 @@
 @import '../../scss/base/mixins.scss';
+@import '../../scss/base/variables';
+
+.bgcontainer{
+    width: 100vw;
+    height: 80vh;
+    display: flex;
+    justify-content: center;
+    position: relative;
+}
+
+.firstimgcontainer{
+    @include imgbg($top : 0% , $left : 0%, $imgwidth : 30vw);
+    img{
+        @include rotate(45);
+    }
+}
+
+.secondimgcontainer{
+    @include imgbg($top : 35% , $left : 70%, $imgwidth : 15vw);
+    display: flex;
+    flex-direction: row;
+
+}
+
+#rotate{
+    width: 18vw;
+    @include rotate(120);
+}
+
+.thirdimgcontainer{
+    @include imgbg($top : 25% , $left : 30%, $imgwidth : 15vw);
+    img{
+        @include rotate(40);
+    }
+}
+
+.fourthimgcontainer{
+    @include imgbg($top : 60% , $left : 75%, $imgwidth :100%);
+}
+
+.siximgcontainer{
+    @include imgbg($top : 30% , $left : 45%, $imgwidth :25vw);
+    img{
+        @include rotate(140);
+    }
+}
 
 .container{
     @include contentcenter;
@@ -18,8 +64,18 @@
     @include flexrowbet(space-around);
 }
 
+.tiptext{
+    margin-left: 0.75rem;
+    font-size: 30px;
+    color: rgb(101, 1, 101);
+    font-weight: 600;
+}
+
 .swipebutt{
     @include flexcolcent;
     width: 100%;
 }
 
+.tipcont{
+    @include flexcolcent(start);
+}

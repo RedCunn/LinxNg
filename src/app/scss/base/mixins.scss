@@ -24,7 +24,7 @@
     align-items: center;
 }
 
-@mixin flexcolcent{
+@mixin flexcolcent($content:space-between){
     display: flex;
     flex-direction: column;
     justify-content: space-between;
@@ -46,4 +46,14 @@
     transform:  rotate(#{$deg + "deg"});
 }
 
+@mixin imgbg($top : 50% , $left : 50%, $imgwidth : 20vw){
+    position: absolute;
+    top: $top;
+    left: $left;
+    z-index: -1;
+    img{
+        width: $imgwidth;
+        object-fit: cover; 
+    }
 
+}
