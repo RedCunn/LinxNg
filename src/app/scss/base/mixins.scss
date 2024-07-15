@@ -85,3 +85,20 @@
         box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     }
 }
+
+@mixin standardbutton($width : fit-content ,$justcont : space-between, $fontsize : 1rem, $bgcolor : transparent){
+    display: flex;
+    flex-direction: row;
+    justify-content: $justcont;
+    align-items: center;
+    width: $width;
+    box-sizing: border-box;
+    padding: 0.75rem;
+    font-size: $fontsize; 
+    border-radius: 0.5rem; 
+    background-color: $bgcolor;
+    cursor: pointer;
+    &:hover {
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+}

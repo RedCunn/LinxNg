@@ -1,11 +1,9 @@
 <!-- Main modal -->
 @if(isOpen()){
-<div class="fixed inset-0 z-50 flex justify-center items-center">
-    <div id="modalBackground" class="fixed inset-0 bg-slate-800 opacity-50"></div>
-    <div id="modalchain" tabindex="-1" aria-hidden="true" class="modal-container w-1/2">
-        <div class="windowchain relative p-4">
+<div class="modalcard">
+    <div id="modalBackground" class="modalbg"></div>
+    <div id="modalchain" tabindex="-1" aria-hidden="true" class="modalcontainer">
             <!-- Modal content -->
-            <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
                 <!-- Modal header -->
                 <div class="modalheader">
                     @if(!isAdminGroups()){
@@ -17,56 +15,46 @@
                         </div>
                     }
                     @if(isAdminGroups()){
-                        <div class="allchainstitle col-span-2 pt-4 mb-3">
-                            <p>⛓️ Todas las cadenas que llevan a tí ⛓️</p>
+                        <div class="col-span-2 justify-items-start">
+                            <img class="cardtitleimg" src="../../../../assets/imgs/logos/verticalgreenlink.png" alt="Todas las cadenas que llevan a tí...">
                         </div>
                     }
                     <div class="col-span-1 flex align-middle justify-end">
                         <button type="button"
-                            class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm h-8 w-8 ms-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white"
+                            class= "bg-transparent hover:text-white rounded-lg ms-auto me-3 inline-flex justify-center items-center "
                             (click)="closeModal()">
-                            <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"
-                                viewBox="0 0 14 14">
-                                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
-                                    stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6" />
-                            </svg>
-                            <span class="sr-only">Close modal</span>
+                            <span class="material-symbols-outlined">close</span>
                         </button>
                     </div>
                     
                 </div>
                 <!-- Modal body -->
-                <div class="p-4 md:p-5" style="height: auto; max-height: 40dvh; overflow-y: auto;">
-                    <ul class="my-4 space-y-3">
+                <div class="modalbody">
+                    <ul>
+                        <h2 class="userchainTitle">Mis cadenas</h2>
                         @if(isMyChain()){
                         @for(chain of this.myChains; track chain.chainid){
                         <li>
-                            <button (click)="this.showLinxsOnChain(chain)"
-                                class="flex items-center w-full p-3 text-base font-bold text-gray-900 rounded-lg bg-gray-50 dark:bg-gray-600 dark:text-white">
-                                <p style="color: green;" class="px-2 pt-2">
-                                </p>
-                                <p style="color: green;">{{chain.chainname}}</p>
+                            <button (click)="this.showLinxsOnChain(chain)" class="chainsbutt">
+                                <p>{{chain.chainname}}</p>
                             </button>
                         </li>
                         }@empty {
                         <li>
-                            <p style="color: green;">Todavía no has hecho cadena...</p>
+                            <p>Todavía no has hecho cadena...</p>
                         </li>
                         }
                         }
                         @if(isSharedChain()){
                         @for(chain of this.sharedChains; track chain.chainid){
                         <li>
-                            <button (click)="this.showLinxsOnChain(chain)"
-                                class="flex items-center w-full p-3 text-base font-bold text-gray-900 rounded-lg bg-gray-50 dark:bg-gray-600 dark:text-white">
-                                <p style="color: purple;" class="px-2 pt-2">
-                                </p>
-                                <p style="color: purple;">{{chain.chainname}}</p>
+                            <button (click)="this.showLinxsOnChain(chain)" class="chainsbutt">
+                                <p>{{chain.chainname}}</p>
                             </button>
                         </li>
                         }@empty{
                         <li>
-                            <p style="color: purple; font-style: italic;">No hay cadenas en común por el momento...</p>
+                            <p style="font-style: italic;">No hay cadenas en común por el momento...</p>
                         </li>
                         }
                         }
@@ -74,36 +62,29 @@
                         @if(isAdminGroups()){
                         @for(group of this.adminGroups; track $index){
                         @if(group.chainadminID === this.user.userid){
-                        <li class="text-lg">
-                            <p class="mychains">
-                                {{this.searchAdminNameOnMyLinxs(group.chainadminID)}} </p>
+                        <li>
+                            <p>{{this.searchAdminNameOnMyLinxs(group.chainadminID)}} </p>
                         </li>
                         }@else {
                         <li>
-                            <p style="color: rgb(52, 4, 118); font-weight: 600;"> Cadenas de
-                                {{this.searchAdminNameOnMyLinxs(group.chainadminID)}}</p>
+                            <h2 class="linxchainTitle"> Cadenas de
+                                {{this.searchAdminNameOnMyLinxs(group.chainadminID)}}</h2>
                         </li>
                         }
                         <li>
                             @if(group.chainadminID === this.user.userid){
-                            <button (click)="this.showLinsOnGroup(group)"
-                                class="flex items-center w-full p-3 text-base font-bold text-gray-900 rounded-lg bg-gray-50 dark:bg-gray-600 dark:text-white">
-                                <p style="color: rgb(255, 9, 177);" class="px-2 pt-2">
-                                </p>
-                                <p style="color: rgb(255, 9, 177);">{{group.chainName}}</p>
+                            <button (click)="this.showLinsOnGroup(group)" class="mychainsbutt">
+                                <p>{{group.chainName}}</p>
                             </button>
                             }@else {
-                            <button (click)="this.showLinsOnGroup(group)"
-                                class="flex items-center w-full p-3 text-base font-bold text-gray-900 rounded-lg bg-gray-50 dark:bg-gray-600 dark:text-white">
-                                <p style="color: purple;" class="px-2 pt-2">
-                                </p>
-                                <p style="color: purple;">{{group.chainName}}</p>
+                            <button (click)="this.showLinsOnGroup(group)" class="chainsbutt">
+                                <p>{{group.chainName}}</p>
                             </button>
                             }
                         </li>
                         }@empty{
                         <li>
-                            <p style="color: purple; font-style: italic;">No hay cadenas en común por el momento...</p>
+                            <p style="font-style: italic;">No hay cadenas en común por el momento...</p>
                         </li>
                         }
                         }
@@ -112,8 +93,6 @@
                 </div>
             </div>
         </div>
-    </div>
-</div>
 }
 
 <app-linxsonchain [isMyChain]="this.isMyChain" [isAllChains]="isAdminGroups" [isSharedChain]="isSharedChain"

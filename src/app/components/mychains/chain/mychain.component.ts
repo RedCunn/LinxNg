@@ -68,7 +68,7 @@ export class MyChainComponent implements OnInit{
     let adminname = "";
 
     if(userid === this.user.userid){
-      return "Mis cadenas";
+      return "";
     }
 
     const linx = this.myLinxs.find(li => li.userid === userid)

@@ -1,48 +1,58 @@
-@import url('https://fonts.googleapis.com/css2?family=Chakra+Petch:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&display=swap');
+@import '../../../scss/modules/cards';
+@import '../../../scss/base/mixins.scss';
+@import '../../../scss/base/variables';
+
+.modalcard{
+    @include ModalCard;
+
+}
+
+.chainsbutt{
+    @include standardbutton($width : 100%,$justcont : start);
+}
+
+.mychainsbutt{
+    @include standardbutton($width : 100%,$justcont : center, $bgcolor : #976de6);
+}
+
+ul{
+    li{
+        p{
+            padding-left: 0.5rem /* 8px */;
+            padding-right: 0.5rem /* 8px */;
+            font-size: 1.5rem;
+            color: $greenfontcolor;
+        }
+    }
+}
+
+.cardtitleimg{
+    @include rotate(70);
+    width: 200px;
+}
+
+.linxchainTitle{
+    color: rgb(52, 4, 118); font-weight: 600;
+}
+
+.userchainTitle{
+    color: rgb(52, 4, 118); font-weight: 600;
+}
 
 #circleicon{
     font-size: 50px;
 }
 
-.allchainstitle{
-    font-family: "Chakra Petch", sans-serif;
-    font-weight: 600;
-    font-style: normal;
-    color : gray;
-    font-size: 1rem;
-    text-align: center;
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-}
-
 .mychains {
     color : rgb(78, 77, 77);
-    font-family: "Chakra Petch", sans-serif;
     font-weight: 400;
     font-style: normal;
-}
-
-.modal-container {
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-}
-
-.windowchain {
-    width: 70%;
-    padding: 1rem;
-    max-width: 100%;
-    margin-left: auto;
-    margin-right: auto;
 }
 
 .modalheader{
     display: grid;
     grid-template-columns: repeat(3,minmax(0, 1fr));
     align-items: center;
-    border-bottom-width: 1px;
     border-top-left-radius: 0.25rem;
     border-top-right-radius: 0.25rem;
 }
@@ -50,19 +60,5 @@
 
 
 @media only screen and (max-width: 768px) {
-    .windowchain {
-        width: 100%;
-        margin: 0;
-    }
-
-    .modal-container {
-        top: 0;
-        left: 0;
-        transform: none;
-        width: 100%; 
-        height: 100%;
-        display: flex; 
-        justify-content: center; 
-        align-items: center; 
-    }
+    
 }  
