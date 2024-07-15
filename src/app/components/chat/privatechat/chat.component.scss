@@ -1,27 +1,14 @@
 @import '../../../scss/modules/cards';
+@import '../../../scss/modules/mixins.scss';
 
 .modalcard{
-    @include ModalCard($contheight : 55vh);
+    @include ModalCard($contheight : 55vh, $bodyheight : calc(50vh - 120px) , $bodywidth : 100%);
 }
 
 .formcontainer{
-    display: flex;
-    justify-content: center;
-    align-items: first baseline;
-    height: 10vh;
-    width: 100%;
-    form{
-        display: flex;
-        align-items: center;
-        background-color: rgb(149, 106, 229); 
-        padding-left: 0.75rem; 
-        padding-right: 0.75rem; 
-        padding-top: 0.5rem; 
-        padding-bottom: 0.5rem; 
-        border-radius: 0.5rem; 
-        width: 90%;
-    }
+   @include chatform;
 }
+
 .conversationame{
     font-size: 1.5rem;
     font-weight: 600;

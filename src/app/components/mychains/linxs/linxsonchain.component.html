@@ -6,13 +6,7 @@
     <div id="modalchain" tabindex="-1" aria-hidden="true" class="modalcontainer">
         <!-- Modal header -->
         <div class="modalheader">
-            <div class="col-span-2 flex flex-row text-center ps-2 pt-4 mb-3">
-                <div class="w-full">
-                    <img src="../../../assets/imgs/logos/mychainicon.png"
-                        style="width: 40px ; height: auto;opacity: 80%;">
-                </div>
-            </div>
-            <div class="col-span-1 flex align-middle justify-end">
+            <div class="col-span-3 flex align-middle justify-end mt-5">
                 <button type="button"
                     class="bg-transparent hover:text-white rounded-lg ms-auto me-3 inline-flex justify-center items-center "
                     (click)="closeModal()">
@@ -78,19 +72,18 @@
                 </li>
                 }@empty {
                 <li>
-                    <p style="color: green;">No hay linxs en esta cadena...</p>
+                    <p style="font-style: italic;">No hay linxs en esta cadena...</p>
                 </li>
                 }
                 @for(linx of chain.linxExtents ; track linx.linxExtent.userid){
                 <li>
-                    <button (click)="this.goToLinxProfile(linx.extentAccount)"
-                        class="flex items-center w-full p-3 text-base font-bold text-gray-900 rounded-lg bg-gray-50 dark:bg-gray-600 dark:text-white">
-                        <p style="color: green;" class="px-2 pt-2">
+                    <button (click)="this.goToLinxProfile(linx.extentAccount)">
+                        <p class="px-2 pt-2">
                             <span class="material-symbols-outlined">
                                 account_circle
                             </span>
                         </p>
-                        <p style="color: green;">{{linx.extentAccount.linxname}}</p>
+                        <p>{{linx.extentAccount.linxname}}</p>
                     </button>
                 </li>
                 }
@@ -99,19 +92,18 @@
                 @if(this.isAllChains()){
                 @for(linx of group ; track linx.userid){
                 <li>
-                    <button (click)="this.goToLinxProfile(linx)" [disabled]="linx.userid === this._user?.userid"
-                        class="flex items-center w-full p-3 text-base font-bold text-gray-900 rounded-lg bg-gray-50 dark:bg-gray-600 dark:text-white">
-                        <p style="color: green;" class="px-2 pt-2">
+                    <button (click)="this.goToLinxProfile(linx)" [disabled]="linx.userid === this._user?.userid">
+                        <p class="px-2 pt-2">
                             <span class="material-symbols-outlined">
                                 account_circle
                             </span>
                         </p>
-                        <p style="color: green;">{{linx.linxname}}</p>
+                        <p>{{linx.linxname}}</p>
                     </button>
                 </li>
                 }@empty {
                 <li>
-                    <p style="color: green;">No hay linxs en esta cadena...</p>
+                    <p style="font-style: italic;">No hay linxs en esta cadena...</p>
                 </li>
                 }
                 }

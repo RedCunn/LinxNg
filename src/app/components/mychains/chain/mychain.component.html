@@ -2,31 +2,24 @@
 @if(isOpen()){
 <div class="modalcard">
     <div id="modalBackground" class="modalbg"></div>
+    <!-- Modal content -->
     <div id="modalchain" tabindex="-1" aria-hidden="true" class="modalcontainer">
-            <!-- Modal content -->
                 <!-- Modal header -->
                 <div class="modalheader">
+                    <div class="col-span-3 flex align-middle justify-end mt-5">
+                        <button type="button" class= "bg-transparent hover:text-white rounded-lg ms-auto me-3 inline-flex justify-center items-center "
+                            (click)="closeModal()">
+                            <span class="material-symbols-outlined">close</span>
+                        </button>
+                    </div>
                     @if(!isAdminGroups()){
-                        <div class="col-span-2 flex flex-row text-center ps-2 pt-4 mb-3">
+                        <div class="col-span-3 flex flex-row text-center ps-2 pt-4 mb-3">
                             <div class="w-full">
                                 <img src="../../../assets/imgs/logos/mychainicon.png"
                                     style="width: 40px ; height: auto;opacity: 80%;">
                             </div>
                         </div>
                     }
-                    @if(isAdminGroups()){
-                        <div class="col-span-2 justify-items-start">
-                            <img class="cardtitleimg" src="../../../../assets/imgs/logos/verticalgreenlink.png" alt="Todas las cadenas que llevan a tí...">
-                        </div>
-                    }
-                    <div class="col-span-1 flex align-middle justify-end">
-                        <button type="button"
-                            class= "bg-transparent hover:text-white rounded-lg ms-auto me-3 inline-flex justify-center items-center "
-                            (click)="closeModal()">
-                            <span class="material-symbols-outlined">close</span>
-                        </button>
-                    </div>
-                    
                 </div>
                 <!-- Modal body -->
                 <div class="modalbody">
@@ -78,6 +71,7 @@
                             </button>
                             }@else {
                             <button (click)="this.showLinsOnGroup(group)" class="chainsbutt">
+                                <p style="width: 24px;"><span class="chainico" >⛓️</span><span class="listpoint"> · </span></p>
                                 <p>{{group.chainName}}</p>
                             </button>
                             }
@@ -88,7 +82,6 @@
                         </li>
                         }
                         }
-
                     </ul>
                 </div>
             </div>

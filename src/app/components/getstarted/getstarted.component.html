@@ -27,18 +27,15 @@
                     <div (mouseenter)="mousOverReadTip($event)" (mouseleave)="mouseOutNextTip($event)" id="Match" class="tip hover:shadow-2xl hover:shadow-pink-400 px-5" data-tooltip-target="tooltip-animation-match"
                     data-tooltip-style="light" data-tooltip-placement="bottom">
                         <span class="material-symbols-outlined" id="thumb" style="font-size: 55px; color: rgb(101, 1, 101);" [class.animate-bounce]="this.tipsUnseen.includes('Match') && this.tipsToRead.includes('Match')">
-                            lightning_stand
+                            join
                         </span>
-                        <p class="tiptext">Match</p>
+                        <p class="tiptext">Conexión</p>
                     </div>
                 </div>
                 <div id="tooltip-animation-match" role="tooltip"
-                    class="absolute z-10 invisible inline-block px-3 py-2 text-sm font-medium text-pink-400 bg-gray-900 rounded-lg shadow-sm opacity-0 tooltip dark:bg-gray-700">
-                    <p class="text-xl"><strong>El juego empieza haciendo MATCH</strong></p>
-                    <p>deslizando <span class="material-symbols-outlined">swipe</span> encontrarás los perfiles que hemos encontrado para tí</p>
-                    <p>basándonos en tus preferencias y vuestra compatibilidad.</p>
-                    <p>Se hará match cuando dos usuarixs se den mutuamente match <span class="material-symbols-outlined">lightning_stand</span></p>
-                    <p>a partir de entonces podréis enviaros mensajes  <span class="material-symbols-outlined"> deployed_code</span></p>
+                    class="absolute z-10 invisible w-1/4 inline-block px-3 py-2 text-sm font-medium text-pink-400 bg-gray-900 rounded-lg shadow-sm opacity-0 tooltip dark:bg-gray-700">
+                    <p class="text-xl"><strong>El juego empieza con la primera CONEXIÓN</strong> </p>
+                    <p>Deslizando <span class="material-symbols-outlined">swipe</span> encontrarás los perfiles que hemos encontrado para tí basándonos en tus preferencias y vuestra compatibilidad. <br> Se conectará a dos usuarixs cuando la conexión sea mutua <span class="material-symbols-outlined">join</span> a partir de entonces podréis enviaros mensajes  <span class="material-symbols-outlined"> deployed_code</span></p>
                     <div class="tooltip-arrow" data-popper-arrow></div>
                 </div>
                 <div class="tipcont">
@@ -49,13 +46,9 @@
                     </div>
                 </div>
                 <div id="tooltip-animation-linx" role="tooltip"
-                    class="absolute z-10 invisible inline-block px-3 py-2 text-sm font-medium text-lime-200 bg-gray-900 rounded-lg shadow-sm opacity-0 tooltip dark:bg-gray-700">
+                    class="absolute z-10 invisible w-1/4 inline-block px-3 py-2 text-sm font-medium text-lime-200 bg-gray-900 rounded-lg shadow-sm opacity-0 tooltip dark:bg-gray-700">
                     <p class="text-xl"><strong>La oportunidad de haceros LINX</strong></p>
-                    <p>Revisa tus interacciones <span class="material-symbols-outlined">bubble_chart</span> para saber si has hecho match con alguien.</p>
-                    <p>Una vez que hagáis match podéis proponer una unión de cadenas,</p>
-                    <p>esto os hace linxs, y como linxs, tendréis acceso a la cadena del otrx.</p>
-                    <p>Estar en cadena os permite ver los perfiles y comunicaros con lxs otrxs linxs de esa cadena.</p>
-                    <p>Seréis notificadxs de los eventos <span class="material-symbols-outlined">local_activity</span> e intercambiables <span class="material-symbols-outlined"> handshake</span> que se muevan en esa cadena.</p>
+                    <p>Revisa tus interacciones <span class="material-symbols-outlined">bubble_chart</span> para saber si has hecho una conexión con alguien. <br> Una vez conectadxs podréis crear una nueva cadena con vuestrx linx o invitarle a una de vuestras cadenas <br> e incluso proponer una unión de cadenas. <br> Estar en cadena os permite ver los perfiles y comunicaros con lxs linxs de esa cadena. <br> Seréis notificadxs de los eventos <span class="material-symbols-outlined">local_activity</span> e intercambiables <span class="material-symbols-outlined"> handshake</span> que se muevan en esa cadena.</p>
                     <div class="tooltip-arrow" data-popper-arrow></div>
                 </div>
                 <div class="tipcont">
@@ -66,12 +59,9 @@
                     </div>
                 </div>
                 <div id="tooltip-animation-chain" role="tooltip"
-                    class="absolute z-10 invisible inline-block px-3 py-2 text-sm font-medium text-purple-300 bg-gray-900 rounded-lg shadow-sm opacity-0 tooltip dark:bg-gray-700">
-                    <p class="text-xl"><strong>Todxs tus linxs forman tu CADENA</strong></p>
-                    <p>os encontraréis reunidxs en las cadenas que tú hayas creado o a las que tú hayas sido invitadx por ellxs,</p>
-                    <p>en vuestras cadenas podréis intercambiar pertenencias <span class="material-symbols-outlined"> handshake</span> y publicar eventos <span class="material-symbols-outlined">local_activity</span></p>
-                    <p>y ser notificadx de las publicaciones de todxs lxs linxs en cadena.</p>
-                    <p>Recuerda mirar tus interacciones para estar al día <span class="material-symbols-outlined">bubble_chart</span> </p>
+                    class="absolute z-10 invisible w-1/4 inline-block px-3 py-2 text-sm font-medium text-purple-300 bg-gray-900 rounded-lg shadow-sm opacity-0 tooltip dark:bg-gray-700">
+                    <p class="text-xl"><strong>Una CADENA de confianza</strong></p>
+                    <p>Las cadenas son administradas por lxs usuarixs que las han creado, ellxs son responsables de transmitir y mantener la confianza en el vínculo. <br> Lxs administradorxs tienen el deber y el privilegio de aceptar nuevxs linxs en la cadena o expulsar de la cadena a lxs linxs que no contribuyan a crear conexiones seguras. <br> En vuestras cadenas podréis intercambiar pertenencias <span class="material-symbols-outlined"> handshake</span> y publicar eventos <span class="material-symbols-outlined">local_activity</span> y ser notificadx de las publicaciones de todxs lxs linxs en cadena. <br> Recuerda mirar tus notificaciones <span class="material-symbols-outlined">lightning_stand</span>  para estar al día.</p>
                     <div class="tooltip-arrow" data-popper-arrow></div>
                 </div>
             </div>

@@ -16,7 +16,7 @@
         </div>
         <!-- Modal body -->
 
-        <div #messageContainer class="modalbody" style="height: calc(50vh - 120px); overflow-y: auto; width: 100%;">
+        <div #messageContainer class="modalbody">
 
             @for (item of messages; track $index) {
             <div [class.linxmesscont]="item.sender.userid === this.receiveruserid"
@@ -43,23 +43,17 @@
         </div>
         <div class="formcontainer">
             <form>
-                <button type="button"
-                    class="inline-flex justify-center p-2 text-fuchsia-200 rounded-lg cursor-pointer hover:text-fuchsia-300 ">
+                <button type="button" class="imgbutton">
                     <span class="material-symbols-outlined">
                         image
                     </span>
                 </button>
                 <textarea #messageTextarea id="chat" rows="1" (input)="setMessage($event)"
-                    class="resize-none block mx-4 p-2.5 w-full text-sm text-gray-900 bg-white rounded-lg border border-gray-300 focus:ring-lime-500 focus:border-lime-500"
                     placeholder="Escribe tu mensaje..."></textarea>
-                <button type="button" (click)="sendMessage()"
-                    class="inline-flex justify-center p-2 text-lime-500 rounded-full cursor-pointer hover:text-lime-300">
-                    <svg class="w-5 h-5 rotate-90 rtl:-rotate-90" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
-                        fill="currentColor" viewBox="0 0 18 20">
-                        <path
-                            d="m17.914 18.594-8-18a1 1 0 0 0-1.828 0l-8 18a1 1 0 0 0 1.157 1.376L8 18.281V9a1 1 0 0 1 2 0v9.281l6.758 1.689a1 1 0 0 0 1.156-1.376Z" />
-                    </svg>
-                    <span class="sr-only">Send message</span>
+                <button type="button" class="sendbutton" (click)="sendMessage()">
+                    <span class="material-symbols-outlined">
+                        send
+                    </span>
                 </button>
             </form>
         </div>

@@ -1,5 +1,6 @@
+@import '../base/mixins.scss';
 
-@mixin modalcard($width, $height){
+@mixin modalcard($width, $height) {
     position: fixed;
     top: 10%;
     right: 0;
@@ -12,17 +13,17 @@
     height: $height;
 }
 
-@mixin modalbg{
+@mixin modalbg {
     position: fixed;
     top: 0;
     right: 0;
     bottom: 0;
     left: 0;
-    background-color: #1e293b; 
+    background-color: #1e293b;
     opacity: 0.5;
 }
 
-@mixin modalcontainer($width, $height, $bgcolor){
+@mixin modalcontainer($width, $height, $bgcolor) {
     background-color: $bgcolor;
     position: fixed;
     top: 40%;
@@ -34,12 +35,81 @@
     height: $height;
 }
 
-@mixin modalbody($width, $height){
+@mixin modalheader($cols : 3){
+    display: grid;
+    grid-template-columns: repeat($cols, 1fr);
+    height: 10vh;
+}
+
+@mixin modalbody($width, $height) {
     padding: 1rem;
-    @media (min-width: 768px) {
-      padding: 1.25rem;
-    }
     width: $width;
     height: $height;
     @include no-scrollbar;
+}
+
+
+@mixin chatform {
+        
+        display: flex;
+        justify-content: center;
+        align-items: first baseline;
+        height: 10vh;
+        width: 100%;
+
+        form {
+
+            display: flex;
+            align-items: center;
+            background-color: rgb(149, 106, 229);
+            padding-left: 0.75rem;
+            padding-right: 0.75rem;
+            padding-top: 0.5rem;
+            padding-bottom: 0.5rem;
+            border-radius: 0.5rem;
+            width: 90%;
+
+            textarea {
+                resize: none;
+                display: block;
+                margin-left: 1rem;
+                margin-right: 1rem;
+                padding: 0.625rem;
+                width: 100%;
+                font-size: 0.875rem;
+                color: #1f2937;
+                background-color: #ffffff;
+                border-radius: 0.5rem;
+                border: 1px solid #d1d5db;
+
+                &:focus {
+                    outline: none;
+                    border-color: #84cc16;
+                }
+            }
+
+            button {
+                display: inline-flex;
+                justify-content: center;
+                padding: 0.5rem;
+                border-radius: 9999px;
+                cursor: pointer;
+
+                &.sendbutton {
+                    color: #84cc16;
+                    
+                    &:hover {
+                        color: #d9f99d; 
+                    }
+                }
+
+                &.imgbutton {
+                    color: #e879f9;
+
+                    &:hover {
+                        color: #f0abfc;
+                    }
+                }
+            }
+    }
 }

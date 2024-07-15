@@ -2,63 +2,99 @@
 @import '../../../scss/base/mixins.scss';
 @import '../../../scss/base/variables';
 
-.modalcard{
+.modalcard {
     @include ModalCard;
-
+    .modalheader{
+        height: 50px;
+    }
 }
 
-.chainsbutt{
-    @include standardbutton($width : 100%,$justcont : start);
-}
+.chainsbutt {
+    @include standardbutton($width : 100%, $justcont : start);
 
-.mychainsbutt{
-    @include standardbutton($width : 100%,$justcont : center, $bgcolor : #976de6);
-}
+    @include flexrowbet($content:start);
 
-ul{
-    li{
+    p{
+        flex-grow: 1;
+    }
+
+    &:hover {
+        box-shadow: none;
+
         p{
-            padding-left: 0.5rem /* 8px */;
-            padding-right: 0.5rem /* 8px */;
-            font-size: 1.5rem;
-            color: $greenfontcolor;
+            color :  $buttonhovercolor;
+        }
+        .listpoint{
+            display: none;
+        }
+        .chainico {
+            display: block;
+        }
+    }
+}
+.chainico{
+    display: none;
+}
+
+.mychainsbutt {
+    @include standardbutton($width : 100%, $justcont : center);
+    @include boxshadow;
+    &:hover {
+        box-shadow: none;
+        
+        p{
+            color : $greenfontcolor;
         }
     }
 }
 
-.cardtitleimg{
+ul {
+    li {
+        p {
+            padding-left: 0.5rem
+                /* 8px */
+            ;
+            padding-right: 0.5rem
+                /* 8px */
+            ;
+            font-size: 1.5rem;
+            color: $buttoncolor;
+        }
+    }
+}
+
+.cardtitleimg {
     @include rotate(70);
     width: 200px;
 }
 
-.linxchainTitle{
-    color: rgb(52, 4, 118); font-weight: 600;
+.linxchainTitle {
+    color: rgb(52, 4, 118);
+    font-weight: 600;
 }
 
-.userchainTitle{
-    color: rgb(52, 4, 118); font-weight: 600;
+.userchainTitle {
+    color: rgb(52, 4, 118);
+    font-weight: 600;
 }
 
-#circleicon{
+#circleicon {
     font-size: 50px;
 }
 
 .mychains {
-    color : rgb(78, 77, 77);
+    color: rgb(78, 77, 77);
     font-weight: 400;
     font-style: normal;
 }
 
-.modalheader{
+.modalheader {
     display: grid;
-    grid-template-columns: repeat(3,minmax(0, 1fr));
+    grid-template-columns: repeat(3, minmax(0, 1fr));
     align-items: center;
     border-top-left-radius: 0.25rem;
     border-top-right-radius: 0.25rem;
 }
 
 
-
-@media only screen and (max-width: 768px) {
-    
-}  
+@media only screen and (max-width: 768px) {}

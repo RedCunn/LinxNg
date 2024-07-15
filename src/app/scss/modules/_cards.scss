@@ -79,17 +79,19 @@
     align-items: center;
 }
 
-@mixin ModalCard($modalwidth : 60vw, $modalheight : 100vh,  $contwidth : 40vw , $contheight : 38vh , $bodywidth : 40vw, $bodyheight : 28vh, $bgcolor : $darkerbgcolor){
+@mixin ModalCard($modalwidth : 60vw, $modalheight : 100vh,  $contwidth : 40vw , $contheight : 40vh ,$headercols : 3, $bodywidth : 40vw, $bodyheight : 30vh, $bgcolor : $darkerbgcolor){
     
     .modalcard{
         @include modalcard($modalwidth , $modalheight);
     }
-
     .modalbg{
         @include modalbg;
     }
     .modalcontainer{
         @include modalcontainer ($contwidth, $contheight, $bgcolor);
+    }
+    .modalheader{
+        @include modalheader($headercols);
     }
     .modalbody{
         @include modalbody ($bodywidth, $bodyheight);

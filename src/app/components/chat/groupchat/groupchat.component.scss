@@ -1,20 +1,24 @@
-.modal-container {
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    width: 45vh;
-    max-width: 800px;
-    min-width: 300px;
-    height: 50vh;
-    max-height: 1000px;
-    min-height: 500px;
-    transform: translate(-50%, -50%);
+@import '../../../scss/modules/cards';
+@import '../../../scss/modules/mixins.scss';
+
+.modalcard {
+    @include ModalCard($contheight : 55vh, $bodyheight : calc(50vh - 120px) , $bodywidth : 100%);
+}
+
+.formcontainer {
+    @include chatform;
+}
+
+
+.conversationame {
+    font-size: 1.5rem;
+    font-weight: 600;
 }
 
 .linxmess {
     background-color: rgb(198, 190, 252);
     display: flex;
-    justify-self:flex-end;
+    justify-self: flex-end;
     flex-direction: column;
     width: fit-content;
     height: fit-content;
@@ -41,14 +45,14 @@
     height: fit-content;
 }
 
-.usermesscont{
+.usermesscont {
     display: flex;
     flex-direction: row;
     margin-bottom: 10px;
     justify-content: start;
 }
 
-.linxmesscont{
+.linxmesscont {
     display: flex;
     flex-direction: row;
     margin-bottom: 10px;
