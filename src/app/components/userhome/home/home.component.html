@@ -1,1 +1,245 @@
-<p>home works!</p>
+<div class="homecontainer">
+  <div class="usernamearea">
+      @if(isUser() && !isCandidate()){
+      <p>{{ userdata?.account?.linxname }}</p>
+      }@else {
+      <p>{{isCandidate() ? candidateData.account!.linxname : linxdata!.linxname }}
+        @if(isCandidate()){<a class="text-yellow-500 hover:text-yellow-600"><span
+            class="material-symbols-outlined">flag</span></a>}
+      </p>
+      }
+      @if(!this.isCandidate() && !isUser()){
+      <button (click)="toggleChatModal()" class="ms-3 text-blue-300 hover:text-blue-500 pt-3">
+        <span class="material-symbols-outlined">
+          chat_bubble
+        </span>
+      </button>
+      }
+  </div>
+  <div class="adminaside">
+    <a routerLink="/Linx/Home/Profile" routerLinkActive="active"
+      class="flex flex-row text-cyan-400 hover:text-blue-700 pt-3">
+      <span class="material-symbols-outlined">
+        assignment_ind
+      </span>
+      <p class="ps-2 pt-1">Perfil</p>
+    </a>
+    <a routerLink="/Linx/Home/Avisos" routerLinkActive="active"
+      class="flex flex-row text-yellow-300 hover:text-amber-700 pt-3">
+      <span class="material-symbols-outlined">crisis_alert</span>
+      <p class="ps-2">Avisos</p>
+    </a>
+    <a routerLink="/Linx/Home/Reportes" routerLinkActive="active"
+      class="flex flex-row text-yellow-300 hover:text-yellow-500 pt-3">
+      <span class="material-symbols-outlined">flag</span>
+      <p class="ps-2">Reportes</p>
+    </a>
+    <button (click)="logout()" class="flex flex-row items-inline pt-3 hover:text-gray-600 text-gray-400">
+      <span class="material-symbols-outlined">
+        meeting_room
+      </span>
+      <p class="pt-1 ps-1">Cerrar sesión</p>
+    </button>
+  </div>
+  <div class="centralcontent">
+    <div class="chainsarea">
+      <button (click)="toggleChainModal()">
+        <div class="eslabon">
+          <img style="width: 80px;" src="../../../../assets/imgs/logos/eslabon6.png">
+        </div>
+        <p>CADENAS</p>
+        <div class="eslabon">
+          <img style="width: 80px; margin-left: 10px;" src="../../../../assets/imgs/logos/eslabon6.png">
+        </div>
+      </button>
+    </div>
+    <div class="articlesarea">
+      
+  
+      @if(this.loadingArts()){
+      <article role="status" class="animate-pulse">
+        <div class="animateload"></div>
+        <div class="animateload"></div>
+        <div class="animateload"></div>
+        <div class="animateload w-2/3"></div>
+      </article>
+      <article role="status" class="animate-pulse">
+        <div class="animateload"></div>
+        <div class="animateload"></div>
+        <div class="animateload"></div>
+        <div class="animateload w-2/3"></div>
+      </article>
+      <article role="status" class="animate-pulse">
+        <div class="animateload"></div>
+        <div class="animateload"></div>
+        <div class="animateload"></div>
+        <div class="animateload w-2/3"></div>
+      </article>
+      <article role="status" class="animate-pulse">
+        <div class="animateload"></div>
+        <div class="animateload"></div>
+        <div class="animateload"></div>
+        <div class="animateload w-2/3"></div>
+      </article>
+      }@else {
+  
+          @for(art of this.articles; track $index){
+          <article>
+            <button type="button" [disabled]="!isUser()" (click)="toggleArtFormModal(art)" [class.editart]="isUser()">
+              <h1 class="break-words">{{art.title}}</h1>
+            </button>
+            <p style="color: gray;"><small>{{this.formatDate(art.postedOn)}}</small></p>
+            <p class="artbody">{{art.body}}</p>
+            <div class="artimg">
+              @if(art.img && art.img !== ''){
+              <img [src]="'http://localhost:3000/api/Account/uploads/'+art.img"
+                (error)="loadingArts.set(true)">
+              }
+            </div>
+          </article>
+          }@empty{
+            @if(isUser()){
+            <article>
+              <h1>Escribe tu primer artículo</h1>
+              <p style="color: gray;"><small>{{this.currentDate.toLocaleString()}}</small></p>
+              <p>Escribe algo para que lxs demás sepan quién eres...qué estás buscando... o en qué piensas 👾</p>
+              <div class="flex justify-end">
+                <button type="button" (click)="toggleArtFormModal(null)"
+                  class=" hover:text-orange-600 flex flex-row p-3 rounded-lg">
+                  <span class="material-symbols-outlined">
+                    edit
+                  </span>
+                </button>
+              </div>
+            </article>
+            }@else {
+            <div class="noarticles">
+              <span><img src="../../../../assets/imgs/bacteria/racimo_violeta.png" alt=""></span>
+            </div>
+            }
+          }
+      }
+    </div>
+  </div>
+  <div class="functionsaside">
+    <app-homeaside></app-homeaside>
+  </div>
+</div>
+
+<app-articleform [isOpen]="isArtFormOpen" [article]="this.article" [articles]="articles"
+  [userdata]="userdata"></app-articleform>
+
+<ng-container #chatcompoContainer></ng-container>
+
+
+<!-- 
+<div class="centralcontent">
+  @if(isUser()){
+
+  }@else {
+  <div class="leftSideLinks">
+    <div>
+      @if(isChained()){
+      <div class="linxchain">
+        <button (click)="toggleChainModal()" class="extentchain">
+          <div class="eslabon">
+            <img style="width: 60px;" src="../../../../assets/imgs/logos/eslabon6.png">
+          </div>
+          <p class="wordchain">CADENAS</p>
+          <div class="eslabon">
+            <img style="width: 60px; margin-left: 5px;" src="../../../../assets/imgs/logos/eslabon6.png">
+          </div>
+        </button>
+      </div>
+      }
+
+      <div class="joinchainbutt">
+        @if(!this.isCandidate() && !isUser()){
+        <button (click)="togglePickChainModal()" data-tooltip-target="tooltip-animation-2"
+          data-tooltip-placement="right" data-tooltip-style="light"
+          class="hover:bg-fuchsia-200 bg-fuchsia-100 border-fuchsia-400 p-3 rounded-md">
+          <img style="width: 60px; height: auto;" src="../../../../assets/imgs/logos/joinchainbutt.png">
+        </button>
+        }
+        <div id="tooltip-animation-2" role="tooltip"
+          class="absolute z-10 invisible inline-block px-3 py-2 text-sm font-extralight text-fuchsia-600 transition-opacity duration-300 rounded-lg shadow-sm opacity-0 tooltip ">
+          Unir a tu cadena
+        </div>
+      </div>
+
+
+    </div>
+  </div>
+  @if(isCandidate()){
+  <div class="candidateatt">
+    <ul class="lidata">
+      <li>
+        <p>Edad :</p> {{this.cadidateAttributes.get('years')}} años
+      </li>
+      <li>
+        <p>Género :</p> {{this.cadidateAttributes.get('gender')}}
+      </li>
+      <li>
+        <p>Idiomas :</p> {{this.cadidateAttributes.get('langs')}}
+      </li>
+      <li>
+        <p>Trabaja en :</p> {{this.cadidateAttributes.get('work')}}
+      </li>
+      <li>
+        <p>Espectro político :</p> {{this.cadidateAttributes.get('politics')}}
+      </li>
+      <li>
+        <p>Dieta :</p> {{this.cadidateAttributes.get('diet')}}
+      </li>
+      <li>
+        @if(this.candidateResidency){
+        <p>Vive en :</p>
+        {{this.candidateResidency}}
+        }@else {
+        <div role="status">
+          <svg aria-hidden="true" class="w-4 h-4 me-2 text-gray-200 animate-spin fill-gray-600" viewBox="0 0 100 101"
+            fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path
+              d="M100 50.5908C100 78.2051 77.6142 100.591 50 100.591C22.3858 100.591 0 78.2051 0 50.5908C0 22.9766 22.3858 0.59082 50 0.59082C77.6142 0.59082 100 22.9766 100 50.5908ZM9.08144 50.5908C9.08144 73.1895 27.4013 91.5094 50 91.5094C72.5987 91.5094 90.9186 73.1895 90.9186 50.5908C90.9186 27.9921 72.5987 9.67226 50 9.67226C27.4013 9.67226 9.08144 27.9921 9.08144 50.5908Z"
+              fill="currentColor" />
+            <path
+              d="M93.9676 39.0409C96.393 38.4038 97.8624 35.9116 97.0079 33.5539C95.2932 28.8227 92.871 24.3692 89.8167 20.348C85.8452 15.1192 80.8826 10.7238 75.2124 7.41289C69.5422 4.10194 63.2754 1.94025 56.7698 1.05124C51.7666 0.367541 46.6976 0.446843 41.7345 1.27873C39.2613 1.69328 37.813 4.19778 38.4501 6.62326C39.0873 9.04874 41.5694 10.4717 44.0505 10.1071C47.8511 9.54855 51.7191 9.52689 55.5402 10.0491C60.8642 10.7766 65.9928 12.5457 70.6331 15.2552C75.2735 17.9648 79.3347 21.5619 82.5849 25.841C84.9175 28.9121 86.7997 32.2913 88.1811 35.8758C89.083 38.2158 91.5421 39.6781 93.9676 39.0409Z"
+              fill="currentFill" />
+          </svg>
+          <span class="sr-only">Loading...</span>
+        </div>
+        }
+      </li>
+    </ul>
+  </div>
+  }
+  } 
+  ASIDE mobile
+  <div class="asidemobile">
+    @if(!isCandidate()){
+    <app-homeaside></app-homeaside>
+    }
+    @if(!isUser() && !isCandidate()){
+    <div class="reportLink mt-5">
+      <a routerLink="/Linx/Home/Reportes" routerLinkActive="active"
+        class="flex flex-row text-yellow-500 hover:text-yellow-600">
+        <span class="material-symbols-outlined">flag</span>
+        <p class="ps-1 pt-2">Reportar</p>
+      </a>
+    </div>
+    }
+  </div> -->
+  <!--ARTICULOS-->
+
+  <!--ASIDE mobile-->
+  <!-- @if(!isUser() && !isCandidate()){
+  <div class="reportLink">
+    <a routerLink="/Linx/Home/Reportes" routerLinkActive="active"
+      class="flex flex-row text-yellow-500 hover:text-yellow-600">
+      <span class="material-symbols-outlined">flag</span>
+      <p class="ps-1 pt-2">Reportar</p>
+    </a>
+  </div>
+  }
+</div> -->
+

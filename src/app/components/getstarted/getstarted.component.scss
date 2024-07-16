@@ -67,7 +67,7 @@
 }
 
 .tooltips, .swipe{
-    @include flexrowbet;
+    @include flexrow;
     height: 100%;
     width: 70%;
     justify-items: stretch;
@@ -75,7 +75,7 @@
 }
 
 .tip{
-    @include flexrowbet(space-around);
+    @include flexrow(space-around);
 }
 
 .tiptext{
@@ -86,10 +86,10 @@
 }
 
 .swipebutt{
-    @include flexcolcent;
+    @include flexcol;
     width: 100%;
 }
 
 .tipcont{
-    @include flexcolcent(start);
+    @include flexcol($content : start);
 }

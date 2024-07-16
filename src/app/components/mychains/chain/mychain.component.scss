@@ -12,7 +12,7 @@
 .chainsbutt {
     @include standardbutton($width : 100%, $justcont : start);
 
-    @include flexrowbet($content:start);
+    @include flexrow($content:start);
 
     p{
         flex-grow: 1;

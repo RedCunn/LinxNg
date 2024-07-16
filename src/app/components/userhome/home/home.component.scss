@@ -1,0 +1,71 @@
+@import '../../../scss/base/mixins.scss';
+@import '../../../scss/modules/cards';
+@import '../../../scss/modules/mixins.scss';
+
+.homecontainer {
+    @include simplegrid(4);
+    width: 100%;
+}
+
+.usernamearea {
+    grid-column: span 4;
+    @include flexrow(center);
+
+    p {
+        @include homelinxname;
+    }
+}
+
+.adminaside {
+    grid-column: span 1;
+    @include flexcol($content : start, $align : start);
+}
+
+.centralcontent {
+    grid-column: span 2;
+    @include flexcol($content : center, $align : center);
+
+    .chainsarea {
+        width: 100%;
+        @include flexrow(center);
+
+        button{
+            width: 100%;
+            @include flexrow(center);
+            
+            p {
+                font-family: "Jacquarda Bastarda 9 Charted", serif;
+                font-style: normal;
+                font-weight: 400;
+                font-size: 2rem;
+                padding-left: 0.5rem;
+                padding-top: 0.25rem;
+                color: white;
+            }
+        }
+    
+    }
+
+    .articlesarea{
+        margin-top: 3rem;
+        @include simplegrid(2);
+        column-gap: 0.5rem;
+        row-gap: 2rem;
+        
+        div {
+            grid-column: span 2;
+        }
+
+        article{
+            grid-column: span 2;
+            @include homearticle;
+        }
+    }
+}
+
+.functionsaside {
+    grid-column: span 1;
+}
+
+
+@media only screen and (max-width: 768px) {}

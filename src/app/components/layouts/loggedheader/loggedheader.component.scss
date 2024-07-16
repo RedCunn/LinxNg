@@ -7,7 +7,7 @@
 
 header{
     @extend .baseheader;
-    @include flexrowbet;
+    @include flexrow;
 }
 
 .headerlinks{
@@ -19,7 +19,7 @@ header{
 
 .linkscont{
     width: 20%;
-    @include flexrowbet(space-around);
+    @include flexrow(space-around);
 }
 
 .userhome{
@@ -28,7 +28,7 @@ header{
 }
 
 #mychainimg{
-    width: 55px;
+    width: 50px;
 }
 
 #myaccountimg{

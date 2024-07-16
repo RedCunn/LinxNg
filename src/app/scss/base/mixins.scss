@@ -12,24 +12,29 @@
     align-items: center;
 }
 
-@mixin basegrid{
+@mixin simplegrid($cols){
+    display: grid;
+    grid-template-columns: repeat($cols, 1fr);
+}
+
+@mixin gridtemplate{
     display: grid;
     width: 90vw;
     grid-template-columns: 2fr 4fr 1fr 1fr;
 }
 
-@mixin flexrowbet($content:space-between){
+@mixin flexrow($content:space-between){
     display: flex;
     flex-direction: row;
-    justify-content: space-between;
+    justify-content: $content;
     align-items: center;
 }
 
-@mixin flexcolcent($content:space-between){
+@mixin flexcol($content:space-between, $align : center){
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
-    align-items: center;
+    justify-content: $content;
+    align-items: $align;
     text-align: center;
 }
 

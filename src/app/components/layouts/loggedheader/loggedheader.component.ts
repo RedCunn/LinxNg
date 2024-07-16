@@ -42,7 +42,7 @@ export class LoggedheaderComponent implements OnInit{
     this.router.navigateByUrl(`/Linx/Inicio`);
   }
   goHome(){
-    this.router.navigateByUrl(`/Linx/Home`);
+    this.router.navigateByUrl(`/Linx/cuenta/${this.user.account.linxname}`);
   }
 
   toggleMyChainModal() {

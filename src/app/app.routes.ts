@@ -43,8 +43,24 @@ export const routes: Routes = [
             },
             {
                 path : 'Login',
-                loadComponent : () => import('./components/signings/signIN/signin.component').then(m=> m.SigninComponent)
-            }
+                loadComponent : () => import('./components/signings/signIN/signin.component').then(c=> c.SigninComponent)
+            },
+            {
+                path: 'cuenta/:linxname',
+                loadComponent : () => import('./components/userhome/home/home.component').then(c=>c.HomeComponent),
+                canActivate: [authGuard]
+            },
+            {
+                path: 'cuenta/:linxname',
+                children : [
+                    {
+                        path:'perfil',
+                        loadComponent : () => import('./components/userhome/userprofile/userprofile.component').then(c=>c.UserprofileComponent),
+                        canActivate: [authGuard]
+                    }
+                ],
+                canActivateChild : [authGuard]
+            },
         ]
     },
     {

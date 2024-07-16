@@ -1,1 +1,37 @@
-<p>homeaside works!</p>
+<aside>
+    <div class="connections">
+        <button (click)="goToExchangePanel()">
+            <p>Conexiones</p>
+            <span class="material-symbols-outlined">
+                join
+            </span>
+        </button>
+    </div>
+    <div class="events">
+        <button (click)="goToEventsPanel()">
+            <p>Eventos</p>
+            <span class="material-symbols-outlined">local_activity</span>
+        </button>
+    </div>
+    <div class="exchanges">
+        <button (click)="goToExchangePanel()" >
+            <p>Intercambios</p>
+            <span class="material-symbols-outlined">handshake</span>
+        </button>
+    </div>
+    <div class="requests">
+        <button (click)="goToExchangePanel()">
+            <p>Solicitudes</p>
+            <span class="material-symbols-outlined">
+                markunread_mailbox
+            </span>
+        </button>
+    </div>
+    <div class="newpost">
+        <button>
+            <span class="material-symbols-outlined">
+                note_stack_add
+            </span>
+        </button>
+    </div>
+</aside>
