@@ -74,6 +74,18 @@
     }
 }
 
+@mixin checkboxblank{
+
+    input[type="checkbox"]{
+        appearance: none;
+        -webkit-appearance: none; /* Safari and Chrome */
+        -moz-appearance: none; /* Firefox */
+    }
+    input[type="checkbox"]:focus {
+        outline: none;
+    }
+}
+
 
 @mixin converbutton{
     width: 80%;

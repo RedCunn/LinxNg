@@ -14,3 +14,9 @@ $warningValidation : rgb(255, 29, 146);
 $labelaccountForm :  rgb(2, 247, 2);
 
 $articlehover : rgb(225, 116, 0);
+
+
+@mixin strongorange{
+    --tw-bg-opacity: 1;
+    color: rgb(255 90 31 / var(--tw-bg-opacity));
+}

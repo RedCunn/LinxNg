@@ -1,12 +1,86 @@
-.modal-container {
-    position: fixed;
-    top: 45%;
-    left: 50%;
-    width: 45vh;
-    max-width: 800px;
-    min-width: 300px;
-    height: 70vh;
-    max-height: 1000px;
-    min-height: 500px;
-    transform: translate(-50%, -50%);
+@import '../../../../scss/modules/cards';
+@import '../../../../scss/modules/variables';
+@import '../../../../scss/base/variables';
+@import '../../../../scss/base/mixins.scss';
+
+$calcmb :  calc(66vh * 0.15);
+
+.modalcard{
+    @include ModalCard($bgcolor : $articleformbgcolor, $contheight : 66vh, $bodywidth : 40vw, $bodyheight : 60vh);
+
+    color : rgb(34, 30, 30);
+    
+    .formcontent{
+        @include simplegrid(1);
+        width: 100%;
+        justify-items: center;
+
+        .titlearea , .bodyarea, .imgarea, .checkboxarea{
+            width: 90%;
+            margin-bottom: 1.5rem;    
+        }
+
+        .warningarea{
+            min-height:  $calcmb;
+            margin-bottom: $calcmb;    
+        }
+    }
+
+    .imgarea{
+        @include flexcol(center, center);
+
+        .imgcont{
+            border: dashed gray;
+            min-height: 15vh;
+            height: fit-content;
+            width: 90%;
+            @include flexrow(center);
+        }
+
+        .deleteimg{
+            margin-top: 0.5rem;
+            margin-bottom: 1rem;
+            font-size: 0.85rem;
+            color: gray;
+            width: 90%;
+            @include flexrow(start);
+
+            span{
+                font-size: 1rem;
+            }
+        }
+
+        .selectimg{
+            width: 90%;
+            text-align: start;
+        }
+    }
+
+    .checkboxarea{
+        @include flexrow(center);
+        label{
+            width: fit-content;
+            display: inline-flex;
+            align-items: center;
+            cursor: pointer;
+        }
+    }
+
+    .modalfooter{
+        @include flexrow(center);
+        background-color: $articleformbgcolor;
+        border-radius: 0px 0px 15px 15px ;
+        position: fixed;
+        top: 90%;
+        right: 0;
+        left: 0;
+        z-index: 50;
+        width: 100%;
+        height: $calcmb;
+
+        .deletebutton, .savebutton{
+            @include flexrow(center);
+            width: 50%;
+        }
+    }
 }

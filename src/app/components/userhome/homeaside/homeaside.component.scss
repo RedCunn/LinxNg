@@ -43,7 +43,7 @@ aside {
                     font-size: 3.5rem;
                 }
                 &:hover {
-                    color: $articlehover;
+                    @include strongorange;
                 }
             }
         }

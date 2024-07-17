@@ -1,5 +1,5 @@
 import { isPlatformBrowser } from '@angular/common';
-import { Component, Inject, OnInit, PLATFORM_ID } from '@angular/core';
+import { Component, Inject, Input, OnInit, PLATFORM_ID, signal } from '@angular/core';
 import { MatIcon } from '@angular/material/icon';
 import { Router } from '@angular/router';
 import { initDropdowns, initFlowbite } from 'flowbite';
@@ -13,6 +13,7 @@ import { initDropdowns, initFlowbite } from 'flowbite';
 })
 export class HomeasideComponent implements OnInit{
   
+  @Input() openArtModal = signal(false);
 
   constructor(@Inject(PLATFORM_ID) private platformId: Object, private router : Router) { }
 
@@ -28,5 +29,9 @@ export class HomeasideComponent implements OnInit{
 
   goToExchangePanel(){
     this.router.navigateByUrl("/Linx/Home/Exchange");
+  }
+
+  openArticleModal(){
+    this.openArtModal.set(true);
   }
 }
