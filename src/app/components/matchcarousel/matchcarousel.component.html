@@ -9,45 +9,53 @@
     }@else {
 
     @if(this.candidateProfiles!.length > 0){
-
-    <button (click)="nextProfile()">
-        <span class="material-symbols-outlined" id="next" style="color: greenyellow;">
-            join_left
-        </span>
-    </button>
-    <div class="candidateCard">
-        @if(this.candidateProfiles![currentIndex()].account.articles && this.candidateProfiles![currentIndex()].account.articles!.length > 0){
-            <div class="overflowarticle">
-                <article class="article">
-                    <h1>{{this.picArticle.title}}</h1>
-                    <p class="break-words">{{this.picArticle.body}}</p>
-                    @if(this.picArticle.img !== undefined && this.picArticle.img !== ''){
-                        <div class="artimg">
-                            <img style="max-width: 100%; max-height: 100%;"
-                                [src]="'http://localhost:3000/api/Account/uploads/'+this.picArticle.img">
-                        </div>
-                    }
-                </article>
+    <div class="card">
+        <button (click)="nextProfile()" class="backbutt">
+            <span class="material-symbols-outlined" id="next">
+                join_left
+            </span>
+        </button>
+        <div class="candidateCard">
+            @if(this.candidateProfiles![currentIndex()].account.articles && this.candidateProfiles![currentIndex()].account.articles!.length > 0){
+                <div class="overflowarticle">
+                    <article class="article">
+                        <h1>{{this.picArticle.title}}</h1>
+                        <p class="break-words">{{this.picArticle.body}}</p>
+                        @if(this.picArticle.img !== undefined && this.picArticle.img !== ''){
+                            <div class="artimg">
+                                <img style="max-width: 100%; max-height: 100%;"
+                                    [src]="'http://localhost:3000/api/Account/uploads/'+this.picArticle.img">
+                            </div>
+                        }
+                    </article>
+                </div>
+            }
+            <div [class.linxnamecontainer]="this.candidateProfiles![currentIndex()].account.articles && this.candidateProfiles![currentIndex()].account.articles!.length > 0"
+                [class.linxnameNoART] ="this.candidateProfiles![currentIndex()].account.articles === undefined ||  this.candidateProfiles![currentIndex()].account.articles!.length === 0">
             </div>
-        }
-        <div [class.linxnamecontainer]="this.candidateProfiles![currentIndex()].account.articles && this.candidateProfiles![currentIndex()].account.articles!.length > 0"
-            [class.linxnameNoART] ="this.candidateProfiles![currentIndex()].account.articles === undefined ||  this.candidateProfiles![currentIndex()].account.articles!.length === 0">
-            <button (click)="goToLinxProfile(this.candidateProfiles![currentIndex()])">
-                <p id="linxname" style="color: purple;" class="linxname"> 
+        </div>
+        <button (click)="previousProfile()" class="forwardbutt">
+            <span class="material-symbols-outlined" id="next">
+                join_right
+            </span>
+        </button>
+        <div class="candiname">
+            <button (click)="goToLinxProfile(this.candidateProfiles![currentIndex()])" class="candibutt">
+                <p id="linxname" class="linxname"> 
                     {{this.candidateProfiles![currentIndex()].account.linxname}}</p>
             </button>
-            <button (click)="matchRequest(this.candidateProfiles![currentIndex()])" style="border: none;">
-                <span class="material-symbols-outlined" id="thumb" style="color: purple;">
-                    lightning_stand
+        </div>
+        <div class="foot">
+            <button (click)="matchRequest(this.candidateProfiles![currentIndex()])" class="connectbutt">
+                <span class="material-symbols-outlined" [class.hideorigin]="this.showAnimation()" [class.triporigin]="!this.showAnimation()">
+                    trip_origin
+                </span>
+                <span class="material-symbols-outlined" [class.animation]="this.showAnimation()" [class.hideanimation]="!this.showAnimation()">
+                    animation
                 </span>
             </button>
         </div>
     </div>
-    <button (click)="previousProfile()">
-        <span class="material-symbols-outlined" id="next" style="color: violet;">
-            join_right
-        </span>
-    </button>
     }@else(){
     <div class="nolinxfound">
         <img id="shapeone" src="../../../assets/imgs/bacteria/pinkshape2_3D.png" alt="" />

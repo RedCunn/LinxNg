@@ -33,6 +33,7 @@ export class MatchcarouselComponent implements OnInit {
 
   public loading = signal(true);
   public currentIndex = signal(0);
+  public showAnimation = signal(false);
 
   constructor(private router: Router) {
     let _userdata = this.signalStoreSvc.RetrieveUserData();
@@ -116,8 +117,12 @@ export class MatchcarouselComponent implements OnInit {
       if (res.code === 0) {
         let index = this.candidateProfiles!.findIndex(profile => profile.userid === linx.userid);
         if (index !== -1) {
-          this.nextProfile()
-          this.candidateProfiles!.splice(index, 1);
+          this.showAnimation.set(true);
+          setTimeout(() => {
+            this.showAnimation.set(false);
+            this.nextProfile()
+            this.candidateProfiles!.splice(index, 1);
+          }, 2000);
         }
         console.log('RESPONSE MATCH REQ : ', res)
         if (res.message === 'FULL') {
@@ -133,7 +138,7 @@ export class MatchcarouselComponent implements OnInit {
   goToLinxProfile(linx : IUser){
     this.signalStoreSvc.StoreCandidateData(linx as IUser);
     this.signalStoreSvc.StoreCandidateIndex(this.currentIndex());
-    this.router.navigateByUrl(`/Linx/Profile/${linx.account.linxname}`);
+    this.router.navigateByUrl(`/Linx/perfil/${linx.account.linxname}`);
   }
   async ngOnInit(): Promise<void> {
     this.flowbitesvc.loadFlowbite()

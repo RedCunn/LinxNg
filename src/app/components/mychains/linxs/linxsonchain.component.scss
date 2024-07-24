@@ -3,8 +3,7 @@
 @import '../../../scss/base/variables';
 
 .modalcard{
-    @include ModalCard;
-
+    @include m-modal-card;
 }
 
 ul{

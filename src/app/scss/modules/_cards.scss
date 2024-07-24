@@ -7,7 +7,7 @@
 @import '../base/variables';
 @import './mixins.scss';
 
-.logincard {
+.m_login_card {
     padding: $cardpadding;              
     box-sizing: border-box; /* Para incluir el padding en el ancho total */
     display: flex;                 
@@ -19,7 +19,7 @@
     border-radius: 0.5rem;       
     width: 400px;
     
-    label{
+    &__label{
         display: block;               
         margin-bottom: 0.5rem;        
         font-size: 0.875rem;          
@@ -27,7 +27,7 @@
         color: $loginlabelcolor;                
     }
 
-    input{
+    &__input{
         background-color: #cb99fc;     
         border: 1px solid #d1d5db;     
         color: $inputtextcolor;                
@@ -46,7 +46,7 @@
     }
 }
 
-.formCard {
+.m_regis_card {
     width: 40vw;
     height: 70vh;
     padding: 1.5rem; 
@@ -55,7 +55,7 @@
     box-shadow: 0 5px 10px rgba(0, 0, 0, 0.05);
     color : white;
 
-    h1{
+    &__title{
         margin-bottom: 0.5rem; 
         font-size: 1.5rem; 
         font-weight: 700; 
@@ -63,27 +63,18 @@
         color: $formcardtitlecolor; 
     }
 
-    input{
+    &__input{
         color : $formcardinputcolor;
         border-radius: 18px;
     }
 
-    select{
+    &__select{
         color : $formcardinputcolor;
         border-radius: 18px;
     }
 }
 
-.formCardContent{
-    width: 100%;
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-}
-
-@mixin ModalCard($modalwidth : 60vw, $modalheight : 100vh,  $contwidth : 40vw , $contheight : 40vh ,$headercols : 3, $bodywidth : 40vw, $bodyheight : 30vh, $bgcolor : $darkerbgcolor){
+@mixin m-modal-card($modalwidth : 60vw, $modalheight : 100vh,  $contwidth : 40vw , $contheight : 40vh ,$headercols : 3, $bodywidth : 40vw, $bodyheight : 30vh, $bgcolor : $darkerbgcolor){
     
     .modalcard{
         @include modalcard($modalwidth , $modalheight);
@@ -102,7 +93,8 @@
     }
 }
 
-@mixin homearticle{
+@mixin m-article-card{
+    
     @include articlecard;
 
     button{
@@ -145,3 +137,4 @@
         height: 100%;
     }
 }
+

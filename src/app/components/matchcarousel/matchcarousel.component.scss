@@ -1,18 +1,132 @@
 @import '../../scss/base/variables';
+@import '../../scss/base/mixins.scss';
+
+
+.carouselContainer{
+    @include contentcenter;
+    height: 110%; 
+    width: 100%;
+}
+
+.card{
+    width: 80%;
+    height: 100%;
+    border-radius: 0.5rem; 
+    @include boxshadow; 
+    @include simplegrid(4);
+    grid-template-rows: repeat(3, auto);
+    align-items: center; 
+    justify-content: center;
+}
+
+.backbutt{
+    grid-column: 1 / span 1;
+    grid-row: 1 / span 3;
+    span{
+        color : violet;
+    }
+
+    &:hover{
+        span{
+            filter: brightness(150%);
+        }
+    }
+}
+
+.forwardbutt{
+    grid-column: 4 / span 1;
+    grid-row: 1 / span 3;
+    span{
+        color : greenyellow;
+    }
+
+    &:hover{
+        span{
+            filter: brightness(150%);
+        }
+    }
+}
+
+.candidateCard {
+    width: 30vw; 
+    height: 50vh; 
+    grid-column: span 2 / span 2;
+    display: flex; 
+    flex-direction: column; 
+    align-content: center;
+}
+
+.connectbutt{
+    position: relative;
+    height: auto;
+    width: auto;
+    &:hover{
+        .triporigin{
+            background: linear-gradient(to right, $connectingcolor, #ff27f8);
+            -webkit-background-clip: text; /* Para navegadores WebKit */
+            background-clip: text; /* Propiedad estándar */
+            -webkit-text-fill-color: transparent; /* Para navegadores WebKit */
+            color: transparent; /* Propiedad estándar (por compatibilidad) */        
+        }
+    }
+}
+
+.triporigin{
+    position: absolute; top: 0; left: 0;
+    font-size: 4rem;
+    transition: opacity 0.5s ease-out;
+    background: linear-gradient(to left,  $connectingcolor, #ff27f8);
+    -webkit-background-clip: text; /* Para navegadores WebKit */
+    background-clip: text; /* Propiedad estándar */
+    -webkit-text-fill-color: transparent; /* Para navegadores WebKit */
+    color: transparent; /* Propiedad estándar (por compatibilidad) */
+ 
+}
+
+.hideorigin{
+    font-size: 4rem;
+    position: absolute; top: 0; left: 0;
+    opacity: 0;
+}
+
+.animation{
+    font-size: 4rem;
+    opacity: 1;
+    color: $connectingcolor;
+    transition: opacity 1s ease-in-out;
+}
+
+.hideanimation {
+    font-size: 4rem;
+    opacity: 0; 
+}
+.foot, .candiname{
+    grid-column: 2 / span 2;
+    @include flexrow(center);
+}
+
+.candibutt{
+    &:hover{
+        .linxname{
+            background: linear-gradient(to top, $darkerbgcolor,greenyellow);
+            -webkit-background-clip: text; /* Para navegadores WebKit */
+            background-clip: text; /* Propiedad estándar */
+            -webkit-text-fill-color: transparent; /* Para navegadores WebKit */
+            color: transparent; /* Propiedad estándar (por compatibilidad) */
+        }
+    }
+}
 
 .linxname{
     font-family: "Ubuntu Mono", monospace;
     font-weight: 400;
     font-style:normal;
     font-size: 3rem;
-}
-
-.carouselContainer{
-    display: flex; 
-    flex-direction: column; 
-    align-items: center; 
-    justify-content: center;
-    height: 100%; 
+    background: linear-gradient(to bottom,$darkerbgcolor, greenyellow);
+    -webkit-background-clip: text; /* Para navegadores WebKit */
+    background-clip: text; /* Propiedad estándar */
+    -webkit-text-fill-color: transparent; /* Para navegadores WebKit */
+    color: transparent; /* Propiedad estándar (por compatibilidad) */
 }
 
 .nolinxfound {
@@ -87,7 +201,7 @@
     left: 0; 
     right: 0;
     bottom: 0;
-    background-image: url('../../../assets/imgs/bacteria/racimo_violeta.png'); 
+    background-image: url('../../../assets/imgs/logos/purplechain3D.png'); 
     background-size: cover; 
     background-position: center; 
     opacity:80%;
@@ -97,35 +211,12 @@
     font-size: 50px;
 }
 
-#linxname:hover{
-    filter: brightness(150%);
-}
-
-#next:hover {
-    filter: brightness(150%);
-}
-
 #thumb {
     font-size: 50px;
 }
 
 #thumb:hover {
     filter: brightness(150%);
-}
-
-
-
-.candidateCard {
-    width: 28rem; 
-    margin-bottom: 2.5rem; 
-    background-color: #ffffff; 
-    border: 1px solid #e5e7eb; 
-    border-radius: 0.5rem; 
-    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05), 0 1px 3px rgba(0, 0, 0, 0.1); 
-    height: 24rem; 
-    display: flex; 
-    flex-direction: column; 
-    align-content: center;
 }
 
 .article{
@@ -151,16 +242,5 @@
 }
 
 @media only screen and (max-width: 768px) {
-    .candidateCard {
-        width: 18rem; 
-        margin-bottom: 2.5rem; 
-        background-color: #ffffff; 
-        border: 1px solid #e5e7eb; 
-        border-radius: 0.5rem; 
-        box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05), 0 1px 3px rgba(0, 0, 0, 0.1); 
-        height: 28rem; 
-        display: flex; 
-        flex-direction: column; 
-        align-content: center;
-    }
+    
 }

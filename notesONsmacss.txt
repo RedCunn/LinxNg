@@ -4,6 +4,3 @@ CATEGORIES :
     3. Module : reusable parts.
     4. State : decribes how our modules or layouts should look on a certain state.
     5. Theme : another layer of state. 
-
-
-

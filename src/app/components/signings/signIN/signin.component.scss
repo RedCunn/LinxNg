@@ -1,4 +1,5 @@
 @import '../../../scss/base/base.scss';
+@import '../../../scss/base/mixins.scss';
 @import '../../../scss/modules/cards';
 
 .signuplink{
@@ -20,16 +21,19 @@
 }
 
 .logincard{
-    @extend .logincard;
+    @extend .m_login_card;
+
+    .logininput{
+        @extend .m_login_card__input;
+    }
+
+    .loginlabel{
+        @extend .m_login_card__label;
+    }
 }
 
 .logincont{
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    height: 75vh;
-    width: 80vw;
+    @include contentcenter;
 }
 
 #remember{

@@ -1,9 +1,24 @@
 @import '../../../../../scss/modules/cards';
+@import '../../../../../scss/base/mixins.scss';
 
 .card{
-    @extend .formCard;
+    @extend .m_regis_card;
+
+    h1{
+        @extend .m_regis_card__title;
+    }
+
+    input{
+        @extend .m_regis_card__input;
+    }
+
+    select{
+        @extend .m_regis_card__select;
+    }
 }
 
 .cardcontent{
-    @extend .formCardContent;
+    @include contentcenter;
+    width: 100%;
+    height: 100%;
 }

@@ -3,10 +3,7 @@
 @import '../../../scss/base/variables';
 
 .modalcard {
-    @include ModalCard;
-    .modalheader{
-        height: 50px;
-    }
+    @include m-modal-card;
 }
 
 .chainsbutt {
@@ -86,14 +83,6 @@ ul {
     color: rgb(78, 77, 77);
     font-weight: 400;
     font-style: normal;
-}
-
-.modalheader {
-    display: grid;
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-    align-items: center;
-    border-top-left-radius: 0.25rem;
-    border-top-right-radius: 0.25rem;
 }
 
 

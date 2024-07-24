@@ -1,0 +1,59 @@
+HOME 
+
+--username
+    
+    *ARTICLES_COMPO
+
+    *ADMIN_ASIDE_COMPO
+
+    *FUNCTIONS_ASIDE_COMPO
+
+    *PERSONALDATA_ASIDE_COMPO
+
+----------------------------
+
+_____________COMMON
+
+-> username 
+-> centralcontent
+
+_____________H_USER_COMPONENTS
+
+-> admin_aside
+
+-> centralcontent
+    -edit
+
+-> functions_aside
+    - Connections
+    - Events
+    - Exchanges
+    - Requests
+    - Add Article
+
+_____________H_LINX_COMPONENTS
+
+-> centralcontent
+    -comment
+
+-> functions_aside
+    - Events
+    - Exchanges
+
+_____________H_CONNECTION_COMPONENTS
+
+-> personal_data_aside
+
+-> functions_aside
+    - Events
+
+_____________H_CANDI_COMPONENTS
+
+-> personal_data_aside
+
+
+
+
+
+
+

@@ -62,7 +62,7 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
     private roomkey!: string;
   
     //__ REBUILT _
-    
+  
     //OLD : va para interactions
     public isChainBeingRequested = signal(false);
     public showBreakChainAlert = signal(false);
@@ -77,7 +77,7 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
     public sharedChains : Array<IChainGroup> = [];
     public myChains : Array<IChainGroup> = [];
     //_---------------------------
-    public routePattern: RegExp = new RegExp("/Linx/Profile/[^/]+", "g");
+    public routePattern: RegExp = new RegExp("/Linx/perfil/[^/]+", "g");
   
     constructor(@Inject(PLATFORM_ID) private platformId: Object, private router: Router, private ref: ChangeDetectorRef) {
       this.userdata = this.signalStoreSvc.RetrieveUserData()();

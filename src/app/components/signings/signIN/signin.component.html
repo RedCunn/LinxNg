@@ -1,13 +1,13 @@
 <div class="logincont">
   <form #loginForm="ngForm" (ngSubmit)="Signin(loginForm)" class="logincard">
     <div class="mb-5">
-      <label for="emailorlinxname">Email o linxname</label>
-      <input type="text" name="emailorlinxname" placeholder="introduce tu email o tu linxname" required [(ngModel)]="credentials.emailorlinxname"
+      <label class="loginlabel" for="emailorlinxname">Email o linxname</label>
+      <input class="logininput" type="text" name="emailorlinxname" placeholder="introduce tu email o tu linxname" required [(ngModel)]="credentials.emailorlinxname"
         #emailorlinxname="ngModel" />
     </div>
     <div class="mb-1">
-      <label for="password">Contraseña</label>
-      <input type="password" name="password" required [(ngModel)]="credentials.password" #password="ngModel" />
+      <label class="loginlabel" for="password">Contraseña</label>
+      <input class="logininput" type="password" name="password" required [(ngModel)]="credentials.password" #password="ngModel" />
     </div>
     <p class="forgotpwd"><a href="#">¿Has olvidado tu contraseña?</a></p>
     @if(loginerrors()){
@@ -15,9 +15,9 @@
     }
     <div class="flex items-start mt-5 mb-5">
       <div class="flex items-center h-5">
-        <input id="remember" type="checkbox"/>
+        <input class="logininput" id="remember" type="checkbox"/>
       </div>
-      <label for="remember" class="ms-2 text-sm font-medium text-purple-400">Recuérdame</label>
+      <label for="remember" class="loginlabel ms-2">Recuérdame</label>
     </div>
     <div class="flex justify-center">
       <button type="submit" class="enterbutt">Iniciar sesión</button>

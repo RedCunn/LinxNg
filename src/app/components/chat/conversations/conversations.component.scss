@@ -7,16 +7,14 @@
 }
 
 .modalcard{
-    @include ModalCard;
-
+    @include m-modal-card;
 }
 
 ul{
     width: 100%;
     li{
         width: 100%;
-        display: flex;
-        justify-content: center;
+        @include flexrow(center);
         button{
             @include converbutton;
             &.group{
