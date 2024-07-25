@@ -117,6 +117,11 @@
     }
 }
 
+.linxnamecontainer{
+    margin-top: 20px;
+    @include flexcol($content:center);
+}
+
 .linxname{
     font-family: "Ubuntu Mono", monospace;
     font-weight: 400;
@@ -127,6 +132,52 @@
     background-clip: text; /* Propiedad estándar */
     -webkit-text-fill-color: transparent; /* Para navegadores WebKit */
     color: transparent; /* Propiedad estándar (por compatibilidad) */
+}
+
+#next {
+    font-size: 50px;
+}
+
+.article{
+    font-family: "Kanit", sans-serif;
+    font-weight: 200;
+    font-style: normal;
+    font-size: large;
+    padding: 0.75rem;
+    width: 100%;
+    height: 80%;
+}
+
+.article h1 {
+    font-family: "Kanit", sans-serif;
+    font-weight: 500;
+    font-style: normal;
+    font-size: xx-large;
+}
+
+.artimg{
+    @include flexrow(center);
+}
+
+.overflowarticle{
+    flex-grow: 0.5; 
+    @include flexcol(center,center);   
+    overflow-y: hidden;
+}
+
+.linxnameNoART{
+    @include flexcol(center,center);   
+    width: 100%;
+    height: 100%;
+    position:static; 
+    top: 0; 
+    left: 0; 
+    right: 0;
+    bottom: 0;
+    background-image: url('../../../assets/imgs/logos/purplechain3D.png'); 
+    background-size: cover; 
+    background-position: center; 
+    opacity:80%;
 }
 
 .nolinxfound {
@@ -175,71 +226,6 @@
 }
 
 
-.overflowarticle{
-    flex-grow: 0.5; 
-    display: flex;
-    flex-direction: column;   
-    overflow-y: hidden;
-}
-.linxnamecontainer{
-    margin-top: 20px;
-    display: flex;
-    flex-direction: column;
-    justify-self: center;
-    text-align: center;
-}
-
-.linxnameNoART{
-    display: flex;
-    flex-direction: column;
-    width: 100%;
-    height: 100%;
-    align-items: center;
-    justify-content: center;
-    position:static; 
-    top: 0; 
-    left: 0; 
-    right: 0;
-    bottom: 0;
-    background-image: url('../../../assets/imgs/logos/purplechain3D.png'); 
-    background-size: cover; 
-    background-position: center; 
-    opacity:80%;
-}
-
-#next {
-    font-size: 50px;
-}
-
-#thumb {
-    font-size: 50px;
-}
-
-#thumb:hover {
-    filter: brightness(150%);
-}
-
-.article{
-    font-family: "Kanit", sans-serif;
-    font-weight: 200;
-    font-style: normal;
-    font-size: large;
-    padding: 0.75rem;
-    width: 100%;
-    height: 80%;
-}
-
-.article h1 {
-    font-family: "Kanit", sans-serif;
-    font-weight: 500;
-    font-style: normal;
-    font-size: xx-large;
-}
-
-.artimg{
-    display: flex;
-    justify-content: center;
-}
 
 @media only screen and (max-width: 768px) {
     

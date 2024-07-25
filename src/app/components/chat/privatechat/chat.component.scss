@@ -2,7 +2,7 @@
 @import '../../../scss/modules/mixins.scss';
 
 .modalcard{
-    @include ModalCard($contheight : 55vh, $bodyheight : calc(50vh - 120px) , $bodywidth : 100%);
+    @include m-modal-card($contheight : 55vh, $bodyheight : calc(50vh - 120px) , $bodywidth : 100%);
 }
 
 .formcontainer{
