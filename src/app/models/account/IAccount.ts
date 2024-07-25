@@ -10,7 +10,6 @@ export interface IAccount {
     password: string;
     active : boolean;
     articles ?: Array<IArticle>;
-    myChains ?: Array<{chainid : string, chainname : string, createdAt : string}>;
-    myLinxs ? : Array<{chainid : string, userid : string, roomkey : string, chainedAt : string}>;
-    linxExtents? : Array<{mylinxuserid : string , userid : string , roomkey : string}>;
+    chains ?: Array<{chainid : string, chainname : string}>;
+    linxs ? : Array<{chainIds : string[], userid : string, roomkey : string}>;
 }

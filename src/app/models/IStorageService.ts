@@ -1,10 +1,7 @@
 import { Signal, WritableSignal, signal } from "@angular/core";
 import { IUser } from "./account/IUser";
 import { IAccount } from "./account/IAccount";
-import { IMatch } from "./account/IMatch";
-import { IChainGroup } from "./chain/IChainGroup";
-import { IAdminGroups } from "./chain/IAdminGroups";
-
+import { IConnection } from "./account/IConnection";
 
 export interface IStorageService {
     //#region ---------------------------- [ SYNC ] --------------------
@@ -21,8 +18,8 @@ export interface IStorageService {
     StoreCandidateData (newstate : IUser | null) : void ;
     RetrieveCandidateData () : WritableSignal<IUser | null> ;
 
-    StoreMatches (matches : IMatch[] | null) : void;
-    RetrieveMatches () : WritableSignal<IMatch[] | null>;
+    StoreMatches (matches : IConnection[] | null) : void;
+    RetrieveMatches () : WritableSignal<IConnection[] | null>;
 
     StoreMatchesAccounts (matches : IAccount[] | null) : void;
     RetrieveMatchesAccounts () : WritableSignal<IAccount[] | null>;
@@ -37,12 +34,6 @@ export interface IStorageService {
     //#region ---------------NEW AND OLD ----------------
 
     //NEW : 
-
-    StoreAllUserChainsGroupedByAdmin (admingroups : IAdminGroups[] | null) : void;
-    RetrieveAllUserChainsGroupedByAdmin () : WritableSignal<IAdminGroups[] | null>; 
-
-    StoreGroupedLinxsOnMyChains ( chaingroups : IChainGroup[] | null) : void;
-    RetrieveGroupedLinxsOnMyChains () : WritableSignal<IChainGroup[] | null>; 
 
     StoreMyLinxs ( mylinxs : IAccount[] | null) : void;
     RetrieveMyLinxs () : WritableSignal<IAccount[] | null>;

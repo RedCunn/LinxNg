@@ -2,9 +2,7 @@ import { Injectable, Signal, WritableSignal, signal } from '@angular/core';
 import { IStorageService } from '../models/IStorageService';
 import { IUser } from '../models/account/IUser';
 import { IAccount } from '../models/account/IAccount';
-import { IMatch } from '../models/account/IMatch';
-import { IChainGroup } from '../models/chain/IChainGroup';
-import { IAdminGroups } from '../models/chain/IAdminGroups';
+import { IConnection } from '../models/account/IConnection';
 
 @Injectable({
   providedIn: 'root'
@@ -16,40 +14,16 @@ export class SignalStorageService implements IStorageService{
   private _jwtsignal : WritableSignal<string | null> = signal<string | null>('');
   private _linxstatesignal : WritableSignal<IAccount | null> = signal<IAccount | null>(null);
   private _matchesaccountsignal : WritableSignal<IAccount[] | null> = signal<IAccount[] | null>([]);
-  private _matchessignal : WritableSignal<IMatch[] | null> = signal<IMatch[]| null>([]);
+  private _matchessignal : WritableSignal<IConnection[] | null> = signal<IConnection[]| null>([]);
   private _roomkeyssignal : WritableSignal<Map<string,string> | null> = signal<Map<string,string> | null>(new Map<string,string>());
   private _candidateindex : WritableSignal<number> = signal<number>(0);
 
   //NEW : 
   private _mylinxssignal : WritableSignal<IAccount[] | null> = signal<IAccount[] | null>([]);
-  private _groupedLinxs : WritableSignal<IChainGroup[] | null> = signal<IChainGroup[] | null>([]);
-  private _groupedLinxsByAdmin : WritableSignal<IAdminGroups[] | null> = signal<IAdminGroups[] | null>([]);
   
   constructor() { }
   
   //NEW : 
-
-  StoreAllUserChainsGroupedByAdmin(admingroups: IAdminGroups[] | null): void {
-    if(admingroups !== null){
-      this._groupedLinxsByAdmin.update((currentstate) => ([...admingroups]))
-    }else{
-      this._groupedLinxsByAdmin.set(null);
-    }
-  }
-  RetrieveAllUserChainsGroupedByAdmin(): WritableSignal<IAdminGroups[] | null> {
-    return this._groupedLinxsByAdmin;
-  }
-  
-  StoreGroupedLinxsOnMyChains(chaingroups: IChainGroup[] | null): void {
-    if(chaingroups !== null){
-      this._groupedLinxs.update((currentstate) => ([...chaingroups]))
-    }else{
-      this._groupedLinxs.set(null);
-    }
-  }
-  RetrieveGroupedLinxsOnMyChains(): WritableSignal<IChainGroup[] | null> {
-    return this._groupedLinxs;
-  }
 
   StoreMyLinxs(mylinxs: IAccount[] | null): void {
     if(mylinxs !== null){
@@ -106,14 +80,14 @@ export class SignalStorageService implements IStorageService{
     console.log('RETRIEVE ROOMKEYS SIGNAL SVC : ', this._roomkeyssignal())
     return this._roomkeyssignal;
   }
-  StoreMatches(matches: IMatch[] | null): void {
+  StoreMatches(matches: IConnection[] | null): void {
     if(matches !== null){
       this._matchessignal.update((currentstate) => ([...matches]))
     }else{
       this._matchessignal.set([]);
     }
   }
-  RetrieveMatches(): WritableSignal<IMatch[] | null> {
+  RetrieveMatches(): WritableSignal<IConnection[] | null> {
     return this._matchessignal;
   }
   StoreMatchesAccounts(matches: IAccount[] | null): void {

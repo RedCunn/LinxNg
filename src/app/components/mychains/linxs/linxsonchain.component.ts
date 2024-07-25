@@ -1,14 +1,14 @@
-import { AfterContentInit, AfterViewInit, Component, Input, OnInit, ViewChild, ViewContainerRef, inject, signal } from '@angular/core';
+import { Component, Input, OnInit, ViewChild, ViewContainerRef, inject, signal } from '@angular/core';
 import { Router } from '@angular/router';
 import { SignalStorageService } from '../../../services/signal-storage.service';
 import { RestnodeService } from '../../../services/restnode.service';
 import { UtilsService } from '../../../services/utils.service';
 import { IGroupChat } from '../../../models/chat/IGroupChat';
-import { IChainGroup } from '../../../models/chain/IChainGroup';
 import { IAccount } from '../../../models/account/IAccount';
 import { IUser } from '../../../models/account/IUser';
 import { IArticle } from '../../../models/account/IArticle';
 import { GroupchatComponent } from '../../chat/groupchat/groupchat.component';
+import { IChain } from '../../../models/chain/IChain';
 
 @Component({
   selector: 'app-linxsonchain',
@@ -24,15 +24,16 @@ export class LinxsonchainComponent implements OnInit{
   @Input() isMyChain = signal(false)
   @Input() isSharedChain = signal(false)
   @Input() isAllChains = signal(false)
-  @Input()
-  set chain(value: IChainGroup) {
-    this._chain = value;
-    this.onChainInputChange();
-  }
+  @Input() chain! : IChain;
+  // @Input()
+  // set chain(value: IChainGroup) {
+  //   this._chain = value;
+  //   this.onChainInputChange();
+  // }
 
-  get chain(): IChainGroup {
-    return this._chain;
-  }
+  // get chain(): IChainGroup {
+  //   return this._chain;
+  // }
 
   @Input() group! : IAccount[];
   @Input() isOpen = signal(false);
@@ -41,7 +42,7 @@ export class LinxsonchainComponent implements OnInit{
 
   onChainInputChange() {
     if (this.isMyChain()) {
-      this.chain.linxsOnChain.forEach(linx => {
+      this.chain.accounts.forEach(linx => {
         if (!this.setBreakAlertOpen[linx.userid]) {
           this.setBreakAlertOpen[linx.userid] = false;
         }
@@ -59,7 +60,6 @@ export class LinxsonchainComponent implements OnInit{
   public showBreakChainAlert = signal<{[key : string]: boolean}>({});
   private setBreakAlertOpen : {[key : string]: boolean} = {};
   public groupchat: IGroupChat = {conversationname : '',groupParticipants : [], roomkey : '', messages : []};  
-  public _chain! : IChainGroup;
 
   @ViewChild('chatContainer', { read: ViewContainerRef, static: true })
   public chatcompoContainer!: ViewContainerRef;
@@ -96,9 +96,6 @@ export class LinxsonchainComponent implements OnInit{
     try {
       const res = await this.restsvc.breakChain(this._user?.userid! , linxid , this.chainId)
       if(res.code === 0){
-        const linxindex = this.chain.linxsOnChain.findIndex(linx => linx.userid === linxid)
-        this.chain.linxsOnChain.splice(linxindex , 1);
-        this.isOpen.set(false);
       }else{
         
       }

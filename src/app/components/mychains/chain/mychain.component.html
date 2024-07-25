@@ -12,75 +12,29 @@
                             <span class="material-symbols-outlined">close</span>
                         </button>
                     </div>
-                    @if(!isAdminGroups()){
-                        <div class="col-span-3 flex flex-row text-center ps-2 pt-4 mb-3">
-                            <div class="w-full">
-                                <img src="../../../assets/imgs/logos/mychainicon.png"
-                                    style="width: 40px ; height: auto;opacity: 80%;">
-                            </div>
+                
+                    <div class="col-span-3 flex flex-row text-center ps-2 pt-4 mb-3">
+                        <div class="w-full">
+                            <img src="../../../assets/imgs/logos/mychainicon.png"
+                                style="width: 40px ; height: auto;opacity: 80%;">
                         </div>
-                    }
+                    </div>
+                
                 </div>
                 <!-- Modal body -->
                 <div class="modalbody">
                     <ul>
                         <h2 class="userchainTitle">Mis cadenas</h2>
-                        @if(isMyChain()){
-                        @for(chain of this.myChains; track chain.chainid){
+                        @for(chain of this.chains; track chain.chainID){
                         <li>
                             <button (click)="this.showLinxsOnChain(chain)" class="chainsbutt">
-                                <p>{{chain.chainname}}</p>
-                            </button>
-                        </li>
-                        }@empty {
-                        <li>
-                            <p>Todavía no has hecho cadena...</p>
-                        </li>
-                        }
-                        }
-                        @if(isSharedChain()){
-                        @for(chain of this.sharedChains; track chain.chainid){
-                        <li>
-                            <button (click)="this.showLinxsOnChain(chain)" class="chainsbutt">
-                                <p>{{chain.chainname}}</p>
+                                <p>{{chain.chainName}}</p>
                             </button>
                         </li>
                         }@empty{
                         <li>
                             <p style="font-style: italic;">No hay cadenas en común por el momento...</p>
                         </li>
-                        }
-                        }
-
-                        @if(isAdminGroups()){
-                        @for(group of this.adminGroups; track $index){
-                        @if(group.chainadminID === this.user.userid){
-                        <li>
-                            <p>{{this.searchAdminNameOnMyLinxs(group.chainadminID)}} </p>
-                        </li>
-                        }@else {
-                        <li>
-                            <h2 class="linxchainTitle"> Cadenas de
-                                {{this.searchAdminNameOnMyLinxs(group.chainadminID)}}</h2>
-                        </li>
-                        }
-                        <li>
-                            @if(group.chainadminID === this.user.userid){
-                            <button (click)="this.showLinsOnGroup(group)" class="mychainsbutt">
-                                <p>{{group.chainName}}</p>
-                            </button>
-                            }@else {
-                            <button (click)="this.showLinsOnGroup(group)" class="chainsbutt">
-                                <p style="width: 24px;"><span class="chainico" >⛓️</span><span class="listpoint"> · </span></p>
-                                <p>{{group.chainName}}</p>
-                            </button>
-                            }
-                        </li>
-                        }@empty{
-                        <li>
-                            <p style="font-style: italic;">No hay cadenas en común por el momento...</p>
-                        </li>
-                        }
                         }
                     </ul>
                 </div>
@@ -88,6 +42,5 @@
         </div>
 }
 
-<app-linxsonchain [isMyChain]="this.isMyChain" [isAllChains]="isAdminGroups" [isSharedChain]="isSharedChain"
-    [chain]="this.chain" [group]="this.group" [isOpen]="this.isLinxsOnChainOpen"
+<app-linxsonchain [chain]="this.chain" [group]="this.group" [isOpen]="this.isLinxsOnChainOpen"
     [chainName]="this.chainName" [chainId]="this.chainId" [groupChat]="this.groupChats"></app-linxsonchain>

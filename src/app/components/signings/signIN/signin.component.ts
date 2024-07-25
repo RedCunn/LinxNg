@@ -6,14 +6,10 @@ import { RestnodeService } from '../../../services/restnode.service';
 import { SignalStorageService } from '../../../services/signal-storage.service';
 import { WebsocketService } from '../../../services/websocket.service';
 import { UtilsService } from '../../../services/utils.service';
-import { IChainExtents } from '../../../models/chain/IChainExtents';
-import { IAdminGroups } from '../../../models/chain/IAdminGroups';
 import { IUser } from '../../../models/account/IUser';
 import { IAccount } from '../../../models/account/IAccount';
 import { IArticle } from '../../../models/account/IArticle';
-import { IMatch } from '../../../models/account/IMatch';
-import { ILinxExtent } from '../../../models/chain/ILinxExtent';
-import { IChainGroup } from '../../../models/chain/IChainGroup';
+import { IConnection } from '../../../models/account/IConnection';
 
 @Component({
   selector: 'app-signin',
@@ -37,8 +33,6 @@ export class SigninComponent {
   private userRooms: Map<string,string> = new Map<string,string>();
   constructor(private router: Router, private restSvc: RestnodeService) { }
 
-  private chainsExtents : IChainExtents[] = [];
-  private chainGroupsByAdmin : IAdminGroups[] = [];
   private chainRooms :  Map<string,string> = new Map<string,string>();
 
   goToSignup() {
@@ -52,7 +46,7 @@ export class SigninComponent {
       if (res.code === 0) {
         let accounts: IAccount[] = res.others as IAccount[];
         const articles: IArticle[] = res.userdata as IArticle[];
-        user.account.myLinxs?.forEach(c => {
+        user.account.linxs?.forEach(c => {
           this.userRooms.set(c.userid, c.roomkey);
         })
         const wholeAccounts = this.utilsvc.putArticleObjectsIntoAccounts(accounts, articles);
@@ -69,7 +63,7 @@ export class SigninComponent {
     try {
       const res = await this.restSvc.getMyMatches(userid)
       if (res.code === 0) {
-        const matches: IMatch[] = res.userdata;
+        const matches: IConnection[] = res.userdata;
         this.signalstoresvc.StoreMatches(matches);
 
         matches.forEach(element => {
@@ -101,15 +95,7 @@ export class SigninComponent {
         const extentsAccounts : IAccount[] = res.others.accounts as IAccount[]
         const extentsArticles : IArticle[] = res.others.articles as IArticle[]
         const wholeExtentsAccounts : IAccount[] = this.utilsvc.putArticleObjectsIntoAccounts(extentsAccounts , extentsArticles);
-        const extents : ILinxExtent[] = res.userdata as ILinxExtent[];
         
-        extents.forEach(extent => {
-          wholeExtentsAccounts.forEach(account => {
-            if(extent.userid === account.userid){
-              this.chainsExtents.push({linxExtent : extent , extentAccount : account})
-            }
-          })
-        })
         
       }else{
         console.log('ERROR AL RECUPERAR LINXEXTENTS EN SIGNIN : ', res.error)
@@ -121,37 +107,6 @@ export class SigninComponent {
   }
 //#endregion
 
-//#region ---------- GROUPING LINXS & EXTENTS ON CHAINS 
-  groupLinxsAndExtentsOnChains(user : IUser){
-    const linxaccounts = this.signalstoresvc.RetrieveMyLinxs()()!;
-    let groupedLinxs : IChainGroup[] = this.utilsvc.groupMyLinxsOnChains(user, linxaccounts)
-    groupedLinxs.forEach(group => {
-      this.chainsExtents.forEach(extent => {
-        if(group.chainid === extent.linxExtent.chainID){
-          group.linxExtents.push(extent)
-        }
-      })
-    })
-    this.signalstoresvc.StoreGroupedLinxsOnMyChains(groupedLinxs);
-  }
-
-//#endregion
-
-//#region --------------- SETTING ROOMKEYS FOR EXTENTS 
-  setExtendedChainKeys (userid : string){
-    const extmap = new Map<string,string>();
-    this.chainsExtents.forEach(ext => {
-      const roomkey = this.utilsvc.generateRoomkey();
-      extmap.set(ext.linxExtent.userid , roomkey);
-    })
-    for (const [key , value] of extmap) {
-      this.socketSvc.requestInitChat(key , userid, value)
-    }
-    this.signalstoresvc.StoreRoomKeys(extmap);
-  }
-
-//#endregion
-
 
 //#region ------ CARGAR TODAS LAS CADENAS DE LAS QUE FORMO PARTE AGRUPADAS POR ADMIN PARA EL ACCESO DESDE LOGGEDHEADER
 //!NO CARGO ARTÍCULOS, hay que peedirlos cada vez que el user acceda a uno de sus perfiles 
@@ -161,15 +116,7 @@ async getAllChainsGroupedByAdmin (userid : string){
     const res = await this.restSvc.getAllUserChainsGroupedByAdmin(userid)
 
     if(res.code === 0){
-      console.log('GOT ALL USER CHAINs GROUPED BY ADMIN ->> ', res.userdata)
-      //RES _> adminGroup = {chainadminID : index.chainadminID , chainName : index.chainName , accounts : []}[]
-      this.chainGroupsByAdmin = res.userdata as IAdminGroups[]
-
-      this.chainGroupsByAdmin.forEach(chain => {
-        this.chainRooms.set(chain.chainName , chain.chainID);
-      })
-      this.signalstoresvc.StoreAllUserChainsGroupedByAdmin(this.chainGroupsByAdmin)
-
+      
     }else{
       console.log('COULDNT GET ALL USER CHAINs GROUPED BY ADMIN...', res.error)
     }

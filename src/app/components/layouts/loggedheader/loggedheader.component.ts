@@ -2,8 +2,8 @@ import { Component, OnDestroy, OnInit, inject, signal } from '@angular/core';
 import { SignalStorageService } from '../../../services/signal-storage.service';
 import { Router } from '@angular/router';
 import { IUser } from '../../../models/account/IUser';
-import { IAdminGroups } from '../../../models/chain/IAdminGroups';
 import { MyChainComponent } from '../../mychains/chain/mychain.component';
+import { IChain } from '../../../models/chain/IChain';
 
 @Component({
   selector: 'app-loggedheader',
@@ -21,18 +21,14 @@ export class LoggedheaderComponent implements OnInit{
   public isSharedChain = signal(false);
   public isAllChains = signal(true);
   private user! : IUser;
-  public allChains! : IAdminGroups[];
-
+  private allChains : IChain[] = [];
+  
   constructor(private router : Router){
     this.user = this.signalStoreSvc.RetrieveUserData()()!;
   }
 
   ngOnInit(): void {
-    if(this.signalStoreSvc.RetrieveAllUserChainsGroupedByAdmin()() !== null){
-      this.allChains = this.signalStoreSvc.RetrieveAllUserChainsGroupedByAdmin()()!
-    }else{
-      this.allChains = []
-    }
+    //!RETRIEVE ALL CHAINS GROUPED 
     this.isMyChain.set(false);
     this.isSharedChain.set(false);
     this.isAllChains.set(true);

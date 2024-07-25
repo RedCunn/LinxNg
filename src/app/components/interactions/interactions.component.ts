@@ -201,25 +201,6 @@ export class InteractionsComponent implements OnInit, OnDestroy {
     }
   }
 
-  getNewOnChains (){
-    const tenDaysAgo = new Date(this.currentDate);
-    tenDaysAgo.setDate(this.currentDate.getDate() - 10);
-    const myLinxs = this.signalStorageSvc.RetrieveMyLinxs()()!;
-    
-    const linxson = this._user?.account.myLinxs;
-
-    let filteredLinxs = linxson?.filter(c => {
-                          const date = new Date(c.chainedAt)
-                          return date <= tenDaysAgo;
-                        });
-
-    const linxsUserIds = filteredLinxs?.map(c => c.userid);
-
-    const newOnChains = myLinxs?.filter(acc => linxsUserIds?.includes(acc.userid));
-
-    return newOnChains;    
-  }
-
   async getMyInteractions() {
     this.getMatches();
     if(this.myMatches !== null){
@@ -247,11 +228,6 @@ export class InteractionsComponent implements OnInit, OnDestroy {
           this.interactions.chainInvitations!.push(invitation);
         }
       })      
-    })
-
-    const newOnChains = this.getNewOnChains()
-    newOnChains?.forEach(element => {
-      this.interactions.chainedAccounts?.push({account : element , chain : {chainid : '',chainname : ''}})
     })
   }
 

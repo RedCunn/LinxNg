@@ -7,8 +7,6 @@ import { IUser } from '../../../models/account/IUser';
 import { IAccount } from '../../../models/account/IAccount';
 import { IChat } from '../../../models/chat/IChat';
 import { IArticle } from '../../../models/account/IArticle';
-import { IChainExtents } from '../../../models/chain/IChainExtents';
-import { IChainGroup } from '../../../models/chain/IChainGroup';
 import { Event, NavigationEnd, NavigationStart, Router, RouterModule } from '@angular/router';
 import { BehaviorSubject, distinctUntilChanged } from 'rxjs';
 import { isPlatformBrowser } from '@angular/common';
@@ -18,7 +16,6 @@ import { HomeasideComponent } from '../accountmenu_aside/homeaside.component';
 import { MatIcon } from '@angular/material/icon';
 import { FormsModule } from '@angular/forms';
 import { ArticleformComponent } from '../articles/modalform/articleform.component';
-import { ILinxExtent } from '../../../models/chain/ILinxExtent';
 import { AdminasideComponent } from '../admin_aside/adminaside.component';
 import { CandidatedataComponent } from '../data_aside/candidatedata.component';
 import { ArticlestrayComponent } from '../articles/articlestray/articlestray.component';
@@ -83,10 +80,7 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
     public isMyChain = signal(false);
     public isAdminChains = signal(false);
     public isSharedChains = signal(false);
-    public chainExtents : Array<IChainExtents> = [];
     public acceptedChainsReq : Array<{chainid : string, accepted : boolean} > = [];
-    public sharedChains : Array<IChainGroup> = [];
-    public myChains : Array<IChainGroup> = [];
     //_---------------------------
     public routePattern: RegExp = new RegExp("/Linx/perfil/[^/]+", "g");
   
@@ -129,8 +123,6 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
             }
           } else {
             this.isUser.set(true);
-            this.getChainExtents(this.userdata?.userid!);
-            this.groupLinxsAndExtentsOnChains(this.userdata!);
             this.isMyChain.set(true);
           }
 
@@ -159,15 +151,11 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
     }
   
     getGroupedLinxsOnChain (){
-      if(this.signalStoreSvc.RetrieveGroupedLinxsOnMyChains()() !== null){
-        this.myChains = this.signalStoreSvc.RetrieveGroupedLinxsOnMyChains()()!;
-      }else{
-        this.myChains = []
-      }
+      
     }
   
     groupLinxsOnSharedChains (){
-      this.sharedChains = this.utilsvc.groupLinxsInSharedChains(this.userdata! , this.linxdata!)
+      
     }
   
   
@@ -206,7 +194,7 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
     }
     
     isLinx(): boolean {
-      let onChain = this.userdata?.account.myLinxs?.find(l => l.userid === this.linxdata?.userid)
+      let onChain = this.userdata?.account.linxs?.find(l => l.userid === this.linxdata?.userid)
       return onChain !== undefined;
     }
   
@@ -281,65 +269,8 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
   
     
     //------ NEW ON SINGIN BEFORE : 
-    private chainsExtents : IChainExtents[] = [];
-  
     
-    async getChainExtents (userid : string){
-      try {
-        const res = await this.restSvc.getMyChainExtents(userid , null)
-        if(res.code === 0){
-          const extentsAccounts : IAccount[] = res.others.accounts as IAccount[]
-          const extentsArticles : IArticle[] = res.others.articles as IArticle[]
-          const wholeExtentsAccounts : IAccount[] = this.utilsvc.putArticleObjectsIntoAccounts(extentsAccounts , extentsArticles);
-          const extents : ILinxExtent[] = res.userdata as ILinxExtent[];
-          
-          extents.forEach(extent => {
-            wholeExtentsAccounts.forEach(account => {
-              if(extent.userid === account.userid){
-                this.chainsExtents.push({linxExtent : extent , extentAccount : account})
-              }
-            })
-          })
-          
-        }else{
-          console.log('ERROR AL RECUPERAR LINXEXTENTS EN SIGNIN : ', res.error)
-        }
-        
-      } catch (error) {
-        console.log('ERROR AL RECUPERAR LINXEXTENTS EN SIGNIN : ', error)
-      }
-    }
-  
-    groupLinxsAndExtentsOnChains(user : IUser){
-      const admingroups = this.signalStoreSvc.RetrieveAllUserChainsGroupedByAdmin()()!;
-      let groupedLinxs : IChainGroup[] = [];
-  
-  
-      admingroups.forEach(group => {
-          if(group.chainadminID === this.userdata?.userid){
-            const chain = this.userdata.account.myChains?.find(chain => chain.chainid === group.chainID)
-            const chaingroup : IChainGroup = {chainid : group.chainID , chainname : group.chainName , createdAt : chain?.createdAt , linxsOnChain : group.accounts, linxExtents : []}
-            groupedLinxs.push(chaingroup);
-          }
-      })
-  
-      this.myChains = groupedLinxs;
-      console.log('GROUPED LINX AND EXTENTS FROM MYCHAINS AT HOME : ', groupedLinxs)
-      this.signalStoreSvc.StoreGroupedLinxsOnMyChains(groupedLinxs);
-    }
-  
-    setExtendedChainKeys (userid : string){
-      const extmap = new Map<string,string>();
-      this.chainsExtents.forEach(ext => {
-        const roomkey = this.utilsvc.generateRoomkey();
-        extmap.set(ext.linxExtent.userid , roomkey);
-      })
-      for (const [key , value] of extmap) {
-        this.socketsvc.requestInitChat(key , userid, value)
-      }
-      this.signalStoreSvc.StoreRoomKeys(extmap);
-    }
-  
+    
     //#region ---------------------- COMPONET'S LIFECYCLE --------------------------------
     ngAfterViewInit(): void {
       initTooltips();
@@ -353,8 +284,6 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
         initFlowbite();
       }
       this.retrieveAccountRequests();
-      this.groupLinxsAndExtentsOnChains(this.userdata!)
-      this.setExtendedChainKeys(this.userdata!.userid)
     }
   
     ngOnDestroy(): void {

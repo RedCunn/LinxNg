@@ -22,7 +22,6 @@ export class AdminasideComponent {
     this.signalStoreSvc.StoreRoomKeys(null);
     this.signalStoreSvc.StoreMatchesAccounts(null);
     this.signalStoreSvc.StoreMyLinxs(null);
-    this.signalStoreSvc.StoreGroupedLinxsOnMyChains(null);
     this.signalStoreSvc.StoreMatches(null);
     this.signalStoreSvc.StoreCandidateData(null);
     this.socketsvc.disconnect();
