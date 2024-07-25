@@ -16,7 +16,7 @@
     }
 }
 
-.adminaside {
+.leftaside {
     grid-column: span 1;
     @include flexcol($content : start, $align : start);
 }

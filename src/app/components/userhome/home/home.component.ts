@@ -14,16 +14,18 @@ import { BehaviorSubject, distinctUntilChanged } from 'rxjs';
 import { isPlatformBrowser } from '@angular/common';
 import { initFlowbite, initTooltips } from 'flowbite';
 import { ChatComponent } from '../../chat/privatechat/chat.component';
-import { HomeasideComponent } from '../homeaside/homeaside.component';
+import { HomeasideComponent } from '../functions_aside/homeaside.component';
 import { MatIcon } from '@angular/material/icon';
 import { FormsModule } from '@angular/forms';
 import { ArticleformComponent } from '../articles/modalform/articleform.component';
 import { ILinxExtent } from '../../../models/chain/ILinxExtent';
+import { AdminasideComponent } from '../admin_aside/adminaside.component';
+import { CandidatedataComponent } from '../data_aside/candidatedata.component';
 
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [HomeasideComponent, ChatComponent, MatIcon, FormsModule, RouterModule, ArticleformComponent],
+  imports: [HomeasideComponent, ChatComponent, MatIcon, FormsModule, RouterModule, ArticleformComponent, AdminasideComponent, CandidatedataComponent],
   templateUrl: './home.component.html',
   styleUrl: './home.component.scss'
 })
@@ -54,8 +56,6 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
     public userdata!: IUser | null;
     public linxdata!: IAccount | null;
     public candidateData!: IUser;
-    public cadidateAttributes: Map<string, string> = new Map<string, string>();
-    public candidateResidency: string = '';
     public chat!: IChat;
     public articles: IArticle[] = [];
     public article: IArticle = { articleid: '', title: '', body: '', img: '', postedOn: '', useAsProfilePic: false }
@@ -88,8 +88,6 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
           if (signalcandidate !== null) {
             this.candidateData = this.signalStoreSvc.RetrieveCandidateData()()!;
             this.isCandidate.set(true);
-            this.cadidateAttributes = this.utilsvc.mapCandidateProfileDataToLegible(this.candidateData);
-            this.getPlaceDetail()
           } else {
             this.isCandidate.set(false);
             this.linxdata = this.signalStoreSvc.RetrieveLinxData()();
@@ -144,20 +142,6 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
   
   
     //____________________________________
-  
-    async getPlaceDetail() {
-      try {
-        const res = await this.restSvc.getPlaceDetails(this.candidateData.geolocation.city_id);
-        if (res.code === 0) {
-          const addrComponents = res.others.address_components;
-          this.candidateResidency = addrComponents[1].long_name + ' , ' + addrComponents[2].long_name;
-        } else {
-          console.log('RES DE GOOGLE : ', res.error)
-        }
-      } catch (error) {
-        console.log('RES DE GOOGLE : ', error)
-      }
-    }
   
     async loadChatComponent() {
       const viewContainerRef = this.chatcompoContainer;
@@ -415,21 +399,8 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
     }
   
     ngOnDestroy(): void {
+      this.signalStoreSvc.StoreLinxData(null);
       this.signalStoreSvc.StoreCandidateData(null);
-      this.signalStoreSvc.StoreCandidateData(null);
-    }
-  
-    logout() {
-      this.signalStoreSvc.StoreUserData(null);
-      this.signalStoreSvc.StoreJWT(null);
-      this.signalStoreSvc.StoreRoomKeys(null);
-      this.signalStoreSvc.StoreMatchesAccounts(null);
-      this.signalStoreSvc.StoreMyLinxs(null);
-      this.signalStoreSvc.StoreGroupedLinxsOnMyChains(null);
-      this.signalStoreSvc.StoreMatches(null);
-      this.signalStoreSvc.StoreCandidateData(null);
-      this.socketsvc.disconnect();
-      this.router.navigateByUrl('/Linx/Login');
     }
   
     //#endregion

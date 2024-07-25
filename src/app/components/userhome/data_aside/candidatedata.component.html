@@ -1,0 +1,37 @@
+<ul class="datalist">
+    <li>
+        <p class="emo">🌼</p>
+        <p>Edad : {{this.cadidateAttributes.get('years')}} años</p>
+    </li>
+    <li>
+        <p class="emo">🤸‍♀️</p>
+        <p>Género : {{this.cadidateAttributes.get('gender')}} </p>
+    </li>
+    <li>
+        <p class="emo">👅</p>
+        <p>Idiomas : {{this.cadidateAttributes.get('langs')}} </p>
+    </li>
+    <li>
+        <p class="emo">🖐️ </p>
+        <p>Trabaja en : {{this.cadidateAttributes.get('work')!.trim() === '' ? '❔' : this.cadidateAttributes.get('work')}} </p>
+    </li>
+    <li>
+        <p class="emo">👻</p>
+        <p>Espectro político : {{this.cadidateAttributes.get('politics')}} </p>
+    </li>
+    <li>
+        <p class="emo">🥕 </p>
+        <p>Dieta : {{this.cadidateAttributes.get('diet')}}</p>
+    </li>
+    <li>
+        <p class="emo">🏘️ </p>
+        <p>
+            Vive en :
+            @if(this.candidateResidency() !== null){
+            {{this.candidateResidency()}}
+            }@else {
+                <span class="ms-2 bg-indigo-400 animate-pulse" style="width: 15px; height: 15px; border-radius: 15px;"></span>
+            }
+        </p>
+    </li>
+</ul>

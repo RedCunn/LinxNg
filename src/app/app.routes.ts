@@ -60,7 +60,7 @@ export const routes: Routes = [
                 children : [
                     {
                         path:'perfil',
-                        loadComponent : () => import('./components/userhome/userprofile/userprofile.component').then(c=>c.UserprofileComponent),
+                        loadComponent : () => import('./components/userhome/admin_aside/userprofile/userprofile.component').then(c=>c.UserprofileComponent),
                         canActivate: [authGuard]
                     }
                 ],

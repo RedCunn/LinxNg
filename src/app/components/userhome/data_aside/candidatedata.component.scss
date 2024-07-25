@@ -1,0 +1,19 @@
+@import '../../../scss/base/mixins.scss';
+
+.datalist{
+    @include flexcol($content: start, $align : start);
+    padding-right: 2rem;
+
+    li{
+        @include flexrow;
+        text-align: start;
+        align-items: baseline;
+        height: 3.5rem;
+        font-size: 1rem;
+        .emo{
+            font-size: 1.5rem;
+            margin-right: 1rem;
+        }
+    
+    }
+}
