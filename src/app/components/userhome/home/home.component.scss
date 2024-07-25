@@ -34,32 +34,17 @@
             @include flexrow(center);
             
             p {
-                font-family: "Jacquarda Bastarda 9 Charted", serif;
-                font-style: normal;
                 font-weight: 400;
                 font-size: 2rem;
                 padding-left: 0.5rem;
                 padding-top: 0.25rem;
-                color: white;
             }
         }
     
     }
-
+    
     .articlesarea{
         margin-top: 3rem;
-        @include simplegrid(2);
-        column-gap: 0.5rem;
-        row-gap: 2rem;
-        
-        div {
-            grid-column: span 2;
-        }
-
-        article{
-            grid-column: span 2;
-            @include m-article-card;
-        }
     }
 }
 

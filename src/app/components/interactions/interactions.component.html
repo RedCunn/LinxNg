@@ -19,14 +19,13 @@
                 </div>
                 <!-- Modal body -->
                 <div class="modalbody">
-                    <ul class="my-4 space-y-3">
+                    <ul>
                         @if(this.interactions.chainedAccounts!.length > 0 || this.interactions.matchingAccounts!.length
                         > 0|| this.interactions.chainInvitations!.length >
                         0){
                         @for(item of interactions.chainInvitations ; track item.fromaccount.userid){
                         <li>
-                            <div
-                                class="flex flex-col justify-between ">
+                            <div class="chaininvit">
                                 <p>💌
                                     <button (click)="this.goToProfile(item.fromaccount)"
                                         style="color: rgb(251, 9, 190);">{{item.fromaccount.linxname}}</button>
@@ -67,23 +66,21 @@
                         }
                         @for(item of interactions.matchingAccounts ; track item.userid){
                         <li>
-                            <div
-                                class="flex flex-col items-start">
-                                <p>✨ Has hecho match con <button (click)="this.goToProfile(item)"
-                                        style="color: purple;">{{item.linxname}}</button></p>
+                                <div class="notification">
+                                    <p>✨ Has hecho match con <button (click)="this.goToProfile(item)" style="color: purple;">{{item.linxname}}</button></p>
+                                </div>
                                 @if(signalOpenUnMatchAlert()[item.userid]){
-                                <div class="w-full flex flex-row justify-between font-light">
+                                <div class="undoalert">
                                     <button class="text-red-500 text-xs" (click)="unMatch(item.userid)">Deshacer match
                                         con {{item.linxname}}</button>
                                     <button class="text-black text-xs"
                                         (click)="showUnMatchAlert(false, item.userid)">X</button>
                                 </div>
                                 }@else {
-                                <div class="w-full flex justify-end">
+                                <div class="undo">
                                     <button class="font-light text-fuchsia-500 text-xs" (click)="showUnMatchAlert(true, item.userid)">Deshacer</button>
                                 </div>
                                 }
-                            </div>
                         </li>
                         }
                         @for(item of interactions.chainedAccounts ; track item.account.userid){

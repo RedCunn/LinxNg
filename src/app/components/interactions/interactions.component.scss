@@ -8,25 +8,10 @@
 
 .modalcard{
     @include m-modal-card;
+ 
 }
 
-ul{
-    width: 100%;
-    li{
-        width: 100%;
-        @include flexrow(center);
-        div{
-            width: 80%;
-            @include flexrow(center);
-        }
-        button{
-            @include converbutton;
-            &.group{
-                color: $ligtherbgcolor; 
-            }
-        }
-    }
-}
+
 
 @media only screen and (max-width: 768px) {
   

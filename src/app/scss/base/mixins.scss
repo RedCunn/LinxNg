@@ -13,9 +13,9 @@
     width: 80vw;
 }
 
-@mixin simplegrid($cols){
+@mixin simplegrid($cols, $fr : 1fr){
     display: grid;
-    grid-template-columns: repeat($cols, 1fr);
+    grid-template-columns: repeat($cols, $fr);
 }
 
 @mixin gridtemplate{

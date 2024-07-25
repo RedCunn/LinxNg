@@ -14,6 +14,7 @@ import { initDropdowns, initFlowbite } from 'flowbite';
 export class HomeasideComponent implements OnInit{
   
   @Input() openArtModal = signal(false);
+  @Input() isLinxsOpen = signal(false);
 
   constructor(@Inject(PLATFORM_ID) private platformId: Object, private router : Router) { }
 
@@ -33,5 +34,17 @@ export class HomeasideComponent implements OnInit{
 
   openArticleModal(){
     this.openArtModal.set(true);
+  }
+
+  toggleLinxModal() {
+    // if(this.isUser()){
+    //   this.isMyChain.set(true);
+    //   this.isAdminChains.set(false);
+    //   this.isSharedChains.set(false);
+    // }else{
+    //   this.isMyChain.set(false);
+    //   this.isAdminChains.set(true);
+    // }
+    this.isLinxsOpen.update(v => !v);
   }
 }

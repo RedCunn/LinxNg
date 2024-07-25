@@ -1,0 +1,18 @@
+@import '../../../../scss/base/mixins.scss';
+@import '../../../../scss/modules/cards';
+@import '../../../../scss/modules/mixins.scss';
+
+.artcontainer {
+    @include simplegrid(2);
+    column-gap: 0.5rem;
+    row-gap: 2rem;
+
+    div {
+        grid-column: span 2;
+    }
+
+    article {
+        grid-column: span 2;
+        @include m-article-card;
+    }
+}

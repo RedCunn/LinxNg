@@ -32,6 +32,15 @@ aside {
             }
         }
 
+        &.linxs{
+            button{
+                width: fit-content;
+                &:hover {
+                    color: white;
+                }
+            }
+        }
+
         &.newpost {
             width: 100%;
             flex-grow: 1;
@@ -43,7 +52,7 @@ aside {
                     font-size: 3.5rem;
                 }
                 &:hover {
-                    @include strongorange;
+                    color : $articlehover;
                 }
             }
         }

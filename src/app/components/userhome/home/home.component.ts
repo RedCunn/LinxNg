@@ -14,18 +14,30 @@ import { BehaviorSubject, distinctUntilChanged } from 'rxjs';
 import { isPlatformBrowser } from '@angular/common';
 import { initFlowbite, initTooltips } from 'flowbite';
 import { ChatComponent } from '../../chat/privatechat/chat.component';
-import { HomeasideComponent } from '../functions_aside/homeaside.component';
+import { HomeasideComponent } from '../accountmenu_aside/homeaside.component';
 import { MatIcon } from '@angular/material/icon';
 import { FormsModule } from '@angular/forms';
 import { ArticleformComponent } from '../articles/modalform/articleform.component';
 import { ILinxExtent } from '../../../models/chain/ILinxExtent';
 import { AdminasideComponent } from '../admin_aside/adminaside.component';
 import { CandidatedataComponent } from '../data_aside/candidatedata.component';
+import { ArticlestrayComponent } from '../articles/articlestray/articlestray.component';
+import { LinxsonchainComponent } from '../../mychains/linxs/linxsonchain.component';
 
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [HomeasideComponent, ChatComponent, MatIcon, FormsModule, RouterModule, ArticleformComponent, AdminasideComponent, CandidatedataComponent],
+  imports: [HomeasideComponent, 
+            ChatComponent, 
+            MatIcon, 
+            FormsModule, 
+            RouterModule, 
+            ArticleformComponent, 
+            AdminasideComponent, 
+            CandidatedataComponent,
+            ArticlestrayComponent,
+            LinxsonchainComponent
+          ],
   templateUrl: './home.component.html',
   styleUrl: './home.component.scss'
 })
@@ -41,7 +53,7 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
   
     public isChatOpen = signal(false);
     public isArtFormOpen = signal(false);
-    public isChainOpen = signal(false);
+    public isLinxsOpen = signal(false);
     public isPickChainOpen = signal(false);
   
     public isUser = signal(false);
@@ -50,9 +62,8 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
     public isExtendedLinx = signal(false); 
     public isMatch = signal(false); 
   
-    public loadingArts = signal(false);
+    public loadingArts = signal(true);
   
-    public currentDate: Date = new Date();
     public userdata!: IUser | null;
     public linxdata!: IAccount | null;
     public candidateData!: IUser;
@@ -80,9 +91,12 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
     public routePattern: RegExp = new RegExp("/Linx/perfil/[^/]+", "g");
   
     constructor(@Inject(PLATFORM_ID) private platformId: Object, private router: Router, private ref: ChangeDetectorRef) {
+      
       this.userdata = this.signalStoreSvc.RetrieveUserData()();
       const routePatternMatch$ = new BehaviorSubject<string | null>(null);
+      
       this.router.events.subscribe((event: Event) => {
+    
         if (event instanceof NavigationStart || event instanceof NavigationEnd) {
           let signalcandidate = this.signalStoreSvc.RetrieveCandidateData()();
           if (signalcandidate !== null) {
@@ -119,14 +133,30 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
             this.groupLinxsAndExtentsOnChains(this.userdata!);
             this.isMyChain.set(true);
           }
-  
-          this.articles = []
-          this.loadProfileArticles()
+
+          this.articles = [];
+          this.setArticles();
         });
     }
     //#region ----------------- SET UP ----------------------------------------
     
     //_________ NEW BUILT :
+
+    setArticles(){
+
+      if(this.isCandidate()){
+        this.articles = this.candidateData.account.articles ?? [];
+      }
+
+      if(this.isUser()){
+        this.articles = this.userdata?.account.articles ?? [];
+      }
+
+      if(this.isMatch()){
+        this.articles = this.linxdata?.articles ?? [];
+      }
+
+    }
   
     getGroupedLinxsOnChain (){
       if(this.signalStoreSvc.RetrieveGroupedLinxsOnMyChains()() !== null){
@@ -192,27 +222,6 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
       this.isChatOpen.update(v => !v);
     }
   
-    toggleArtFormModal(article: IArticle | null) {
-      if (article !== null) {
-        this.article = article
-      } else {
-        this.article = { title: '', body: '', img: '', postedOn: '', useAsProfilePic: false }
-      }
-      this.isArtFormOpen.update(v => !v);
-    }
-  
-    toggleChainModal() {
-      if(this.isUser()){
-        this.isMyChain.set(true);
-        this.isAdminChains.set(false);
-        this.isSharedChains.set(false);
-      }else{
-        this.isMyChain.set(false);
-        this.isAdminChains.set(true);
-      }
-      this.isChainOpen.update(v => !v);
-    }
-  
     togglePickChainModal(){
       this.isPickChainOpen.update(v => !v);
     }
@@ -228,10 +237,7 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
     onJoinChainRequestedAlertChange (isOpen : boolean){
      this.isChainRequested.set(isOpen)
     }
-  
-    formatDate(postedon: string): string {
-      return this.utilsvc.formatDateISOStringToLegible(postedon)
-    }
+
   
     async retrieveAccountRequests(){
       try {
@@ -273,53 +279,7 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
   
     }
   
-    async loadProfileArticles() {
-  
-      let sortedArticles: IArticle[] = [];
-      this.articles = [];
-  
-      if (this.isCandidate()) {
-        sortedArticles = this.utilsvc.sortArticlesDateDESC(this.candidateData.account.articles !== undefined ? this.candidateData.account.articles! : [])
-        this.articles = sortedArticles;
-        return;
-      } 
-      if (this.isUser()) {
-        sortedArticles = this.utilsvc.sortArticlesDateDESC(this.userdata?.account.articles !== undefined ? this.userdata?.account.articles : [])
-        this.articles = sortedArticles;
-        return;
-      }
-  
-      if(this.isMatch()){
-        sortedArticles = this.utilsvc.sortArticlesDateDESC(this.linxdata?.articles !== undefined ? this.linxdata?.articles! : [])
-        this.articles = sortedArticles;
-        return;
-      }
-      
-      
-        this.articles = await this.getArticles();
-      
-      
-  
-    }
-  
-  
     
-  
-    async getArticles() : Promise<IArticle[]>{
-      try {
-        const res = await this.restSvc.getAccountArticles(this.linxdata?.userid!);
-        console.log('ARTICLES PEDIDOS EN HOME : ', res.userdata)
-        if(res.code === 0){
-          return res.userdata as IArticle[];
-        }else{
-          return [];
-        }
-      } catch (error) {
-        console.log('ERROR PIDIENDO ARTICULOS DE PERFIL ; ', error)
-        return [];
-      }
-    }
-  
     //------ NEW ON SINGIN BEFORE : 
     private chainsExtents : IChainExtents[] = [];
   
@@ -384,7 +344,6 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
     ngAfterViewInit(): void {
       initTooltips();
       this.loadingArts.set(true);
-      this.loadProfileArticles()
       this.ref.detectChanges();
       this.loadingArts.set(false);
     }
