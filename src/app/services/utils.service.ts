@@ -6,9 +6,9 @@ import { RestnodeService } from './restnode.service';
 import { IAccount } from '../models/account/IAccount';
 import { IArticle } from '../models/account/IArticle';
 import { IUser } from '../models/account/IUser';
-import { IInteraction } from '../models/account/IInteraction';
 import { IConnection } from '../models/account/IConnection';
 import { IChain } from '../models/chain/IChain';
+import { Interaction } from '../models/account/IInteractions';
 
 @Injectable({
   providedIn: 'root'
@@ -209,7 +209,7 @@ export class UtilsService {
     return sortedArticles;
   }
 
-  sortInteractionsDateDESC(interactions : IInteraction[]){
+  sortInteractionsDateDESC(interactions : Interaction[]){
     
   }
 
@@ -315,14 +315,6 @@ export class UtilsService {
     return startOfThisWeek.getFullYear() === dateStartOfWeek.getFullYear() &&
       startOfThisWeek.getMonth() === dateStartOfWeek.getMonth() &&
       startOfThisWeek.getDate() === dateStartOfWeek.getDate();
-  }
-
-  findUserIndexOnMatches(matches: IConnection[] | null, userid: string, id: string): number {
-    if (matches !== null) {
-      const index = matches.findIndex(m => (m.userid_a === userid && m.userid_b === id) || (m.userid_a === id && m.userid_b === userid))
-      return index;
-    }
-    return -1;
   }
 
   generateRoomkey () : string {

@@ -64,22 +64,13 @@ export class SigninComponent {
       const res = await this.restSvc.getMyMatches(userid)
       if (res.code === 0) {
         const matches: IConnection[] = res.userdata;
-        this.signalstoresvc.StoreMatches(matches);
 
         matches.forEach(element => {
-          if(element.userid_a === userid){
-            this.userRooms.set(element.userid_b ,element.roomkey);
-          }else{
-            this.userRooms.set(element.userid_a ,element.roomkey);
-          }
+            this.userRooms.set(element.account.userid ,element.roomkey);
         });
+               
+        this.signalstoresvc.StoreConnections(matches);
         
-        let accounts : IAccount[] = res.others.accounts as IAccount[];
-        const articles : IArticle[] = res.others.articles as IArticle[];
-
-        const myMatches : IAccount[] = this.utilsvc.putArticleObjectsIntoAccounts(accounts, articles);        
-        this.signalstoresvc.StoreMatchesAccounts(myMatches);
-
       } else {
         console.log('myMATCHA never found...', res.error)
       }

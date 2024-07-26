@@ -199,8 +199,8 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
     }
   
     isMyMatch() : boolean{
-      const matches = this.signalStoreSvc.RetrieveMatches()();
-      let match = matches?.find(m => m.userid_a === this.linxdata?.userid || m.userid_b === this.linxdata?.userid)
+      const matches = this.signalStoreSvc.RetrieveConnections()();
+      let match = matches?.find(m => m.account.userid === this.linxdata?.userid)
       return match !== undefined;
     }
   

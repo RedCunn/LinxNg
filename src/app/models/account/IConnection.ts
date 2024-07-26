@@ -1,6 +1,8 @@
+import { IAccount } from "./IAccount";
+
 export interface IConnection {
     connectedAt : string;
-    userid_a: string;
-    userid_b : string;
+    active? : boolean;
     roomkey : string;
+    account : IAccount;
 }

@@ -48,7 +48,7 @@ export class GetstartedComponent implements AfterViewInit, OnInit {
   }
 
   goToMeeting() {
-    this.router.navigateByUrl('/Linx/matching')
+    this.router.navigateByUrl('/Linx/conectar')
   }
 
   ngOnInit(): void {

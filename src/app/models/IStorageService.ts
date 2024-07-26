@@ -18,11 +18,8 @@ export interface IStorageService {
     StoreCandidateData (newstate : IUser | null) : void ;
     RetrieveCandidateData () : WritableSignal<IUser | null> ;
 
-    StoreMatches (matches : IConnection[] | null) : void;
-    RetrieveMatches () : WritableSignal<IConnection[] | null>;
-
-    StoreMatchesAccounts (matches : IAccount[] | null) : void;
-    RetrieveMatchesAccounts () : WritableSignal<IAccount[] | null>;
+    StoreConnections(matches : IConnection[] | null) : void;
+    RetrieveConnections () : WritableSignal<IConnection[] | null>;
 
     StoreRoomKeys (rooms : Map<string,string> | null) : void ;
     StoreRoomKey (userRoom : {userid : string , roomkey : string}) : void;

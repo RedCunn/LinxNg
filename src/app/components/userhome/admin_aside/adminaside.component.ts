@@ -20,9 +20,8 @@ export class AdminasideComponent {
     this.signalStoreSvc.StoreUserData(null);
     this.signalStoreSvc.StoreJWT(null);
     this.signalStoreSvc.StoreRoomKeys(null);
-    this.signalStoreSvc.StoreMatchesAccounts(null);
     this.signalStoreSvc.StoreMyLinxs(null);
-    this.signalStoreSvc.StoreMatches(null);
+    this.signalStoreSvc.StoreConnections(null);
     this.signalStoreSvc.StoreCandidateData(null);
     this.socketsvc.disconnect();
     this.router.navigateByUrl('/Linx/Login');

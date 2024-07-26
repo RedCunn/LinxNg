@@ -13,8 +13,7 @@ export class SignalStorageService implements IStorageService{
   private _candidatesignal : WritableSignal<IUser | null> = signal<IUser | null>(null);
   private _jwtsignal : WritableSignal<string | null> = signal<string | null>('');
   private _linxstatesignal : WritableSignal<IAccount | null> = signal<IAccount | null>(null);
-  private _matchesaccountsignal : WritableSignal<IAccount[] | null> = signal<IAccount[] | null>([]);
-  private _matchessignal : WritableSignal<IConnection[] | null> = signal<IConnection[]| null>([]);
+  private _connectionssignal : WritableSignal<IConnection[] | null> = signal<IConnection[]| null>([]);
   private _roomkeyssignal : WritableSignal<Map<string,string> | null> = signal<Map<string,string> | null>(new Map<string,string>());
   private _candidateindex : WritableSignal<number> = signal<number>(0);
 
@@ -80,27 +79,16 @@ export class SignalStorageService implements IStorageService{
     console.log('RETRIEVE ROOMKEYS SIGNAL SVC : ', this._roomkeyssignal())
     return this._roomkeyssignal;
   }
-  StoreMatches(matches: IConnection[] | null): void {
-    if(matches !== null){
-      this._matchessignal.update((currentstate) => ([...matches]))
+  StoreConnections(connections: IConnection[] | null): void {
+    if(connections !== null){
+      this._connectionssignal.update((currentstate) => ([...connections]))
     }else{
-      this._matchessignal.set([]);
+      this._connectionssignal.set([]);
     }
   }
-  RetrieveMatches(): WritableSignal<IConnection[] | null> {
-    return this._matchessignal;
+  RetrieveConnections(): WritableSignal<IConnection[] | null> {
+    return this._connectionssignal;
   }
-  StoreMatchesAccounts(matches: IAccount[] | null): void {
-    if(matches !== null){
-      this._matchesaccountsignal.update((currentstate) => ([...matches]))
-    }else{
-      this._matchesaccountsignal.set([]);
-    }
-  }
-  RetrieveMatchesAccounts(): WritableSignal<IAccount[] | null> {
-    return this._matchesaccountsignal;
-  }
-  
 
   StoreLinxData(newstate: IAccount | null): void {
     if(newstate !== null){

@@ -25,7 +25,7 @@
                 <div class="modalbody">
                     <ul>
                         <h2 class="userchainTitle">Mis cadenas</h2>
-                        @for(chain of this.chains; track chain.chainID){
+                        @for(chain of this.chains; track chain.chainId){
                         <li>
                             <button (click)="this.showLinxsOnChain(chain)" class="chainsbutt">
                                 <p>{{chain.chainName}}</p>

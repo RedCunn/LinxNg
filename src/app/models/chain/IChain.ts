@@ -3,8 +3,8 @@ import { IAccount } from "../account/IAccount";
 
 export interface IChain {
     createdAt? : string ; 
-    chainAdminsID : string[];
-    chainID : string;
+    chainAdminsId : string[];
+    chainId : string;
     chainName : string;
     accounts : IAccount[];   
 }

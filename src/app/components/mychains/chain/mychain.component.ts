@@ -45,7 +45,7 @@ export class MyChainComponent implements OnInit{
   showLinsOnGroup (adgroup : IChain){
     this.chainName = adgroup.chainName;
     this.group = adgroup.accounts;
-    this.chainId = adgroup.chainID;
+    this.chainId = adgroup.chainId;
     this.retrieveGroupChat();
     this.isLinxsOnChainOpen.set(true);
   }

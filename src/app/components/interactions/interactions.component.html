@@ -20,85 +20,78 @@
                 <!-- Modal body -->
                 <div class="modalbody">
                     <ul>
-                        @if(this.interactions.chainedAccounts!.length > 0 || this.interactions.matchingAccounts!.length
-                        > 0|| this.interactions.chainInvitations!.length >
-                        0){
-                        @for(item of interactions.chainInvitations ; track item.fromaccount.userid){
-                        <li>
-                            <div class="chaininvit">
-                                <p>💌
-                                    <button (click)="this.goToProfile(item.fromaccount)"
-                                        style="color: rgb(251, 9, 190);">{{item.fromaccount.linxname}}</button>
-                                    te invita a unirte a {{item.chain.chainid === 'new' ? ' una nueva ' : " la "}}
-                                    cadena <span style="color: rgb(91, 2, 116);">{{item.chain.chainname}}</span>
-                                </p>
-                                <p class="font-light flex justify-end">
-                                    <small>
-                                        {{item.daysOfRequest !== 0 ? 'Hace ' : ''}}
-                                        {{item.daysOfRequest !== 0 ? item.daysOfRequest : ''}}
-                                        {{item.daysOfRequest === 0 ? ' Hoy' : ' días'}}
-                                    </small>
-                                </p>
-                                @if(openChainInvitationAlert()[item.chain.chainid]){
-                                <div class="flex flex-row justify-between items-center text-center">
-                                    <button class="text-black text-xs font-light underline"
-                                        (click)="showChainInvitationAlert(false, item.chain.chainid)">Cerrar</button>
-                                    <div class="flex flex-row justify-end items-center text-center">
-                                        <button type="button" (click)="rejectUnion(item.chain)"
-                                            class="alertbutt text-red-700 bg-white border border-red-600 hover:bg-red-100 font-normal rounded-lg text-sm px-2 me-2 mb-2 ">
-                                            Rechazar
-                                        </button>
-                                        <button type="button" (click)="acceptUnion(item.fromaccount , item.chain)"
-                                            class="alertbutt text-violet-600 bg-white border border-violet-600 hover:bg-violet-200 font-normal rounded-lg text-sm px-2 me-2 mb-2">
-                                            Unirse
-                                        </button>
-                                    </div>
-                                </div>
-                                }@else {
-                                <div class="w-full flex justify-start">
-                                    <button class="font-light text-fuchsia-500 text-xs"
-                                        (click)="showChainInvitationAlert(true, item.chain.chainid)">Contestar</button>
-                                </div>
+                        @for (inter of interactionsInbox; track inter.id) {
+                            @switch (inter.type) {
+                                @case ('INVITE') {
+                                    <li>
+                                        <p>⛓️ {{inter.fromAccount.linxname}} te invita a unirte a la cadena {{inter.chain.chainname}}</p>
+                                        <div class="invitebuttons">
+                                            <button>
+                                                Aceptar
+                                            </button>
+                                            <button>
+                                                Declinar
+                                            </button>
+                                        </div>
+                                        <div class="alertinvite">
+                                            <p>¿Estás segurx de querer declinar la invitación?</p>
+                                            <div class="confirmbuttons">
+                                                <button>
+                                                    Volver
+                                                </button>
+                                                <button>
+                                                    Estoy segurx
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </li>
                                 }
-
-                            </div>
-                        </li>
-                        }
-                        @for(item of interactions.matchingAccounts ; track item.userid){
-                        <li>
-                                <div class="notification">
-                                    <p>✨ Has hecho match con <button (click)="this.goToProfile(item)" style="color: purple;">{{item.linxname}}</button></p>
-                                </div>
-                                @if(signalOpenUnMatchAlert()[item.userid]){
-                                <div class="undoalert">
-                                    <button class="text-red-500 text-xs" (click)="unMatch(item.userid)">Deshacer match
-                                        con {{item.linxname}}</button>
-                                    <button class="text-black text-xs"
-                                        (click)="showUnMatchAlert(false, item.userid)">X</button>
-                                </div>
-                                }@else {
-                                <div class="undo">
-                                    <button class="font-light text-fuchsia-500 text-xs" (click)="showUnMatchAlert(true, item.userid)">Deshacer</button>
-                                </div>
+                                @case ('ONCHAIN') {
+                                    
+                                        <li>
+                                            <button (click)="removeInteractionFromInbox(inter.id)">
+                                                <span class="material-symbols-outlined">
+                                                    disabled_by_default
+                                                </span>
+                                            </button>
+                                            @if (inter.account.userid !== this._user?.userid) {
+                                                <p>🔗 {{inter.account.linxname}} es ahora linx de la cadena {{inter.chain.chainName}}</p>
+                                            }@else {
+                                                <p>🔗 Ahora eres linx en la cadena {{inter.chain.chainName}} 🔗</p>
+                                            }
+                                        </li>
                                 }
-                        </li>
-                        }
-                        @for(item of interactions.chainedAccounts ; track item.account.userid){
-                        <li>
-                            <div class="flex flex-col justify-start ">
-                                <p>⛓️ Te has unido a la cadena <span style="color: rgb(34, 189, 34);">{{item.chain.chainname}}</span> de <button (click)="this.goToProfile(item.account)"
-                                        style="color: rgb(25, 136, 25); width: fit-content;">{{item.account.linxname}}</button></p>
-                                <p>{{item.chain.chainname}}</p>
-                            </div>
-                        </li>
-                        }
-                        }@else {
-                        <li>
-                            <div
-                                class="flex items-center w-full p-3 text-base font-bold text-gray-900 rounded-lg bg-gray-50 dark:bg-gray-600 dark:text-white">
-                                <p>No hay nuevas interacciones...</p>
-                            </div>
-                        </li>
+                                @case ('OFFCHAIN') {
+                                    <li>
+                                        <button (click)="removeInteractionFromInbox(inter.id)">
+                                            <span class="material-symbols-outlined">
+                                                disabled_by_default
+                                            </span>
+                                        </button>
+                                        @if (inter.userid === this._user?.userid) {
+                                            <p>👁️ Ya no formas parte de la cadena {{inter.chain?.chainName}}</p>
+                                        }@else {
+                                            <div class="offchainmessage">
+                                                <p>👀 {{inter.linxname}} ya no está en la cadena</p>
+                                                <button (click)="openChain(inter.chain!)" >{{inter.chain?.chainName}}</button>
+                                            </div>
+                                        }
+                                    </li>
+                                }
+                                @case ('CONNECTION') {
+                                    <li>
+                                        <button (click)="removeInteractionFromInbox(inter.id)">
+                                            <span class="material-symbols-outlined">
+                                                disabled_by_default
+                                            </span>
+                                        </button>
+                                        <div class="connmessage">
+                                            <p>🌼 Has hecho una nueva conexión con </p>
+                                            <button (click)="goToProfile(inter.account!)">{{inter.account?.linxname}}</button>
+                                        </div>
+                                    </li>
+                                }
+                            }
                         }
                     </ul>
                 </div>
