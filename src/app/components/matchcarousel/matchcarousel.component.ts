@@ -126,7 +126,7 @@ export class MatchcarouselComponent implements OnInit {
         }
         console.log('RESPONSE MATCH REQ : ', res)
         if (res.message === 'FULL') {
-          this.socketsvc.linxmatch(linx.userid, this.userdata?.userid!, this.userdata?.account!, linx.account);
+          this.socketsvc.doConnection(this.userdata?.account!, linx.account);
         }
       } else {
         console.log('RESPONSE ERROR MATCH REQ : ', res)

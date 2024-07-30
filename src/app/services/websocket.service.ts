@@ -107,7 +107,7 @@ export class WebsocketService {
   }
 
   getInteractions(){
-    //Full Match , New Event , On Chain , Broken Chain
+    //Full Connection, Chain Invite , Chain invite Accepted, Chain invite Rejected, New onChain , New offChain
     let obs = new Observable<{type : string , from : IAccount , element? : {chainid : string , chainname : string} }>(observer => {
       socket.on('get_interaction', (data) => {
         observer.next(data);
@@ -117,8 +117,8 @@ export class WebsocketService {
     return obs;
   }
 
-  linxmatch(to_userid : string,from_userid : string , from_user : IAccount, to_user : IAccount) {
-    socket.emit('full_match', {to_userid, from_userid, to_user, from_user}, (res : any) => {
+  doConnection(from_user : IAccount, to_user : IAccount) {
+    socket.emit('full_connection', {to_user, from_user}, (res : any) => {
       console.log('RES OK : ', res.status)
     })
   }

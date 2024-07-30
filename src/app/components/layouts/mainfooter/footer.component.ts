@@ -47,7 +47,7 @@ export class FooterComponent implements AfterViewInit, OnInit{
   }
 
   goLinxme(){
-    this.router.navigateByUrl('/Linx/linxme');    
+    this.router.navigateByUrl('/Linx/conectar');    
   }
 
   chatCompression(){

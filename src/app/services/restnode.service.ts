@@ -125,12 +125,12 @@ export class RestnodeService {
   //#region -------------------------- MATCHING ----------------------------------------
 
   public shuffleCandidateProfiles(userid: string): Promise<IRestMessage> {
-    const res = this._httpClient.get<IRestMessage>(`http://localhost:3000/api/Match/${userid}/shuffledProfiles`)
+    const res = this._httpClient.get<IRestMessage>(`http://localhost:3000/api/Connection/${userid}/shuffledProfiles`)
     return lastValueFrom(res);
   }
 
   public requestMatch(userid: string, linxuserid: string): Promise<IRestMessage> {
-    const res = this._httpClient.post<IRestMessage>(`http://localhost:3000/api/Match/${userid}/${linxuserid}`,
+    const res = this._httpClient.post<IRestMessage>(`http://localhost:3000/api/Connection/${userid}/${linxuserid}`,
       {
         headers: new HttpHeaders({ 'Content-Type': 'application/json' })
       })
@@ -194,18 +194,18 @@ export class RestnodeService {
 
   //#region ----------------------------- MY INTERACTIONS ------------------------
 
-  public getMyMatches(userid: string): Promise<IRestMessage> {
-    const res = this._httpClient.get<IRestMessage>(`http://localhost:3000/api/Match/${userid}/matches`);
+  public getMyConnections(userid: string): Promise<IRestMessage> {
+    const res = this._httpClient.get<IRestMessage>(`http://localhost:3000/api/Connection/${userid}`);
     return lastValueFrom(res);
   }
 
   public getMatchRoomKey(userid_a: string, userid_b: string): Promise<IRestMessage> {
-    const res = this._httpClient.get<IRestMessage>(`http://localhost:3000/api/Match/${userid_a}/${userid_b}/roomkey`);
+    const res = this._httpClient.get<IRestMessage>(`http://localhost:3000/api/Connection/${userid_a}/${userid_b}/roomkey`);
     return lastValueFrom(res);
   }
 
   public unMatch(userid: string, matchuserid: string): Promise<IRestMessage> {
-    const res = this._httpClient.delete<IRestMessage>(`http://localhost:3000/api/Match/${userid}/match/${matchuserid}`);
+    const res = this._httpClient.delete<IRestMessage>(`http://localhost:3000/api/Connection/${userid}/match/${matchuserid}`);
     return lastValueFrom(res);
   }
 

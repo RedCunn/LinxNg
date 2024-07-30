@@ -59,9 +59,9 @@ export class SigninComponent {
     }
   }
 
-  async getMyMatches(userid: string) {
+  async getMyConnections(userid: string) {
     try {
-      const res = await this.restSvc.getMyMatches(userid)
+      const res = await this.restSvc.getMyConnections(userid)
       if (res.code === 0) {
         const matches: IConnection[] = res.userdata;
 
@@ -131,13 +131,8 @@ async getAllChainsGroupedByAdmin (userid : string){
       this.socketSvc.initUserRoom(user.userid);
 
       await this.getAllMyLinxs(user)
-      await this.getMyMatches(user.userid)
-      //!CARGAR EXTENTS E INICIAR ROOMS CUANDO EL USER ACCEDA A LA CADENA COMPARTIDA
-      //await this.getChainExtents(user.userid)
-      //!CARGAR EN USERHOME 
-      //this.groupLinxsAndExtentsOnChains(user)
-      //this.setExtendedChainKeys(user.userid)
-      await this.getAllChainsGroupedByAdmin(user.userid)
+      await this.getMyConnections(user.userid)
+      
       this.socketSvc.userLogin(user.account._id!, user.account.linxname);
       this.utilsvc.joinRooms(this.userRooms);
       this.utilsvc.joinRooms(this.chainRooms);

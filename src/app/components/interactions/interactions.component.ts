@@ -10,6 +10,7 @@ import { IAccount } from '../../models/account/IAccount';
 import { IArticle } from '../../models/account/IArticle';
 import * as interactions from '../../models/account/IInteractions';
 import { IChain } from '../../models/chain/IChain';
+import { IConnection } from '../../models/account/IConnection';
 
 @Component({
   selector: 'app-interactions',
@@ -19,7 +20,7 @@ import { IChain } from '../../models/chain/IChain';
   styleUrl: './interactions.component.scss'
 })
 export class InteractionsComponent implements OnInit, OnDestroy {
-  
+
 
   @Input() isOpen = signal(false)
 
@@ -36,47 +37,62 @@ export class InteractionsComponent implements OnInit, OnDestroy {
   public _user!: IUser | null;
   private destroy$ = new Subject<void>();
 
-  public chainInvites: Array<interactions.IChainInvite> = [];
-  public newsOnChain : Array<interactions.INewOnChain> = [];
-  public newConnections : Array<interactions.INewConnection> = [];
-  public usersOffChain : Array<interactions.IUserOffChain> = [];
+  public interactionsInbox: Array<interactions.Interaction> = [];
 
-  public interactionsInbox : Array <interactions.Interaction> = [];
+  public currentDate: Date = new Date();
 
-  public currentDate : Date = new Date();
+  ngOnInit(): void {
+    this.websocketsvc.getInteractions().pipe(takeUntil(this.destroy$))
+      .subscribe(data => {
 
+        switch (data.type) {
+          case 'connection':
+            console.log('FULL MATCH :::::::::::::::::', data)
+            let tempId = this.utilsvc.generateRoomkey();
+            this.websocketsvc.requestInitChat(data.from.userid, this._user?.userid!, tempId);
+            let connection: IConnection = { connectedAt: this.currentDate.toISOString(), active: true, roomkey: tempId, account: data.from }
+            let newConn = new interactions.NewConnection(tempId, this.currentDate.toISOString(), data.from, this._user?.userid!, connection);
 
-  async removeInteractionFromInbox(interactionId : string){
+            
+            
+            break;
+          default:
+            break;
+        }
+
+      })
+  }
+
+  async removeInteractionFromInbox(interactionId: string) {
     try {
-      
+
     } catch (error) {
-      
+
     }
   }
 
-  async emptyInbox(){
+  async emptyInbox() {
     try {
-      
+
     } catch (error) {
-      
+
     }
   }
 
-  openChain(chain : IChain){
-    
+  openChain(chain: IChain) {
+
   }
 
-  goToProfile(account : IAccount){
+  goToProfile(account: IAccount) {
     this.signalStorageSvc.StoreLinxData(account);
     this.router.navigateByUrl(`/Linx/profile/${account.linxname}`)
   }
 
-  ngOnInit(): void {
-    throw new Error('Method not implemented.');
-  }
+
   ngOnDestroy(): void {
-    throw new Error('Method not implemented.');
+    this.destroy$.next();
+    this.destroy$.complete();
   }
-  
+
 
 }
