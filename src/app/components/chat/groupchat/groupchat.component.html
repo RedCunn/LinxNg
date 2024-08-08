@@ -6,7 +6,7 @@
         <!-- Modal header -->
         <div class="flex justify-between p-4 md:p-5 rounded-t w-full">
             <h2 class="conversationame">
-                {{groupChatRef.conversationname}}
+                {{groupChatRef.name}}
             </h2>
             <button type="button" style="font-size: 1.5rem;"
                 class="bg-transparent rounded-lg ms-auto me-3 inline-flex justify-center items-center "
@@ -27,7 +27,7 @@
                         <span class="text-sm font-semibold text-gray-900 ">{{item.sender.linxname}}</span>
                         <span class="text-xs font-extralight text-gray-500"
                             style="font-style: italic;">{{this.formateDate(item.timestamp)}}</span>
-                        @if(item.sender.userid === this.user.userid && item.isRead){
+                        @if(item.sender.userid === this.user.userid && everyoneHasRead(item)){
                         <span style="color: lightblue;" class="material-symbols-outlined">done_all</span>
                         }
                     </div>
@@ -36,7 +36,7 @@
             </div>
             }@empty {
             <p class="font-extralight" style="font-style: italic; color: fuchsia;">Escribe tu primer mensaje en
-                {{this.groupChatRef.conversationname}}...</p>
+                {{this.groupChatRef.name}}...</p>
             }
 
         </div>

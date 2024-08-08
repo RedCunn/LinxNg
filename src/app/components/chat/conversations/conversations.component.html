@@ -27,7 +27,11 @@
                                                 link
                                             </span>
                                         </p>
-                                        <p>{{groupchat.conversationname}}</p>
+                                        <p>{{groupchat.name}}</p>
+                                        @let count = this.countMessagesUnread(groupchat.messages, 'group');
+                                        @if(count > 0){
+                                            <div class="notreadcount"><p>{{count}}</p></div>   
+                                        }
                                     </div>
                                 </button>
                             </li>
@@ -41,10 +45,11 @@
                                                 link
                                             </span>
                                         </p>
-                                        <p>{{chat.conversationname}}</p>
+                                        <p>{{chat.name}}</p>
                                     </div>
-                                    @if(this.countMessagesUnread(chat.messages) > 0){
-                                        <div class="notreadcount"><p>{{this.countMessagesUnread(chat.messages)}}</p></div>   
+                                    @let count = this.countMessagesUnread(chat.messages, 'chat');
+                                    @if(count > 0){
+                                        <div class="notreadcount"><p>{{count}}</p></div>   
                                     }
                                 </button>
                             </li>

@@ -4,7 +4,7 @@ import { SignalStorageService } from '../../../services/signal-storage.service';
 import { RestnodeService } from '../../../services/restnode.service';
 import { WebsocketService } from '../../../services/websocket.service';
 import { UtilsService } from '../../../services/utils.service';
-import { IMessage } from '../../../models/chat/IMessage';
+import { ChatMessage, GroupMessage, IMessage } from '../../../models/chat/IMessage';
 import { Subject, takeUntil } from 'rxjs';
 import { IUser } from '../../../models/account/IUser';
 
@@ -29,28 +29,31 @@ export class GroupchatComponent implements OnInit, OnDestroy , AfterContentInit{
   private socketSvc = inject(WebsocketService);
   private utilsvc = inject(UtilsService);
 
-  public groupChat :  IGroupChat = {conversationname:'', groupParticipants: [], messages: [], roomkey: ''};
-  public message: IMessage = { isRead : false, text: '', timestamp: '', sender: { userid: '', linxname: '' }};
+  public groupChat :  IGroupChat = {name:'', groupParticipants: [], messages: [], roomkey: '', chainId : ''};
+  public readers : {userid : string , isRead : boolean}[] = [];
+  public message!: GroupMessage;
   public user!: IUser;
 
   private destroy$ = new Subject<void>();
-  public messages: IMessage[] = [];
+  public messages: GroupMessage[] = [];
   private messID : string  = '';
 
   constructor(private ref: ChangeDetectorRef) {
     this.socketSvc.getMessages().pipe(
       takeUntil(this.destroy$)
-    ).subscribe(data => {
-      console.log('constr chat getMessages : ', data)
-      this.messages.push(data);
+    ).subscribe((data: ChatMessage | GroupMessage)=> {
+      console.log('constr groupchat getMessages : ', data)
+      if (this.isGroupMessage(data)) {
+        this.messages.push(data as GroupMessage);
+      }
       this.ref.detectChanges();
       this.scrollToBottom();
     });
   }
 
   setMessage(event: any) {
+    this.message = new GroupMessage(this.readers, {userid : this.user.userid, linxname : this.user.account.linxname},this.groupChatRef.chainId,'', new Date().toISOString())
     this.message.text = event.target.value;
-    this.message.timestamp = new Date().toISOString();
   }
 
   formateDate (date : string) : string{
@@ -72,7 +75,7 @@ export class GroupchatComponent implements OnInit, OnDestroy , AfterContentInit{
   async storeMessage(message: IMessage) {
     try {
       console.log('STORING MESSAGE ----> ', { chat: { groupParticipants: this.groupChatRef.groupParticipants, message: message }, roomkey: this.groupChatRef.roomkey })
-      const res = await this.restSvc.StoreMessageGroupChat({ groupParticipants: this.groupChatRef.groupParticipants, message: message }, this.groupChatRef.roomkey );
+      const res = await this.restSvc.storeGroupMessage(message, this.groupChatRef.roomkey );
       console.log('Storing message response : ',res.others)
       const updatedChat : IGroupChat = res.others as IGroupChat;
       updatedChat.messages.sort((a, b) => new Date(b.timestamp).getTime() - new Date(a.timestamp).getTime());
@@ -93,11 +96,28 @@ export class GroupchatComponent implements OnInit, OnDestroy , AfterContentInit{
 
   initializeChat() {
     this.user = this.signalStorageSvc.RetrieveUserData()()!;
-    this.message.sender = { userid: this.user.userid, linxname: this.user.account.linxname }
     if (this.groupChatRef.messages !== null ) {
       this.messages = this.groupChatRef.messages;
       this.scrollToBottom();
     }
+    this.groupChatRef.groupParticipants.forEach(parti => {
+      const reader = {userid : parti.userid , isRead : false}
+      this.readers.push(reader);
+    });
+  }
+
+  everyoneHasRead(message : GroupMessage) : boolean{
+    let someone = message.readBy.some(user => user.isRead === false)
+
+    if(someone){
+      return false;
+    }else{
+      return true;
+    }
+  }
+
+  private isGroupMessage(message: ChatMessage | GroupMessage): message is GroupMessage {
+    return (message as GroupMessage).readBy !== undefined;
   }
 
   ngOnInit(){

@@ -172,9 +172,9 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
   
     async setChat() {
       this.roomkey = this.utilsvc.setRoomKey(this.userdata?.userid! ,this.linxdata?.userid!);
-      this.chat = { conversationname: this.linxdata?.linxname!, participants: { userid_a: this.userdata?.userid!, userid_b: this.linxdata?.userid! }, roomkey: this.roomkey, messages: [] }
+      this.chat = { name: this.linxdata?.linxname!, participants: { userid_a: this.userdata?.userid!, userid_b: this.linxdata?.userid! }, roomkey: this.roomkey, messages: [] }
       try {
-        const res = await this.restSvc.getMyChats(this.userdata?.userid!, this.linxdata?.userid!);
+        const res = await this.restSvc.getChats(this.userdata?.userid!);
         console.log('RESPONSE GETTING CHATS HOME : ', res)
         if (res.code === 0) {
           const _resMess: IChat[] = res.others;

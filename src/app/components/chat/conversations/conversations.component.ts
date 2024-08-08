@@ -1,10 +1,10 @@
-import { Component, Input, OnDestroy, OnInit, ViewChild, ViewContainerRef, inject, signal} from '@angular/core';
+import { Component, Input, OnDestroy, OnInit, ViewChild, ViewContainerRef, inject, signal } from '@angular/core';
 import { MatIcon } from '@angular/material/icon';
 import { GroupchatComponent } from '../groupchat/groupchat.component';
 import { SignalStorageService } from '../../../services/signal-storage.service';
 import { IChat } from '../../../models/chat/IChat';
 import { UtilsService } from '../../../services/utils.service';
-import { IMessage } from '../../../models/chat/IMessage';
+import { ChatMessage, GroupMessage, IMessage, Message } from '../../../models/chat/IMessage';
 import { WebsocketService } from '../../../services/websocket.service';
 import { Subject, takeUntil } from 'rxjs';
 import { IGroupChat } from '../../../models/chat/IGroupChat';
@@ -18,22 +18,22 @@ import { IUser } from '../../../models/account/IUser';
   templateUrl: './conversations.component.html',
   styleUrl: './conversations.component.scss'
 })
-export class ConversationsComponent implements OnDestroy{
-  
+export class ConversationsComponent implements OnDestroy {
+
   @Input() isOpen = signal(false);
-  @Input() chats! : IChat[];
-  @Input() groupchats! : IGroupChat[];
+  @Input() chats!: IChat[];
+  @Input() groupchats!: IGroupChat[];
   private signalStorageSvc = inject(SignalStorageService);
   private utilsvc = inject(UtilsService);
   private socketsvc = inject(WebsocketService);
 
   public isChatOpen = signal(false);
   public isGroupChatOpen = signal(false);
-  private _user! : IUser;
-  public chatToOpen : IChat = {conversationname : '',participants : {userid_a : '', userid_b : ''},roomkey : '',messages : []}; 
-  public groupChatToOpen : IGroupChat = {conversationname : '',groupParticipants : [],roomkey : '',messages : []}; 
-  public messageCountMap : Map<string , number> = new Map<string,number>();
-  
+  private _user!: IUser;
+  public chatToOpen: IChat = { name: '', participants: { userid_a: '', userid_b: '' }, roomkey: '', messages: [] };
+  public groupChatToOpen: IGroupChat = { name: '', groupParticipants: [], roomkey: '', messages: [] , chainId : ''};
+  public messageCountMap: Map<string, number> = new Map<string, number>();
+
   @ViewChild('chatcompoContainer', { read: ViewContainerRef, static: true })
   public chatcompoContainer!: ViewContainerRef;
   @ViewChild('groupChatContainer', { read: ViewContainerRef, static: true })
@@ -41,7 +41,7 @@ export class ConversationsComponent implements OnDestroy{
 
   private destroy$ = new Subject<void>();
 
-  constructor(){
+  constructor() {
     this._user = this.signalStorageSvc.RetrieveUserData()()!;
 
     this.socketsvc.getReadMessages().pipe(
@@ -68,42 +68,63 @@ export class ConversationsComponent implements OnDestroy{
     comporef.setInput('groupChatRef', this.groupChatToOpen);
   }
 
-  setChat(chat : IChat) {
-      this.chatToOpen = chat;
-      let chatuserid = chat.participants.userid_a === this._user.userid ? chat.participants.userid_b : chat.participants.userid_a;
-      let roomkey = this.utilsvc.setRoomKey(this._user.userid , chatuserid);
-      this.chatToOpen.roomkey = roomkey;
+  setChat(chat: IChat) {
+    this.chatToOpen = chat;
+    let chatuserid = chat.participants.userid_a === this._user.userid ? chat.participants.userid_b : chat.participants.userid_a;
+    let roomkey = this.utilsvc.setRoomKey(this._user.userid, chatuserid);
+    this.chatToOpen.roomkey = roomkey;
   }
 
-  setGroupChat(groupchat : IGroupChat){
+  setGroupChat(groupchat: IGroupChat) {
     this.groupChatToOpen = groupchat;
   }
 
-  countMessagesUnread(messages : IMessage []) : number{
+  countMessagesUnread(messages: ChatMessage[] | GroupMessage[], type: string): number {
     let count = 0;
-    
-    messages.forEach(m => {
-      if(!m.isRead && m.sender.userid !== this._user.userid){
-        count ++;
-      }
-    })
+
+    switch (type) {
+      case 'chat':
+        if (messages.every(m => 'isRead' in m)) {
+          messages.forEach((m: ChatMessage) => {
+            if (!m.isRead && m.to === this._user.userid) {
+              count++;
+            }
+          });
+        }
+        break;
+      case 'group':
+        if (messages.every(m => 'readBy' in m)) {
+          messages.forEach((m: GroupMessage) => {
+            
+            m.readBy.forEach(user => {
+              if(user.userid === this._user.userid && !user.isRead){
+                count++;
+              }
+            })
+
+          });
+        }
+        break;
+      default:
+        break;
+    }
 
     return count;
   }
 
-  openChat(chat : IChat){
+  openChat(chat: IChat) {
     this.setChat(chat);
     this.loadChatComponent();
     this.isChatOpen.update(v => !v);
   }
 
-  openGroupChat(groupchat : IGroupChat){
+  openGroupChat(groupchat: IGroupChat) {
     this.setGroupChat(groupchat);
     this.loadGroupChatComponent();
     this.isGroupChatOpen.update(v => !v);
   }
-  
-  closeModal(){
+
+  closeModal() {
     this.isOpen.set(false);
   }
 

@@ -59,7 +59,7 @@ export class LinxsonchainComponent implements OnInit{
   private isChatOpen = signal(false);
   public showBreakChainAlert = signal<{[key : string]: boolean}>({});
   private setBreakAlertOpen : {[key : string]: boolean} = {};
-  public groupchat: IGroupChat = {conversationname : '',groupParticipants : [], roomkey : '', messages : []};  
+  public groupchat: IGroupChat = {name : '',groupParticipants : [], roomkey : '', messages : [], chainId: ''};  
 
   @ViewChild('chatContainer', { read: ViewContainerRef, static: true })
   public chatcompoContainer!: ViewContainerRef;
@@ -123,7 +123,7 @@ export class LinxsonchainComponent implements OnInit{
   }
 
   setChat(){
-    this.groupchat.conversationname = this.chainName;
+    this.groupchat.name = this.chainName;
     this.groupchat.roomkey = this.chainId;
     this.group.forEach(linx => {
       this.groupchat.groupParticipants?.push({userid : linx.userid, linxname : linx.linxname})

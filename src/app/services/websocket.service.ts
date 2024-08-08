@@ -1,6 +1,6 @@
 import { Injectable, inject } from '@angular/core';
 import { Socket, io } from 'socket.io-client';
-import { IMessage } from '../models/chat/IMessage';
+import { ChatMessage, GroupMessage, IMessage } from '../models/chat/IMessage';
 import { Observable } from 'rxjs';
 import { IAccount } from '../models/account/IAccount';
 
@@ -71,15 +71,15 @@ export class WebsocketService {
     })  
   }
 
-  sendMessage( message : IMessage, roomkey : string) {
+  sendMessage( message : ChatMessage | GroupMessage, roomkey : string) {
     socket.emit("chat_message", {message, roomkey}, (res: any) => {
       console.log('RES OK : ', res.status)
     }
     )
   }
-  getMessages() {
-    return new Observable<IMessage>(observer => {
-      const messageHandler = (data: IMessage) => {
+  getMessages() : Observable<ChatMessage | GroupMessage>  {
+    return new Observable< ChatMessage | GroupMessage>(observer => {
+      const messageHandler = (data:  ChatMessage | GroupMessage) => {
         console.log('socketsvc get_message: ', data);
         observer.next(data);
       };
@@ -88,7 +88,7 @@ export class WebsocketService {
     })  
   };
 
-  markMessageAsRead (message : IMessage , userid : string, senderid : string){
+  markMessageAsRead (message :  ChatMessage | GroupMessage , userid : string, senderid : string){
     console.log('MESSAGE TO MARK : ', message)
       socket.emit("messageRead", {message , userid, senderid}, (res: any) => {
         console.log('RES OK : ', res.status)
@@ -105,15 +105,13 @@ export class WebsocketService {
       socket.on('get_your_message_read', messageHandler);
     })   
   }
-
+  //Full Connection, Chain Invite , Chain invite Accepted, Chain invite Rejected, New onChain , New offChain
   getInteractions(){
-    //Full Connection, Chain Invite , Chain invite Accepted, Chain invite Rejected, New onChain , New offChain
     let obs = new Observable<{type : string , from : IAccount , element? : {chainid : string , chainname : string} }>(observer => {
       socket.on('get_interaction', (data) => {
         observer.next(data);
       });
     })
-
     return obs;
   }
 

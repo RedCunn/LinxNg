@@ -21,7 +21,7 @@
                 <div class="modalbody">
                     <ul>
                         @for (inter of interactionsInbox; track inter.id) {
-                            @switch (inter.type) {
+                            <!-- @switch (inter.type) {
                                 @case ('INVITE') {
                                     <li>
                                         <p>⛓️ {{inter.fromAccount.linxname}} te invita a unirte a la cadena {{inter.chain.chainname}}</p>
@@ -54,10 +54,10 @@
                                                     disabled_by_default
                                                 </span>
                                             </button>
-                                            @if (inter.account.userid !== this._user?.userid) {
-                                                <p>🔗 {{inter.account.linxname}} es ahora linx de la cadena {{inter.chain.chainName}}</p>
+                                            @if (inter.fromAccount.userid !== this._user?.userid) {
+                                                <p>🔗 {{inter.fromAccount.linxname}} es ahora linx de la cadena {{inter.chainName}}</p>
                                             }@else {
-                                                <p>🔗 Ahora eres linx en la cadena {{inter.chain.chainName}} 🔗</p>
+                                                <p>🔗 Ahora eres linx en la cadena {{inter.chainName}} 🔗</p>
                                             }
                                         </li>
                                 }
@@ -91,7 +91,7 @@
                                         </div>
                                     </li>
                                 }
-                            }
+                            } -->
                         }
                     </ul>
                 </div>

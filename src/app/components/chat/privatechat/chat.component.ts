@@ -7,7 +7,7 @@ import { RestnodeService } from '../../../services/restnode.service';
 import { WebsocketService } from '../../../services/websocket.service';
 import { UtilsService } from '../../../services/utils.service';
 import { IGroupChat } from '../../../models/chat/IGroupChat';
-import { IMessage } from '../../../models/chat/IMessage';
+import { ChatMessage, GroupMessage, IMessage } from '../../../models/chat/IMessage';
 import { IUser } from '../../../models/account/IUser';
 import { FlowbiteService } from '../../../services/flowbite.service';
 
@@ -33,28 +33,30 @@ export class ChatComponent implements OnInit, OnDestroy , AfterContentInit{
   private socketSvc = inject(WebsocketService);
   private utilsvc = inject(UtilsService);
 
-  public chat: IChat = {conversationname:'', participants: { userid_a: '', userid_b: '' }, messages: [], roomkey: ''};
-  public groupChat :  IGroupChat = {conversationname:'', groupParticipants: [], messages: [], roomkey: ''};
-  public message: IMessage = { isRead : false, text: '', timestamp: '', sender: { userid: '', linxname: '' }};
+  public chat: IChat = {name:'', participants: { userid_a: '', userid_b: '' }, messages: [], roomkey: ''};
+  public groupChat :  IGroupChat = {name:'', groupParticipants: [], messages: [], roomkey: '', chainId : ''};
+  public message: ChatMessage = { isRead : false, text: '', timestamp: '', sender: { userid: '', linxname: '' }, to : ''};
   public user!: IUser;
   public receiveruserid: string = '';
 
   private destroy$ = new Subject<void>();
-  public messages: IMessage[] = [];
+  public messages: ChatMessage[] = [];
   private messID : string  = '';
 
   constructor(private ref: ChangeDetectorRef) {
     this.socketSvc.getMessages().pipe(
       takeUntil(this.destroy$)
-    ).subscribe(data => {
+    ).subscribe((data: ChatMessage | GroupMessage) => {
       console.log('constr chat getMessages : ', data)
-      if(this.isOpen() && data.sender.userid !== this.user.userid){
-        data.isRead = true;
-        this.socketSvc.markMessageAsRead(data, this.user.userid, data.sender.userid);
-      }else{
-        data.isRead = false;
+      if(this.isChatMessage(data)){
+        if(this.isOpen() && data.sender.userid !== this.user.userid){
+          data.isRead = true;
+          this.socketSvc.markMessageAsRead(data, this.user.userid, data.sender.userid);
+        }else{
+          data.isRead = false;
+        }
+        this.messages.push(data);
       }
-      this.messages.push(data);
       this.ref.detectChanges();
       this.scrollToBottom();
     });
@@ -73,7 +75,7 @@ export class ChatComponent implements OnInit, OnDestroy , AfterContentInit{
     })
     console.log('messages to update read : ', readMessages)
     try {
-      const res = await this.restSvc.markMessagesAsRead(readMessages , this.user.userid!);
+      const res = await this.restSvc.markMessagesAsRead(this.user.userid , this.chatRef.roomkey);
       if (res.code === 0) {
         console.log('Messages marked at chatmodal : ', res.message);
         this.messages.forEach(m =>  {
@@ -105,7 +107,7 @@ export class ChatComponent implements OnInit, OnDestroy , AfterContentInit{
       console.log('SENDING MESSAGE ------> ', this.message)
       this.messageTextarea.nativeElement.value = '';
       await this.storeMessage(this.message);
-      this.message._id = this.messID;
+      this.message.id = this.messID;
       this.socketSvc.sendMessage( this.message, this.chatRef.roomkey);
     }
   }
@@ -113,12 +115,12 @@ export class ChatComponent implements OnInit, OnDestroy , AfterContentInit{
   async storeMessage(message: IMessage) {
     try {
       console.log('STORING MESSAGE ----> ', { chat: { participants: { userid_a: this.user.userid, userid_b: this.receiveruserid }, message: message }, roomkey: this.chatRef.roomkey })
-      const res = await this.restSvc.storeMessage({ participants: { userid_a: this.user.userid, userid_b: this.receiveruserid }, message: message }, this.chatRef.roomkey);
+      const res = await this.restSvc.storeMessage(message , this.chatRef.roomkey);
       console.log('Storing message response : ',res.others)
 
       const updatedChat : IChat = res.others as IChat;
       updatedChat.messages.sort((a, b) => new Date(b.timestamp).getTime() - new Date(a.timestamp).getTime());
-      this.messID = updatedChat.messages[0]._id!;
+      this.messID = updatedChat.messages[0].id!;
     } catch (error) {
       console.log(error)
     }
@@ -138,6 +140,10 @@ export class ChatComponent implements OnInit, OnDestroy , AfterContentInit{
       this.messages = this.chatRef.messages;
       this.scrollToBottom();
     }
+  }
+
+  private isChatMessage(message: ChatMessage | GroupMessage): message is ChatMessage {
+    return (message as ChatMessage).isRead !== undefined;
   }
 
   ngAfterContentInit(): void {

@@ -1,8 +1,8 @@
-import { IMessage } from "./IMessage";
+import { ChatMessage } from "./IMessage";
 
 export interface IChat {
-    conversationname : string;
+    name : string;
     participants : {userid_a: string; userid_b : string;};
-    messages : Array<IMessage>;
+    messages : Array<ChatMessage>;
     roomkey : string;
 }

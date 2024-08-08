@@ -73,7 +73,7 @@ export class MyChainComponent implements OnInit{
 
   async retrieveGroupChat(){
     try {
-      const res = await this.restsvc.getMyChats( this.user?.userid!, null);
+      const res = await this.restsvc.getChats( this.user?.userid!);
       if(res.code === 0){
         this.groupChats = res.userdata as IGroupChat[];
         console.log('GROUP CHATS ON LINXSONCHAIN : ', this.groupChats)

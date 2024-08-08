@@ -212,14 +212,19 @@ export class RestnodeService {
   //#endregion
 
   //#region -------------------------------- CHAT ---------------------------------
-  public getMyChats(userid: string, linxuserid: string | null): Promise<IRestMessage> {
-    const res = this._httpClient.get<IRestMessage>(`http://localhost:3000/api/Account/${userid}/chat/${linxuserid}`);
+  public getChats(userid : string): Promise<IRestMessage> {
+    const res = this._httpClient.get<IRestMessage>(`http://localhost:3000/api/Chat/user/${userid}`);
     return lastValueFrom(res);
   }
 
-  public storeMessage(chat: { participants: { userid_a: string, userid_b: string }, message: IMessage }, roomkey: string): Promise<IRestMessage> {
-    const res = this._httpClient.put<IRestMessage>(`http://localhost:3000/api/Account/chat/${roomkey}`,
-      chat,
+  public getChat(roomkey : string): Promise<IRestMessage> {
+    const res = this._httpClient.get<IRestMessage>(`http://localhost:3000/api/Chat/${roomkey}`);
+    return lastValueFrom(res);
+  }
+
+  public storeMessage(message: IMessage, roomkey: string): Promise<IRestMessage> {
+    const res = this._httpClient.put<IRestMessage>(`http://localhost:3000/api/Chat/${roomkey}`,
+      message,
       {
         headers: new HttpHeaders({ 'Content-Type': 'application/json' })
       })
@@ -227,9 +232,10 @@ export class RestnodeService {
     return lastValueFrom(res);
   }
 
-  public StoreMessageGroupChat(chat: { groupParticipants: Array<{userid : string, linxname : string}>, message: IMessage }, roomkey: string): Promise<IRestMessage> {
-    const res = this._httpClient.put<IRestMessage>(`http://localhost:3000/api/Account/groupchat/${roomkey}`,
-      chat,
+  
+  public storeGroupMessage(message: IMessage, roomkey: string): Promise<IRestMessage> {
+    const res = this._httpClient.put<IRestMessage>(`http://localhost:3000/api/Chat/group/${roomkey}`,
+      message,
       {
         headers: new HttpHeaders({ 'Content-Type': 'application/json' })
       })
@@ -237,9 +243,8 @@ export class RestnodeService {
     return lastValueFrom(res);
   }
 
-  public markMessagesAsRead(messages : IMessage[], userid : string): Promise<IRestMessage> {
-    const res = this._httpClient.put<IRestMessage>(`http://localhost:3000/api/Account/${userid}/chat`,
-      messages,
+  public markMessagesAsRead(userid : string, roomkey : string): Promise<IRestMessage> {
+    const res = this._httpClient.put<IRestMessage>(`http://localhost:3000/api/Chat/${roomkey}/user/${userid}`,{},
       {
         headers: new HttpHeaders({ 'Content-Type': 'application/json' })
       })

@@ -6,7 +6,7 @@ import { initTooltips } from 'flowbite';
 import { SignalStorageService } from '../../../services/signal-storage.service';
 import { RestnodeService } from '../../../services/restnode.service';
 import { IChat } from '../../../models/chat/IChat';
-import { IMessage } from '../../../models/chat/IMessage';
+import { ChatMessage, IMessage } from '../../../models/chat/IMessage';
 import { IGroupChat } from '../../../models/chat/IGroupChat';
 import { IUser } from '../../../models/account/IUser';
 import { InteractionsComponent } from '../../interactions/interactions.component';
@@ -65,8 +65,8 @@ export class FooterComponent implements AfterViewInit, OnInit{
     for (const [key, chatList] of this.chatsMap.entries()) {
       if (chatList.length > 1) {
         const unifiedChat: IChat = {
-          conversationname: chatList[0].conversationname,
-          messages: chatList.reduce((accumulator: IMessage[], currentChat: IChat) => accumulator.concat(currentChat.messages), []),
+          name: chatList[0].name,
+          messages: chatList.reduce((accumulator: ChatMessage[], currentChat: IChat) => accumulator.concat(currentChat.messages), []),
           participants: chatList[0].participants,
           roomkey: key
         };
@@ -82,14 +82,24 @@ export class FooterComponent implements AfterViewInit, OnInit{
 
   }
 
+  differentiateChats(userchats : IChat [] | IGroupChat []){
+    userchats.forEach(chat => {
+      if((chat as IGroupChat).groupParticipants !== undefined){
+        this.groupchats.push(chat as IGroupChat)
+      }else{
+        this.chats.push(chat as IChat)
+      }
+    })
+  }
+
   async ngOnInit() : Promise<void>{
     this.flowbitesvc.loadFlowbite()
     
     try {
-      const res = await this.restSvc.getMyChats( this._user?.userid!, null);
+      const res = await this.restSvc.getChats( this._user?.userid!);
       if(res.code === 0){
-        this.chats = res.others as IChat[]; 
-        this.groupchats = res.userdata as IGroupChat[];
+        const userchats = res.others;
+        this.differentiateChats(userchats);
         this.chatCompression();
         console.log('CHATS comprimidos EN FOOTER ....', this.compressedChats)
         console.log('CHATS DE GRUPO : ', this.groupchats)
