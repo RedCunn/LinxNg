@@ -27,7 +27,7 @@ export class MatchcarouselComponent implements OnInit {
   private utilsvc : UtilsService = inject(UtilsService);
 
   public userdata!: IUser | null;
-  public candidateProfiles!: IUser[] | null;
+  public candidateProfiles: IUser[] | null = [];
 
   public picArticle! : IArticle;
 
@@ -46,23 +46,31 @@ export class MatchcarouselComponent implements OnInit {
 
   async setCandidateProfiles() {
     try {
+      console.log('entering shuffle .....')
       const response: IRestMessage = await this.restsvc.shuffleCandidateProfiles(this.userdata?.userid!);
       console.log('RESPONSE SETTING CANDIDATE PROFILES : ', response)
       if (response.code === 0) {
         
         const _accountsArticles : IArticle[] = response.userdata as IArticle[];
-        const _accounts = response.others.accounts as IAccount[];
-        if(_accounts.length > 0){
-          const wholeAccounts : IAccount[] = this.utilsvc.putArticleObjectsIntoAccounts(_accounts , _accountsArticles)
+        const candidates : Array<{candidate : {account : IAccount , profile : IUser}}> | []= response.others;
 
-          const _users = response.others.users as IUser[];
-          const wholeUsers : IUser[] = this.utilsvc.integrateAccountsIntoUsers(wholeAccounts , _users);
+        if(candidates.length > 0){
+
+          candidates.forEach(candi => {
+            const candidate : IUser = candi.candidate.profile;
+            candidate.account = candi.candidate.account;
   
-          this.candidateProfiles = wholeUsers;
+            this.candidateProfiles?.push(candidate)
+          });
+
+          const wholeProfiles : IUser[] = this.utilsvc.putArticleObjectsIntoUsers(_accountsArticles , this.candidateProfiles!) as IUser[];
+
+          this.candidateProfiles = wholeProfiles;
   
           if(this.candidateProfiles[this.currentIndex()].account.articles !== undefined && this.candidateProfiles[this.currentIndex()].account.articles!.length > 0){
             this.setProfilePicArticle(this.candidateProfiles[this.currentIndex()])
           }
+
         }else{
           this.candidateProfiles = []; 
         }
@@ -141,6 +149,7 @@ export class MatchcarouselComponent implements OnInit {
     this.router.navigateByUrl(`/Linx/perfil/${linx.account.linxname}`);
   }
   async ngOnInit(): Promise<void> {
+    console.log('on carousel init : ')
     this.flowbitesvc.loadFlowbite()
     initCarousels();
     await this.setCandidateProfiles();

@@ -17,14 +17,15 @@ export class UtilsService {
 
   private socketSvc: WebsocketService = inject(WebsocketService);
   private signalSvc: SignalStorageService = inject(SignalStorageService);
-  private restsvc : RestnodeService = inject(RestnodeService);
+  private restsvc: RestnodeService = inject(RestnodeService);
   private currentDate: Date = new Date();
 
   constructor() { }
 
-  public putArticleObjectsIntoAccounts(accounts: IAccount[], articles: IArticle[]): IAccount[] {
+  // ------------------ REVIEWED 👌👌👌👌👌👌👌👌👌👌👌👌👌👌👌👌-----------------------------------------------------------------
+  public putArticleObjectsIntoUsers(articles: IArticle[], users: IUser[]): IUser[] {
+
     let articlesByUserid: { [key: string]: IArticle[] } = {};
-    let wholeAccounts = accounts;
 
     articles.forEach(art => {
       if (!articlesByUserid[art.userid!]) {
@@ -33,24 +34,52 @@ export class UtilsService {
       articlesByUserid[art.userid!].push(art);
     })
 
-    wholeAccounts.forEach(acc => {
-      if (acc.articles && acc.articles.length > 0) {
-        acc.articles = [];
+    const wholeUsers : IUser[] = users.map(user => {
+        user.account.articles = articlesByUserid[user.userid] || [];
+        if(user.account.articles.length > 0){
+          const profilePicArticleIndex = articlesByUserid[user.userid].findIndex(article => article.useAsProfilePic === true);
+          if (profilePicArticleIndex !== -1) {
+            const profilePicArticle = user.account.articles.splice(profilePicArticleIndex, 1)[0];
+            user.account.articles.unshift(profilePicArticle);
+          }
+        }
+        
+        return user;
+    })
+
+    return wholeUsers;
+  }
+
+  public putArticleObjectsIntoAccounts(articles: IArticle[], accounts: IAccount[]): IAccount[] {
+    let articlesByUserid: { [key: string]: IArticle[] } = {};
+
+    articles.forEach(art => {
+      if (!articlesByUserid[art.userid!]) {
+        articlesByUserid[art.userid!] = [];
+      }
+      articlesByUserid[art.userid!].push(art);
+    })
+
+    const wholeAccounts: IAccount[] = accounts.map(acc => {
         acc.articles = articlesByUserid[acc.userid] || [];
         const profilePicArticleIndex = articlesByUserid[acc.userid].findIndex(article => article.useAsProfilePic === true);
         if (profilePicArticleIndex !== -1) {
           const profilePicArticle = acc.articles.splice(profilePicArticleIndex, 1)[0];
           acc.articles.unshift(profilePicArticle);
         }
-      }
+      return acc;  
     })
+
     return wholeAccounts;
+
   }
 
-  public joinRoom (room :{userid : string , roomkey : string}){
+  //----------------------------------------------------👌👌👌👌👌👌👌👌👌👌👌👌---------------------------------------------------------------
+
+  public joinRoom(room: { userid: string, roomkey: string }) {
     this.socketSvc.initChat(room.roomkey);
     const storedkeys = new Map<string, string>(this.signalSvc.RetrieveRoomKeys()());
-    storedkeys.set(room.userid , room.roomkey);
+    storedkeys.set(room.userid, room.roomkey);
     this.signalSvc.StoreRoomKey(room)
   }
 
@@ -79,24 +108,24 @@ export class UtilsService {
 
   }
 
-  groupMyLinxsOnChains (userdata : IUser , myLinxs : IAccount[]) :Array<IChain>{
-    
+  groupMyLinxsOnChains(userdata: IUser, myLinxs: IAccount[]): Array<IChain> {
+
     const linxMap: Map<string, IAccount> = new Map();
-  
-    let myChainGroups : Array<IChain> = [];
+
+    let myChainGroups: Array<IChain> = [];
 
     return myChainGroups;
   }
 
-  groupLinxsInSharedChains (userdata : IUser , linxdata : IAccount) : Array<IChain>{
+  groupLinxsInSharedChains(userdata: IUser, linxdata: IAccount): Array<IChain> {
 
-    let myLinxs : IAccount[] = this.signalSvc.RetrieveMyLinxs()()!;
-    let chainIDs : Set<string> = new Set<string>();
-    let linxMap :  Map<string, string> = new Map<string,string>();
+    let myLinxs: IAccount[] = this.signalSvc.RetrieveMyLinxs()()!;
+    let chainIDs: Set<string> = new Set<string>();
+    let linxMap: Map<string, string> = new Map<string, string>();
 
-    let sharedChainsGroups : Array<IChain> = [];
+    let sharedChainsGroups: Array<IChain> = [];
 
-    
+
     return sharedChainsGroups;
   }
 
@@ -186,15 +215,15 @@ export class UtilsService {
 
     attributesMap.set('work', work)
 
-    let langs= '';
-    if(profile.languages.length > 1){
+    let langs = '';
+    if (profile.languages.length > 1) {
       profile.languages.forEach(lang => {
         langs = langs + ', ' + lang
       })
-    }else{
+    } else {
       langs = profile.languages[0]
     }
-    
+
     attributesMap.set('langs', langs)
 
     return attributesMap;
@@ -209,8 +238,8 @@ export class UtilsService {
     return sortedArticles;
   }
 
-  sortInteractionsDateDESC(interactions : Interaction[]){
-    
+  sortInteractionsDateDESC(interactions: Interaction[]) {
+
   }
 
   formatDateISOStringToLegible(date: string) {
@@ -248,7 +277,7 @@ export class UtilsService {
     const dateDay = dateObj.getDay();
 
     const weekdays: string[] = ['Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado']
-    const months : string[] = ['enero', 'febrero', 'marzo', 'abril', 'mayo', 'junio','julio','agosto','septiembre','octubre','noviembre','diciembre']
+    const months: string[] = ['enero', 'febrero', 'marzo', 'abril', 'mayo', 'junio', 'julio', 'agosto', 'septiembre', 'octubre', 'noviembre', 'diciembre']
 
     if (dateYear === this.currentDate.getFullYear() &&
       dateMonth === this.currentDate.getMonth() &&
@@ -268,20 +297,20 @@ export class UtilsService {
 
     const isThisWeek = this.isSameWeek(dateObj)
 
-    if(isThisWeek && !todayYestarday){
+    if (isThisWeek && !todayYestarday) {
       legibleDate = weekdays[dateDay] + ' a las '
     }
-    
-    if(!todayYestarday && !isThisWeek){
+
+    if (!todayYestarday && !isThisWeek) {
       let dateString = dateDate.toString()
-        let monthString = months[dateMonth]
-        if(dateDate < 10){
-          dateString = '0'+dateString
-        }
+      let monthString = months[dateMonth]
+      if (dateDate < 10) {
+        dateString = '0' + dateString
+      }
       if (this.currentDate.getFullYear() > dateYear) {
-        legibleDate = dateString + ' de ' + monthString +' de '+ dateYear.toString() + ' a las '
+        legibleDate = dateString + ' de ' + monthString + ' de ' + dateYear.toString() + ' a las '
       } else {
-        legibleDate = dateString + ' de ' + monthString + ' a las ' 
+        legibleDate = dateString + ' de ' + monthString + ' a las '
       }
     }
 
@@ -304,8 +333,8 @@ export class UtilsService {
     const startOfWeek = (date: Date) => {
       const day = date.getDay();
       const diff = date.getDate() - day + (day === 0 ? -6 : 1);
-      const start  = new Date(date.setDate(diff));
-      start.setHours(0, 0, 0, 0); 
+      const start = new Date(date.setDate(diff));
+      start.setHours(0, 0, 0, 0);
       return start;
     };
 
@@ -317,36 +346,36 @@ export class UtilsService {
       startOfThisWeek.getDate() === dateStartOfWeek.getDate();
   }
 
-  generateRoomkey () : string {
+  generateRoomkey(): string {
     const randomBytes = CryptoJS.lib.WordArray.random(16);
     const roomkey = CryptoJS.enc.Hex.stringify(randomBytes);
     return roomkey;
   }
 
-  setRoomKey(userid : string , id : string): string {
-    const storedrooms = this.signalSvc.RetrieveRoomKeys()() !== null ? this.signalSvc.RetrieveRoomKeys()() : new Map<string,string>();
-    
-    if(!storedrooms?.has(id)){
-      const roomkey =  this.generateRoomkey();
-      const room = {userid : id, roomkey : roomkey}
+  setRoomKey(userid: string, id: string): string {
+    const storedrooms = this.signalSvc.RetrieveRoomKeys()() !== null ? this.signalSvc.RetrieveRoomKeys()() : new Map<string, string>();
+
+    if (!storedrooms?.has(id)) {
+      const roomkey = this.generateRoomkey();
+      const room = { userid: id, roomkey: roomkey }
       this.signalSvc.StoreRoomKey(room);
       this.socketSvc.requestInitChat(id, userid, roomkey);
       return roomkey;
-    }else{
-      return storedrooms.get(id)!; 
+    } else {
+      return storedrooms.get(id)!;
     }
   }
 
-  async getChainExtents ( userid : string, chainid : string) : Promise<IAccount[]>{
+  async getChainExtents(userid: string, chainid: string): Promise<IAccount[]> {
 
-    let extentsAccounts : IAccount[] = [];
+    let extentsAccounts: IAccount[] = [];
     try {
-      const res = await this.restsvc.getMyChainExtents(userid , chainid);
+      const res = await this.restsvc.getMyChainExtents(userid, chainid);
       if (res.code === 0) {
         const extaccounts: IAccount[] = res.others as IAccount[];
         const extarticles: IArticle[] = res.userdata as IArticle[];
         const extAccountsButMe = extaccounts.filter(acc => acc.userid !== userid)
-        extentsAccounts = this.putArticleObjectsIntoAccounts(extAccountsButMe, extarticles);
+        extentsAccounts = this.putArticleObjectsIntoAccounts(extarticles, extAccountsButMe);
       } else {
         console.log('Error gettingExtendedChain utilsvc-userhome : ', res.error);
       }

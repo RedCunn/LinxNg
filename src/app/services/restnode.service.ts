@@ -122,10 +122,10 @@ export class RestnodeService {
 
   //#endregion
 
-  //#region -------------------------- MATCHING ----------------------------------------
+  //#region -------------------------- CONNECTING ----------------------------------------
 
   public shuffleCandidateProfiles(userid: string): Promise<IRestMessage> {
-    const res = this._httpClient.get<IRestMessage>(`http://localhost:3000/api/Connection/${userid}/shuffledProfiles`)
+    const res = this._httpClient.get<IRestMessage>(`http://localhost:3000/api/Connection/${userid}/profiles`)
     return lastValueFrom(res);
   }
 

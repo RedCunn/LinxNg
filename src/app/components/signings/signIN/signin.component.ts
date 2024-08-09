@@ -49,7 +49,7 @@ export class SigninComponent {
         user.account.linxs?.forEach(c => {
           this.userRooms.set(c.userid, c.roomkey);
         })
-        const wholeAccounts = this.utilsvc.putArticleObjectsIntoAccounts(accounts, articles);
+        const wholeAccounts = this.utilsvc.putArticleObjectsIntoAccounts( articles, accounts);
         this.signalstoresvc.StoreMyLinxs(wholeAccounts);
       } else {
         console.log('mychain never found...')
@@ -85,7 +85,7 @@ export class SigninComponent {
       if(res.code === 0){
         const extentsAccounts : IAccount[] = res.others.accounts as IAccount[]
         const extentsArticles : IArticle[] = res.others.articles as IArticle[]
-        const wholeExtentsAccounts : IAccount[] = this.utilsvc.putArticleObjectsIntoAccounts(extentsAccounts , extentsArticles);
+        const wholeExtentsAccounts : IAccount[] = this.utilsvc.putArticleObjectsIntoAccounts(extentsArticles, extentsAccounts );
         
         
       }else{
@@ -119,7 +119,7 @@ async getAllChainsGroupedByAdmin (userid : string){
 
   async Signin(loginForm: NgForm) {
 
-    const _response: IRestMessage = await this.restSvc.signin({ emailorlinxname: loginForm.control.get('emailorlinxname')?.value, password: loginForm.control.get('password')?.value });
+    const _response: IRestMessage = await this.restSvc.signin({ emailorlinxname: loginForm.control.get('emailorlinxname')?.value.trim(), password: loginForm.control.get('password')?.value });
 
     if (_response.code === 0) {
       const user: IUser = _response.userdata;
