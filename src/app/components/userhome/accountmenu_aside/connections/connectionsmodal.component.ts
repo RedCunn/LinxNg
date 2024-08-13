@@ -28,6 +28,7 @@ export class ConnectionsmodalComponent {
 
   goToConnectionProfile(account : IAccount){
     this.signalsvc.StoreLinxData(account);
-    this.router.navigateByUrl(`Linx/perfil/${account.linxname}`)
+    console.log('SAVING ACCOUNT connected : ', this.signalsvc.RetrieveLinxData()());
+    this.router.navigateByUrl(`Linx/conecta/${account.linxname}`)
   }
 }

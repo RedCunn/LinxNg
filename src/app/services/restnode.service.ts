@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { IRestMessage } from '../models/IRestMessage';
 import { Observable, lastValueFrom } from 'rxjs';
 
-import { IMessage } from '../models/chat/IMessage';
+import { ChatMessage, GroupMessage, IMessage } from '../models/chat/IMessage';
 import { IUser } from '../models/account/IUser';
 import { IArticle } from '../models/account/IArticle';
 
@@ -227,7 +227,7 @@ export class RestnodeService {
     return lastValueFrom(res);
   }
 
-  public storeMessage(message: IMessage, roomkey: string): Promise<IRestMessage> {
+  public storeMessage(message: ChatMessage, roomkey: string): Promise<IRestMessage> {
     const res = this._httpClient.put<IRestMessage>(`http://localhost:3000/api/Chat/${roomkey}`,
       message,
       {
@@ -238,7 +238,7 @@ export class RestnodeService {
   }
 
   
-  public storeGroupMessage(message: IMessage, roomkey: string): Promise<IRestMessage> {
+  public storeGroupMessage(message: GroupMessage, roomkey: string): Promise<IRestMessage> {
     const res = this._httpClient.put<IRestMessage>(`http://localhost:3000/api/Chat/group/${roomkey}`,
       message,
       {

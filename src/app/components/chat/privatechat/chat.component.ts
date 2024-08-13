@@ -35,7 +35,7 @@ export class ChatComponent implements OnInit, OnDestroy , AfterContentInit{
 
   public chat: IChat = {name:'', participants: { userid_a: '', userid_b: '' }, messages: [], roomkey: ''};
   public groupChat :  IGroupChat = {name:'', groupParticipants: [], messages: [], roomkey: '', chainId : ''};
-  public message: ChatMessage = { isRead : false, text: '', timestamp: '', sender: { userid: '', linxname: '' }, to : ''};
+  public message: ChatMessage = { isRead : false, text: '', timestamp: '', sender: { userid: '', linxname: '' }, to :''};
   public user!: IUser;
   public receiveruserid: string = '';
 
@@ -103,21 +103,19 @@ export class ChatComponent implements OnInit, OnDestroy , AfterContentInit{
 
   async sendMessage() {
     if (this.message.text.trim() !== '') {
-      console.log('ROOMKEY DEL CHAT : ', this.chatRef.roomkey)
-      console.log('SENDING MESSAGE ------> ', this.message)
       this.messageTextarea.nativeElement.value = '';
+      this.message.sender.linxname = this.user.account.linxname;
+      this.message.sender.userid =  this.user.userid;
+      this.message.to =  this.chatRef.participants.userid_b;
       await this.storeMessage(this.message);
       this.message.id = this.messID;
       this.socketSvc.sendMessage( this.message, this.chatRef.roomkey);
     }
   }
 
-  async storeMessage(message: IMessage) {
+  async storeMessage(message: ChatMessage) {
     try {
-      console.log('STORING MESSAGE ----> ', { chat: { participants: { userid_a: this.user.userid, userid_b: this.receiveruserid }, message: message }, roomkey: this.chatRef.roomkey })
       const res = await this.restSvc.storeMessage(message , this.chatRef.roomkey);
-      console.log('Storing message response : ',res.others)
-
       const updatedChat : IChat = res.others as IChat;
       updatedChat.messages.sort((a, b) => new Date(b.timestamp).getTime() - new Date(a.timestamp).getTime());
       this.messID = updatedChat.messages[0].id!;

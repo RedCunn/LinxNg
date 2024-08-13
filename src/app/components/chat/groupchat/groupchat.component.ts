@@ -72,7 +72,7 @@ export class GroupchatComponent implements OnInit, OnDestroy , AfterContentInit{
     }
   }
 
-  async storeMessage(message: IMessage) {
+  async storeMessage(message: GroupMessage) {
     try {
       console.log('STORING MESSAGE ----> ', { chat: { groupParticipants: this.groupChatRef.groupParticipants, message: message }, roomkey: this.groupChatRef.roomkey })
       const res = await this.restSvc.storeGroupMessage(message, this.groupChatRef.roomkey );
