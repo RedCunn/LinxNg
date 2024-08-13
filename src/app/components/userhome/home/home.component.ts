@@ -20,6 +20,7 @@ import { AdminasideComponent } from '../admin_aside/adminaside.component';
 import { CandidatedataComponent } from '../data_aside/candidatedata.component';
 import { ArticlestrayComponent } from '../articles/articlestray/articlestray.component';
 import { LinxsonchainComponent } from '../../mychains/linxs/linxsonchain.component';
+import { IConnection } from '../../../models/account/IConnection';
 
 @Component({
   selector: 'app-home',
@@ -50,6 +51,7 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
   
     public isChatOpen = signal(false);
     public isArtFormOpen = signal(false);
+    public isConnectionsOpen = signal(false);
     public isLinxsOpen = signal(false);
     public isPickChainOpen = signal(false);
   
@@ -68,20 +70,9 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
     public articles: IArticle[] = [];
     public article: IArticle = { articleid: '', title: '', body: '', img: '', postedOn: '', useAsProfilePic: false }
     private roomkey!: string;
+
+    public userConnections : IConnection[] = [];
   
-    //__ REBUILT _
-  
-    //OLD : va para interactions
-    public isChainBeingRequested = signal(false);
-    public showBreakChainAlert = signal(false);
-    public showChainBeingRequested = signal(false);
-    public isChainRequested = signal(false);
-    //NEW : 
-    public isMyChain = signal(false);
-    public isAdminChains = signal(false);
-    public isSharedChains = signal(false);
-    public acceptedChainsReq : Array<{chainid : string, accepted : boolean} > = [];
-    //_---------------------------
     public routePattern: RegExp = new RegExp("/Linx/perfil/[^/]+", "g");
   
     constructor(@Inject(PLATFORM_ID) private platformId: Object, private router: Router, private ref: ChangeDetectorRef) {
@@ -112,18 +103,10 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
         .pipe(distinctUntilChanged())
         .subscribe((url) => {
           if (url) {
-            this.showChainRequested(false);
             this.isUser.set(false);
-            this.isChained.set(this.isLinx());
-            this.isMatch.set(this.isMyMatch());
-            this.loadChatComponent();
-            if(!this.isMatch() && this.isLinx()){
-                this.groupLinxsOnSharedChains();
-                this.isMyChain.set(false);
-            }
+            this.isMatch.set(true);
           } else {
             this.isUser.set(true);
-            this.isMyChain.set(true);
           }
 
           this.articles = [];
@@ -131,8 +114,6 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
         });
     }
     //#region ----------------- SET UP ----------------------------------------
-    
-    //_________ NEW BUILT :
 
     setArticles(){
 
@@ -149,18 +130,7 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
       }
 
     }
-  
-    getGroupedLinxsOnChain (){
-      
-    }
-  
-    groupLinxsOnSharedChains (){
-      
-    }
-  
-  
-    //____________________________________
-  
+    
     async loadChatComponent() {
       const viewContainerRef = this.chatcompoContainer;
       viewContainerRef.clear();
@@ -205,71 +175,81 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
     }
   
     //#endregion -----------------------------------------------------------------
+
+
+    //#region ------------------------ RETRIEVING ITEMS -------------------
   
+    async retrieveUserConnections (){
+
+      try {
+        const res = await this.restSvc.retrieveUserConnections(this.userdata?.userid!);
+        if(res.code === 0){
+          
+          const connectionsmap : {connection : {connectedAt : string , active : boolean , userid_a : string , userid_b : string, roomkey : string} , account : IAccount , articles : IArticle[]}[] = res.userdata;
+
+          connectionsmap.forEach(item => {
+            const connection : IConnection = {account : item.account , roomkey : item.connection.roomkey , connectedAt : item.connection.connectedAt, active : item.connection.active}
+            connection.account.articles = [];
+            connection.account.articles = item.articles;
+            this.userConnections.push(connection);
+          })
+        }else{
+          console.log('ERROR : ', res.error)
+        }
+      } catch (error) {
+       console.log('ERROR RETRIEVING USER CONNECTIONS AT HOME : ', error) 
+      }
+    }
+
+    // async retrieveAccountRequests(){
+    //   try {
+    //     //aquí me interesan las accounts a las que yo se lo he pedido
+    //     const res = await this.restSvc.getJoinChainRequests(this.userdata!.userid);
+    //     if (res.code === 0) {
+    //       const joinRequests: { requestingUserid: string, requestedUserid: string, requestedAt: Date }[] = res.userdata.reqs;
+    //       const joinRequestings: { requestingUserid: string, requestedUserid: string, requestedAt: Date }[] = res.others.reqs;
+  
+    //       if (joinRequests.length > 0) {
+    //         let reqIndex = joinRequests.findIndex(req => req.requestedUserid === this.linxdata?.userid)
+    //         if (reqIndex !== -1) {
+    //           this.isChainRequested.set(true)
+    //         } else {
+    //           this.isChainRequested.set(false)
+    //         }
+  
+    //       } else {
+    //         this.isChainRequested.set(false)
+    //       }
+  
+    //       if (joinRequestings.length > 0) {
+    //         let reqIndex = joinRequestings.findIndex(req => req.requestedUserid === this.userdata?.userid)
+    //         if (reqIndex !== -1) {
+    //           this.isChainBeingRequested.set(true)
+    //         } else {
+    //           this.isChainBeingRequested.set(false)
+    //         }
+    //       } else {
+    //         this.isChainBeingRequested.set(false)
+    //       }
+  
+    //     } else {
+    //       console.log('error getting join chain reqs ...', res.error)
+    //     }
+    //   } catch (error) {
+    //     console.log('error getting join chain reqs ...', error)
+    //   }
+  
+    // }
+    
+    //#endregion
+
+    //#region --------------------- TOGGLE MODALS --------------------------
+
     toggleChatModal() {
       this.isChatOpen.update(v => !v);
     }
-  
-    togglePickChainModal(){
-      this.isPickChainOpen.update(v => !v);
-    }
-  
-    showChainRequested( isOpen: boolean) {
-      this.isChainRequested.set(isOpen);
-    }
-  
-    onIsChainedChange (value : boolean){
-      this.isChained.set(value);
-    }
-  
-    onJoinChainRequestedAlertChange (isOpen : boolean){
-     this.isChainRequested.set(isOpen)
-    }
 
-  
-    async retrieveAccountRequests(){
-      try {
-        //aquí me interesan las accounts a las que yo se lo he pedido
-        const res = await this.restSvc.getJoinChainRequests(this.userdata!.userid);
-        if (res.code === 0) {
-          const joinRequests: { requestingUserid: string, requestedUserid: string, requestedAt: Date }[] = res.userdata.reqs;
-          const joinRequestings: { requestingUserid: string, requestedUserid: string, requestedAt: Date }[] = res.others.reqs;
-  
-          if (joinRequests.length > 0) {
-            let reqIndex = joinRequests.findIndex(req => req.requestedUserid === this.linxdata?.userid)
-            if (reqIndex !== -1) {
-              this.isChainRequested.set(true)
-            } else {
-              this.isChainRequested.set(false)
-            }
-  
-          } else {
-            this.isChainRequested.set(false)
-          }
-  
-          if (joinRequestings.length > 0) {
-            let reqIndex = joinRequestings.findIndex(req => req.requestedUserid === this.userdata?.userid)
-            if (reqIndex !== -1) {
-              this.isChainBeingRequested.set(true)
-            } else {
-              this.isChainBeingRequested.set(false)
-            }
-          } else {
-            this.isChainBeingRequested.set(false)
-          }
-  
-        } else {
-          console.log('error getting join chain reqs ...', res.error)
-        }
-      } catch (error) {
-        console.log('error getting join chain reqs ...', error)
-      }
-  
-    }
-  
-    
-    //------ NEW ON SINGIN BEFORE : 
-    
+    //#endregion
     
     //#region ---------------------- COMPONET'S LIFECYCLE --------------------------------
     ngAfterViewInit(): void {
@@ -277,13 +257,13 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
       this.loadingArts.set(true);
       this.ref.detectChanges();
       this.loadingArts.set(false);
+      this.retrieveUserConnections();
     }
     
     ngOnInit(){
       if (isPlatformBrowser(this.platformId)) {
         initFlowbite();
       }
-      this.retrieveAccountRequests();
     }
   
     ngOnDestroy(): void {

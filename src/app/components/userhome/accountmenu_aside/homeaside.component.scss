@@ -4,57 +4,61 @@
 @import '../../../scss/modules/variables';
 
 aside {
+    width: 100%;
 
-    @include flexcol($content : start, $align : end);
-
-    div {
+    .menucontainer{
         width: 100%;
-        @include flexrow(end);
-        padding-bottom: 1.5rem;
-
-        p {
-            font-size: 24px;
-            margin-right: 0.75rem;
-        }
-
-        &.connections,
-        &.events,
-        &.exchanges,
-        &.requests {
+        @include flexcol($content : start, $align : end);
+        div {
             width: 100%;
-            button {
-                width: fit-content;
-                @include flexrow(end);
-
-                &:hover {
-                    color: $greenfontcolor;
-                }
-            }
-        }
-
-        &.linxs{
-            button{
-                width: fit-content;
-                &:hover {
-                    color: white;
-                }
-            }
-        }
-
-        &.newpost {
-            width: 100%;
-            flex-grow: 1;
             @include flexrow(end);
-
-            button {
-                width: fit-content;
-                span {
-                    font-size: 3.5rem;
+            padding-bottom: 1.5rem;
+    
+            p {
+                font-size: 24px;
+                margin-right: 0.75rem;
+            }
+    
+            &.connections,
+            &.events,
+            &.exchanges,
+            &.requests {
+                width: 100%;
+                button {
+                    width: fit-content;
+                    @include flexrow(end);
+    
+                    &:hover {
+                        color: $greenfontcolor;
+                    }
                 }
-                &:hover {
-                    color : $articlehover;
+            }
+    
+            &.linxs{
+                button{
+                    width: fit-content;
+                    &:hover {
+                        color: white;
+                    }
+                }
+            }
+    
+            &.newpost {
+                width: 100%;
+                flex-grow: 1;
+                @include flexrow(end);
+    
+                button {
+                    width: fit-content;
+                    span {
+                        font-size: 3.5rem;
+                    }
+                    &:hover {
+                        color : $articlehover;
+                    }
                 }
             }
         }
     }
+    
 }

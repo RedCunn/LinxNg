@@ -1,42 +1,47 @@
 <aside>
-    <div class="linxs">    
-        <button (click)="toggleLinxModal()">
-            <p>🔗Linxs🔗</p>
-        </button>
-    </div>
-    <div class="connections">
-        <button (click)="goToExchangePanel()">
-            <p>Conexiones</p>
-            <span class="material-symbols-outlined">
-                join
-            </span>
-        </button>
-    </div>
-    <div class="events">
-        <button (click)="goToEventsPanel()">
-            <p>Eventos</p>
-            <span class="material-symbols-outlined">local_activity</span>
-        </button>
-    </div>
-    <div class="exchanges">
-        <button (click)="goToExchangePanel()" >
-            <p>Intercambios</p>
-            <span class="material-symbols-outlined">handshake</span>
-        </button>
-    </div>
-    <div class="requests">
-        <button (click)="goToExchangePanel()">
-            <p>Solicitudes</p>
-            <span class="material-symbols-outlined">
-                markunread_mailbox
-            </span>
-        </button>
-    </div>
-    <div class="newpost">
-        <button (click)="openArticleModal()">
-            <span class="material-symbols-outlined">
-                note_stack_add
-            </span>
-        </button>
-    </div>
+    @if(isMenuOpen()){
+        <div class="menucontainer">
+            <div class="linxs">    
+                <button (click)="toggleLinxModal()">
+                    <p>🔗Linxs🔗</p>
+                </button>
+            </div>
+            <div class="connections">
+                <button (click)="openConnections()">
+                    <p>Conexiones</p>
+                    <span class="material-symbols-outlined">
+                        join
+                    </span>
+                </button>
+            </div>
+            <div class="events">
+                <button (click)="goToEventsPanel()">
+                    <p>Eventos</p>
+                    <span class="material-symbols-outlined">local_activity</span>
+                </button>
+            </div>
+            <div class="exchanges">
+                <button (click)="goToExchangePanel()" >
+                    <p>Intercambios</p>
+                    <span class="material-symbols-outlined">handshake</span>
+                </button>
+            </div>
+            <div class="requests">
+                <button (click)="goToExchangePanel()">
+                    <p>Solicitudes</p>
+                    <span class="material-symbols-outlined">
+                        markunread_mailbox
+                    </span>
+                </button>
+            </div>
+            <div class="newpost">
+                <button (click)="openArticleModal()">
+                    <span class="material-symbols-outlined">
+                        note_stack_add
+                    </span>
+                </button>
+            </div>
+        </div>
+    }
+    <ng-container #connectionsCompoContainer></ng-container>
 </aside>

@@ -1,0 +1,26 @@
+@if(isOpen()){
+<!-- Main modal -->
+<div class="container">
+    <div class="headerlist">
+        <button type="button" (click)="closeModal()">
+            <span class="material-symbols-outlined">close</span>
+        </button>
+    </div>
+    <!-- Modal body -->
+    <div class="bodylist">
+        <ul>
+            @for (conn of connections; track conn.roomkey) {
+            <li (click)="goToConnectionProfile(conn.account)">
+                <span class="material-symbols-outlined unchecked">
+                    trip_origin
+                </span>
+                <span class="material-symbols-outlined checked">
+                    hdr_strong
+                </span>
+                <p>{{conn.account.linxname}}</p>
+            </li>
+            }
+        </ul>
+    </div>
+</div>
+}

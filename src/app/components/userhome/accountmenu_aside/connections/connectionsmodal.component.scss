@@ -1,0 +1,48 @@
+@import '../../../../scss/base/mixins.scss';
+@import '../../../../scss/base/variables';
+
+.container{
+    width: 100%;
+}
+
+.headerlist{
+    width: 100%;
+    font-size: 1.5rem;
+    color : $connectingcolor;
+    padding-bottom: 1rem;
+    @include flexrow($content:end);
+}
+ul{
+    width: 100%;
+    li{
+        @include standardbutton($width : 100% ,$justcont : start, $fontsize : 1rem, $bgcolor : transparent);
+        width: 100%;
+        color : $connectingcolor;
+        .unchecked {
+            opacity: 1;
+            visibility: visible;
+            transition: opacity 0.3s ease, visibility 0.3s ease;
+        }
+        
+        .checked {
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s ease, visibility 0.3s ease;
+        }
+        
+        &:hover {
+            .unchecked {
+                opacity: 0;
+                visibility: hidden;
+            }
+        
+            .checked {
+                opacity: 1;
+                visibility: visible;
+            }
+        }
+        p{
+            padding-left: 0.75rem;
+        }
+    }
+}

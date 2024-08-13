@@ -129,6 +129,11 @@ export class RestnodeService {
     return lastValueFrom(res);
   }
 
+  public retrieveUserConnections (userid : string) : Promise<IRestMessage> {
+    const res = this._httpClient.get<IRestMessage>(`http://localhost:3000/api/Connection/${userid}`)
+    return lastValueFrom(res);
+  }
+
   public requestMatch(userid: string, linxuserid: string): Promise<IRestMessage> {
     const res = this._httpClient.post<IRestMessage>(`http://localhost:3000/api/Connection/${userid}/${linxuserid}`,
       {

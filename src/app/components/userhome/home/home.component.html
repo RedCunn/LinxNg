@@ -2,7 +2,7 @@
   <div class="usernamearea">
       @if(isUser() && !isCandidate()){
       <p>{{ userdata?.account?.linxname }}</p>
-      }@else {
+      }@else{
       <p>{{isCandidate() ? candidateData.account!.linxname : linxdata!.linxname }}
         @if(isCandidate()){<a class="text-yellow-500 hover:text-yellow-600"><span
             class="material-symbols-outlined">flag</span></a>}
@@ -37,16 +37,14 @@
         </article>
 
       }@else {
-  
         <app-articlestray [article]="this.article" [articles]="this.articles" [isArtFormOpen]="this.isArtFormOpen" [isUser]="this.isUser" [loadingArts]="this.loadingArts"></app-articlestray>
-          
       }
       
     </div>
   </div>
   <div class="functionsaside">
-    @if(!this.isCandidate()){
-      <app-homeaside [openArtModal]="isArtFormOpen" [isLinxsOpen]="this.isLinxsOpen"></app-homeaside>
+    @if(this.isUser() && !this.isCandidate()){
+      <app-homeaside [openArtModal]="isArtFormOpen" [openLinxModal]="this.isLinxsOpen" [userConnecions]="this.userConnections"></app-homeaside>
     }
   </div>
 </div>
