@@ -4,12 +4,14 @@
 .accessbutt{
     @extend .mainbutt;
     margin-right: 8rem;
+    margin-bottom: 1rem;
     width: 225px;
     font-size: 20px;
 }
 
 footer{
     justify-content: flex-end;
+
 }
 
 

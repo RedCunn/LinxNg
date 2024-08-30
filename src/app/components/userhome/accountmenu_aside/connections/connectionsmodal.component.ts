@@ -20,6 +20,8 @@ export class ConnectionsmodalComponent {
   @Input() isOpen = signal(false);
   @Input() isMenuOpen = signal(true);
   @Input() connections : IConnection[] = [];
+
+  public connectionState = signal(false);
   
   closeModal() {
     this.isOpen.set(false);

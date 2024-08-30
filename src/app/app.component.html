@@ -1,7 +1,13 @@
-@if(!this.isLogged()){
-  <app-mainheader></app-mainheader>
-}
-<div class="container">
-  <router-outlet />
+<div class="app-container">
+  @if(!this.isLogged()){
+    <app-mainheader></app-mainheader>
+  }
+  <div class="outlet-container">
+    <router-outlet />
+  </div>
+  @if(!this.isLogged()){
+    <app-welcomefooter></app-welcomefooter>
+  }
 </div>
+
 

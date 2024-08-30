@@ -1,18 +1,30 @@
 @import '../../../scss/base/mixins.scss';
+@import '../../../scss/base/variables';
 @import '../../../scss/modules/cards';
 @import '../../../scss/modules/mixins.scss';
 
 .homecontainer {
     @include simplegrid(4);
+    @include no-scrollbar;
     width: 100%;
+    height: 100%;
 }
 
 .usernamearea {
+    margin-top: $header-height-desktop;
     grid-column: span 4;
     @include flexrow(center);
 
     p {
         @include homelinxname;
+    }
+
+    .chatbutt{
+        margin-left: 1rem;
+        color: $lightblue;
+        &:hover{
+            color : $blue;
+        }
     }
 }
 
@@ -24,25 +36,6 @@
 .centralcontent {
     grid-column: span 2;
     @include flexcol($content : center, $align : center);
-
-    .chainsarea {
-        width: 100%;
-        @include flexrow(center);
-
-        button{
-            width: 100%;
-            @include flexrow(center);
-            
-            p {
-                font-weight: 400;
-                font-size: 2rem;
-                padding-left: 0.5rem;
-                padding-top: 0.25rem;
-            }
-        }
-    
-    }
-    
     .articlesarea{
         margin-top: 3rem;
     }

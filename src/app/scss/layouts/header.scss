@@ -13,12 +13,20 @@
 
 .baseheader {
     width: 100%;
-    height: 15%;
     position: fixed;
     top: 0;
     left: 50%;
     transform: translateX(-50%);
     z-index: 1000; 
-    padding: 2rem 0;
 }
+
+.logoheader{
+    position: fixed;
+    top: 0;
+    left: 10%;
+    width: fit-content;
+    transform: translateX(-50%);
+    z-index: 1000; 
+}
+
   

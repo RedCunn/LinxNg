@@ -18,13 +18,13 @@
 
         <div #messageContainer class="modalbody">
 
-            @for (item of messages; track $index) {
-            <div [class.linxmesscont]="item.sender.userid === this.receiveruserid"
+            @for (item of this.chatRef.messages; track $index) {
+            <div [class.linxmesscont]="item.sender.userid === this.chatRef.participants.userid_b"
                 [class.usermesscont]="item.sender.userid === this.user.userid ">
-                <div [class.linxmess]="item.sender.userid === this.receiveruserid"
+                <div [class.linxmess]="item.sender.userid === this.chatRef.participants.userid_b"
                     [class.usermess]="item.sender.userid === this.user.userid ">
                     <div class="flex items-center space-x-2 rtl:space-x-reverse">
-                        <span [class.othersender]="item.sender.userid === this.receiveruserid"
+                        <span [class.othersender]="item.sender.userid === this.chatRef.participants.userid_b"
                             [class.usersender]="item.sender.userid === this.user.userid ">{{item.sender.linxname}}</span>
                         <span class="text-xs font-extralight text-gray-500"
                             style="font-style: italic;">{{this.formateDate(item.timestamp)}}</span>

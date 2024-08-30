@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, Inject, OnInit, PLATFORM_ID, inject, signal } from '@angular/core';
+import { AfterViewInit, ChangeDetectionStrategy, Component, Inject, OnInit, PLATFORM_ID, inject, signal } from '@angular/core';
 import { MatIcon } from '@angular/material/icon';
 import { ConversationsComponent } from '../../chat/conversations/conversations.component';
 import { Router } from '@angular/router';

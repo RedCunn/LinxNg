@@ -1,12 +1,23 @@
+.app-container {
+    display: grid;
+    grid-template-rows: 1fr 3fr 1fr;
+    height: 100vh;
 
-.container{
-    display: flex;
-    justify-content: center; 
-    margin-left: auto; 
-    margin-right: auto;
-    padding-left: 20px;
-    padding-right: 20px;
-    min-height: calc(100vh - 160px); 
-    padding-top: 80px; 
-    padding-bottom: 80px;
+    .outlet-container{
+        grid-row: 2;
+        display: flex;
+        justify-content: center; 
+        margin-left: auto; 
+        margin-right: auto;
+        padding-left: 20px;
+        padding-right: 20px;
+    }
+
+    header{
+        grid-row: 1;
+    }
+    
+    footer{
+        grid-row: 3;
+    }
 }

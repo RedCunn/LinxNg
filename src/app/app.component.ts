@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit,ViewContainerRef, inject, signal } from '@angular/core';
+import { Component, OnDestroy, OnInit,ViewChild,ViewContainerRef, inject, signal } from '@angular/core';
 import { Event, NavigationStart, Router, RouterModule } from '@angular/router';
 import { MainheaderComponent } from './components/layouts/mainheader/mainheader.component';
 import { FooterComponent } from './components/layouts/mainfooter/footer.component';
@@ -7,11 +7,12 @@ import { WebsocketService } from './services/websocket.service';
 import { Subject, takeUntil } from 'rxjs';
 import { UtilsService } from './services/utils.service';
 import { FlowbiteService } from './services/flowbite.service';
+import { WelcomefooterComponent } from './components/layouts/welcomefooter/welcomefooter.component';
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterModule, MainheaderComponent, FooterComponent, LoggedheaderComponent],
+  imports: [RouterModule, MainheaderComponent, FooterComponent, LoggedheaderComponent, WelcomefooterComponent],
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss', './scss/base/base.scss']
 })
@@ -27,6 +28,7 @@ export class AppComponent implements OnInit, OnDestroy{
   private vcr = inject(ViewContainerRef);
   public footercompo: any;
   public headercompo: any;
+
   public isLogged = signal(false);
 
   private destroy$ = new Subject<void>();
@@ -36,8 +38,8 @@ export class AppComponent implements OnInit, OnDestroy{
     this.router.events.subscribe((event: Event) => {
       if (event instanceof NavigationStart) {
         if (!event.url.match(this.routePattern)) {
-          this.isLogged.set(true);
           this.loadHeaderFooter();
+          this.isLogged.set(true);
         } else {
           this.vcr.clear();
           this.isLogged.set(false);
@@ -47,7 +49,6 @@ export class AppComponent implements OnInit, OnDestroy{
     this.websocketsvc.getChatRequests().pipe(
       takeUntil(this.destroy$)
     ).subscribe(data => {
-      console.log('chat requests on app compo : ', data)
       const room = {userid : data.userid , roomkey : data.roomkey};
       this.utilsvc.joinRoom(room);
     });

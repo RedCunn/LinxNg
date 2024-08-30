@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit, inject, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnDestroy, OnInit, inject, signal } from '@angular/core';
 import { SignalStorageService } from '../../../services/signal-storage.service';
 import { Router } from '@angular/router';
 import { IUser } from '../../../models/account/IUser';
