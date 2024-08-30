@@ -1,3 +1,6 @@
+@let online = 'green';
+@let offline = 'rgb(211, 211, 211)';
+
 @if(isOpen()){
 <!-- Main modal -->
 <div class="container">
@@ -11,7 +14,7 @@
         <ul>
             @for (conn of connections; track conn.roomkey) {
             <li (click)="goToConnectionProfile(conn.account)">
-                <span class="material-symbols-outlined unchecked">
+                <span class="material-symbols-outlined unchecked" [style.color]="connectionState() ? online : offline">
                     trip_origin
                 </span>
                 <span class="material-symbols-outlined checked">

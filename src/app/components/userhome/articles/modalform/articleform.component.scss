@@ -6,7 +6,7 @@
 $calcmb :  calc(66vh * 0.15);
 
 .modalcard{
-    @include m-modal-card($bgcolor : $articleformbgcolor, $contheight : 66vh, $bodywidth : 40vw, $bodyheight : 60vh);
+    @include m-modal-card($modalwidth : 55vw, $modalheight : 60vh, $bgcolor : $articleformbgcolor, $contheight : 55vh, $bodywidth : 40vw, $bodyheight : 50vh);
 
     color : rgb(34, 30, 30);
     

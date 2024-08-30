@@ -1,7 +1,8 @@
 // DEFAULT BODY, COLOR , FONT , LINKS , BUTTS VARIABLES 
 $darkerbgcolor : rgb(135, 86, 226);
 $ligtherbgcolor : #ec81fe;
-$basebgcolor : linear-gradient(90deg, rgb(135, 86, 226) 10%, #ec81fe 90%);
+$basebgcolor: linear-gradient(90deg, rgb(135, 86, 226) 10%, #ec81fe 90%);
+$darkmodebgcolor : linear-gradient(180deg, rgb(39, 39, 39) 20%, rgb(62, 62, 62) 80%);
 $baseplaintextcolor : rgb(204, 188, 215);
 $greenfontcolor : rgb(8, 245, 8);
 $font-ubuntu: "Ubuntu", monospace;
@@ -24,3 +25,11 @@ $pointercolor : rgb(195, 159, 1);
 
 
 $connectingcolor : #AB047F;
+
+$lightblue : rgb(28, 183, 255);
+$blue : rgb(28, 183, 255);
+$darkblue : rgb(39, 130, 171);
+
+$header-height-desktop : 4dvh;
+$header-height-tablet: 2dvh;
+$header-height-mobile: 1dvh;  

@@ -1,18 +1,21 @@
 @import '../../../../scss/base/mixins.scss';
 @import '../../../../scss/modules/cards';
 @import '../../../../scss/modules/mixins.scss';
+@import '../../../../scss/base/variables';
 
 .artcontainer {
-    @include simplegrid(2);
-    column-gap: 0.5rem;
-    row-gap: 2rem;
+    margin-bottom: $header-height-desktop + 10dvh;
+    @include simplegrid(1);
+    justify-items: center;
+    justify-content: center;
+    align-items: center;
 
-    div {
-        grid-column: span 2;
+    row-gap: 1rem;
+    
+    .noarticles{
+        width: 500px;
     }
-
     article {
-        grid-column: span 2;
         @include m-article-card;
     }
 }

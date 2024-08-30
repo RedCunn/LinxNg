@@ -1,3 +1,5 @@
 <footer>
-    <button class="accessbutt animate-pulse" (click)="goToLogin()">Acceder</button>
+    @if(isWelcome()){
+        <button class="accessbutt animate-pulse" (click)="goToLogin()">Acceder</button>
+    }
 </footer>

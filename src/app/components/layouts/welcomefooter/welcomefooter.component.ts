@@ -1,5 +1,6 @@
-import { Component } from '@angular/core';
-import { Router } from '@angular/router';
+import { Component, signal } from '@angular/core';
+import { NavigationEnd, Router } from '@angular/router';
+import { filter, map } from 'rxjs';
 
 @Component({
   selector: 'app-welcomefooter',
@@ -9,7 +10,28 @@ import { Router } from '@angular/router';
   styleUrl: './welcomefooter.component.scss'
 })
 export class WelcomefooterComponent {
-  constructor(private router : Router){}
+  
+  public isWelcome = signal(false);
+  private welcomeRoutePattern: RegExp = new RegExp("^/Linx$", "g");
+
+  constructor(private router : Router){
+
+    this.router.events
+    .pipe(
+        filter(event => event instanceof NavigationEnd),
+        map((event: NavigationEnd) => event.url),
+        map(url => {
+              if (this.welcomeRoutePattern.test(url)) {
+                this.isWelcome.set(true);
+              }else{
+                this.isWelcome.set(false);
+              }
+            }
+          )
+        )
+        .subscribe();
+  }
+
   goToLogin(){
     this.router.navigateByUrl(`/Linx/Login`);
   }

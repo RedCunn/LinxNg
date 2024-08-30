@@ -98,7 +98,6 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
                 return 'candidate';
             } else if (this.connectionRoutePattern.test(url)) {
                 this.linxdata = this.signalStoreSvc.RetrieveLinxData()()!;
-                console.log('LINX DATA: ', this.linxdata);
                 this.setUserType('match');
                 return 'match';
             } else if (this.linxRoutePattern.test(url)) {
@@ -156,9 +155,7 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
       case 'user':
         this.articles = this.userdata?.account.articles ?? [];
         break;
-      case 'linx':
-        this.articles = this.linxdata?.articles ?? [];
-        break;
+      case 'linx' :
       case 'match':
         this.articles = this.linxdata?.articles ?? [];
         break;
@@ -179,7 +176,7 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
     comporef.setInput('chatRef', this.chat);
   }
 
-  async setChat() {
+  setChat() {
 
     if (this.isMatch()) {
       const connections = this.signalStoreSvc.RetrieveConnections()();
@@ -190,17 +187,15 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
     }
 
     this.chat = { name: this.linxdata?.linxname!, participants: { userid_a: this.userdata?.userid!, userid_b: this.linxdata?.userid! }, roomkey: this.roomkey, messages: [] }
+    this.retrieveChatMessages();
+  }
 
+  async retrieveChatMessages(){
     try {
       const res = await this.restSvc.getChat(this.roomkey);
       if (res.code === 0) {
-        const _resMess: IChat[] = res.others;
-        this.chat.messages = [];
-        _resMess.forEach(chat => {
-          chat.messages.forEach(mess => {
-            this.chat.messages.push(mess);
-          });
-        });
+        const _resMess: IChat = res.others;
+        this.chat.messages = _resMess.messages;
       } else {
         console.log('error recuperando chat...', res.message);
       }
