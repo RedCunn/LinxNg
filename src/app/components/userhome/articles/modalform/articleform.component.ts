@@ -37,11 +37,8 @@ export class ArticleformComponent implements OnChanges{
 
 
   constructor(){
-    console.log('ARTCILE INPUT : ', this.article)
-    console.log('ART COPI : ', this.articleCopy)
   }
   ngOnChanges(changes: SimpleChanges): void {
-    console.log('ch ch ch ch changeeeees ',changes)
   }
 
   generateArticleId() {
@@ -86,7 +83,6 @@ export class ArticleformComponent implements OnChanges{
       
       const response = await this.restSvc.editArticle(this.userdata!.userid,this.articleCopy.articleid!, this.formData);
       if (response.code === 0) {
-        console.log('RESPONSE OTHERS ON UPLOADING ART CHANGES : ', response.others)
         if(response.others !== ''){
           this.articleCopy.img = response.others;
         }
@@ -120,7 +116,6 @@ export class ArticleformComponent implements OnChanges{
   });
     try {
       const response = await this.restSvc.newArticle(this.userdata!.userid, this.formData);
-      console.log('RESPONSE NEW ARTICLE ARTMODAL : ', response)
       if (response.code === 0) {
         this.articleCopy.postedOn = new Date().toISOString();
         this.articleCopy.img = response.others;
@@ -148,7 +143,6 @@ export class ArticleformComponent implements OnChanges{
     try {
       const filename = this.articleCopy.img.split('/')[1];
       const res = await this.restSvc.deleteArticle(this.userdata?.userid!, this.articleCopy.articleid!, filename);
-      console.log('RESPONSE ON DELETE ARTMODAL : ', res)
       if (res.code === 0) {
         const index = this.articles.findIndex(art => art.articleid === this.articleCopy.articleid!);
         if (index !== -1) {
@@ -169,7 +163,6 @@ export class ArticleformComponent implements OnChanges{
     try {
       const filename = this.articleCopy.img.split('/')[1];
       const res = await this.restSvc.deleteArticleImg(this.userdata?.userid!, this.articleCopy.articleid!, filename);
-      console.log('RESPONSE ON DELETE ARTIMG ARTMODAL : ', res)
       if(res.code === 0 ){
         console.log('Removed image from article on artmodal : ', res.message)
         const index = this.articles.findIndex(art => art.articleid === this.articleCopy.articleid!);

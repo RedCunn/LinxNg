@@ -80,21 +80,35 @@ export class WebsocketService {
   getMessages() : Observable<ChatMessage | GroupMessage>  {
     return new Observable< ChatMessage | GroupMessage>(observer => {
       const messageHandler = (data:  ChatMessage | GroupMessage) => {
-        console.log('socketsvc get_message: ', data);
         observer.next(data);
       };
-  
       socket.on('get_message', messageHandler);
     })  
   };
 
-  markMessageAsRead (message :  ChatMessage | GroupMessage , userid : string, senderid : string){
-    console.log('MESSAGE TO MARK : ', message)
-      socket.emit("messageRead", {message , userid, senderid}, (res: any) => {
+
+  userReadMessages(userid : string , roomkey : string){
+      socket.emit("readMessages", {userid,roomkey}, (res: any) => {
         console.log('RES OK : ', res.status)
       }
     )
   }
+  markMessagesAsRead(){
+    return new Observable<{roomkey : string, userid : string, read : boolean }>(observer => {
+      const messageHandler = (data: {roomkey : string, userid : string, read : boolean }) => {
+        observer.next(data);
+      };
+
+      socket.on('readingMessages', messageHandler);
+    });
+  }
+  
+  markMessageAsRead (message :  ChatMessage | GroupMessage , userid : string, senderid : string){
+    socket.emit("messageRead", {message , userid, senderid}, (res: any) => {
+      console.log('RES OK : ', res.status)
+    }
+  )
+}
 
   getReadMessages(){
     return new Observable<IMessage>(observer => {

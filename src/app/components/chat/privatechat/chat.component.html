@@ -40,6 +40,25 @@
                 {{this.chatRef.name}}...</p>
             }
 
+            @for(newmess of this.chatMessages(); track $index){
+                <div [class.linxmesscont]="newmess.sender.userid === this.chatRef.participants.userid_b"
+                [class.usermesscont]="newmess.sender.userid === this.user.userid ">
+                <div [class.linxmess]="newmess.sender.userid === this.chatRef.participants.userid_b"
+                    [class.usermess]="newmess.sender.userid === this.user.userid ">
+                    <div class="flex items-center space-x-2 rtl:space-x-reverse">
+                        <span [class.othersender]="newmess.sender.userid === this.chatRef.participants.userid_b"
+                            [class.usersender]="newmess.sender.userid === this.user.userid ">{{newmess.sender.linxname}}</span>
+                        <span class="text-xs font-extralight text-gray-500"
+                            style="font-style: italic;">{{this.formateDate(newmess.timestamp)}}</span>
+                        @if(newmess.sender.userid === this.user.userid && newmess.isRead || newmess.sender.userid === this.user.userid && this.chatWasRead()){
+                        <span style="color: lightblue;" class="material-symbols-outlined">done_all</span>
+                        }
+                    </div>
+                    <p class="text-sm font-normal py-2.5 text-gray-900 break-words">{{newmess.text}}</p>
+                </div>
+            </div>
+            }
+
         </div>
         <div class="formcontainer">
             <form>

@@ -38,8 +38,6 @@ export class SigninComponent {
   goToSignup() {
     this.router.navigateByUrl('/Linx/Registro');
   }
-
-  //#region ---- GETTING ALL MY LINXS WHOLEACCOUNTS, MATCHES-WHOLEACCOUNTS, EXTENTS-WHOLEACCOUNT
   async getAllMyLinxs(user: IUser) {
     try {
       const res = await this.restSvc.getMyLinxs(user.userid, null);
@@ -63,7 +61,23 @@ export class SigninComponent {
     try {
       const res = await this.restSvc.getMyConnections(userid)
       if (res.code === 0) {
-        const matches: IConnection[] = res.userdata;
+        // res : [{connection : , account : }]
+        /*        
+        __v =0
+        _id ='66b64286a7b3403ab594b53c'
+        active =true
+        connectedAt ='2024-08-09T16:23:34.228Z'
+        roomkey ='7656d77e-db73-4cc4-b6ab-0008f139189b'
+        userid_a ='0e9b0030-98ca-49f2-83ca-1b2c260cb88d'
+        userid_b ='c08eea3a-87d4-4fe1-8e60-ae854b45b371'
+        */
+        const connectionObjects : any = res.userdata;
+        const matches: IConnection[] = [];
+
+        connectionObjects.forEach((obj : any) => {
+          const connection : IConnection = {connectedAt : obj.connection.connectedAt, active : obj.connection.active, roomkey : obj.connection.roomkey, account : obj.account}
+          matches.push(connection);
+        })
 
         matches.forEach(element => {
             this.userRooms.set(element.account.userid ,element.roomkey);
@@ -96,12 +110,6 @@ export class SigninComponent {
       console.log('ERROR AL RECUPERAR LINXEXTENTS EN SIGNIN : ', error)
     }
   }
-//#endregion
-
-
-//#region ------ CARGAR TODAS LAS CADENAS DE LAS QUE FORMO PARTE AGRUPADAS POR ADMIN PARA EL ACCESO DESDE LOGGEDHEADER
-//!NO CARGO ARTÍCULOS, hay que peedirlos cada vez que el user acceda a uno de sus perfiles 
-//!NO INICIALIZO CHATS, tendré que unirme a sala cada vez que visite perfil 
 async getAllChainsGroupedByAdmin (userid : string){
   try {
     const res = await this.restSvc.getAllUserChainsGroupedByAdmin(userid)
@@ -115,7 +123,6 @@ async getAllChainsGroupedByAdmin (userid : string){
     console.log('COULDNT GET ALL USER CHAINs GROUPED BY ADMIN...', error)
   }
 }
-//#endregion
 
   async Signin(loginForm: NgForm) {
 
@@ -135,7 +142,7 @@ async getAllChainsGroupedByAdmin (userid : string){
       
       this.socketSvc.userLogin(user.account._id!, user.account.linxname);
       this.utilsvc.joinRooms(this.userRooms);
-      this.utilsvc.joinRooms(this.chainRooms);
+      //this.utilsvc.joinRooms(this.chainRooms);
 
       this.router.navigateByUrl('/Linx/Inicio');
     } else {
