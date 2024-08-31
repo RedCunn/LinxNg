@@ -82,27 +82,18 @@ export class FooterComponent implements AfterViewInit, OnInit{
 
   }
 
-  differentiateChats(userchats : IChat [] | IGroupChat []){
-    userchats.forEach(chat => {
-      if((chat as IGroupChat).groupParticipants !== undefined){
-        this.groupchats.push(chat as IGroupChat)
-      }else{
-        this.chats.push(chat as IChat)
-      }
-    })
-  }
 
   async ngOnInit() : Promise<void>{
     this.flowbitesvc.loadFlowbite()
-    
     try {
       const res = await this.restSvc.getChats( this._user?.userid!);
       if(res.code === 0){
-        const userchats = res.others;
-        this.differentiateChats(userchats);
+        const userchats : {chats : IChat[], groupchats : IGroupChat[]}= res.others;
+        this.chats = userchats.chats;
+        this.groupchats = userchats.groupchats;
+
         this.chatCompression();
-        console.log('CHATS comprimidos EN FOOTER ....', this.compressedChats)
-        console.log('CHATS DE GRUPO : ', this.groupchats)
+        
       }else{
         console.log('ERROR ON RETRIEVING CHATS ON FOOTER ; ', res.error)
       }
