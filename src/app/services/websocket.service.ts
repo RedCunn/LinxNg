@@ -87,8 +87,8 @@ export class WebsocketService {
   };
 
 
-  userReadMessages(userid : string , roomkey : string){
-      socket.emit("readMessages", {userid,roomkey}, (res: any) => {
+  userReadMessages(userid : string , roomkey : string, chatopen : boolean){
+      socket.emit("readMessages", {userid,roomkey, chatopen}, (res: any) => {
         console.log('RES OK : ', res.status)
       }
     )

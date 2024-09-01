@@ -10,6 +10,7 @@ import { Subject, takeUntil } from 'rxjs';
 import { IGroupChat } from '../../../models/chat/IGroupChat';
 import { ChatComponent } from '../privatechat/chat.component';
 import { IUser } from '../../../models/account/IUser';
+import { RestnodeService } from '../../../services/restnode.service';
 
 @Component({
   selector: 'app-conversations',
@@ -26,6 +27,7 @@ export class ConversationsComponent implements OnDestroy {
   private signalStorageSvc = inject(SignalStorageService);
   private utilsvc = inject(UtilsService);
   private socketsvc = inject(WebsocketService);
+  private restSvc = inject(RestnodeService);
 
   public isChatOpen = signal(false);
   public isGroupChatOpen = signal(false);
@@ -68,11 +70,27 @@ export class ConversationsComponent implements OnDestroy {
     comporef.setInput('groupChatRef', this.groupChatToOpen);
   }
 
-  setChat(chat: IChat) {
+  async setChat(chat: IChat) {
     this.chatToOpen = chat;
-    let chatuserid = chat.participants.userid_a === this._user.userid ? chat.participants.userid_b : chat.participants.userid_a;
-    let roomkey = this.utilsvc.setRoomKey(this._user.userid, chatuserid);
-    this.chatToOpen.roomkey = roomkey;
+    const retrievedMessages = await this.retrieveChatMessages(chat.roomkey);
+    this.chatToOpen.messages = retrievedMessages; 
+  }
+
+  async retrieveChatMessages(roomkey : string): Promise<ChatMessage[]>{
+    try {
+      const res = await this.restSvc.getChat(roomkey);
+      if (res.code === 0) {
+        const _resMess: IChat = res.others;
+        return _resMess.messages;
+      } else {
+        console.log('error recuperando chat...', res.message);
+      }
+    } catch (error) {
+      console.log('error recuperando chat...', error);
+    }
+
+    return [];
+
   }
 
   setGroupChat(groupchat: IGroupChat) {

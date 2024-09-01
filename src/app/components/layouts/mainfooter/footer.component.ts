@@ -30,7 +30,7 @@ export class FooterComponent implements AfterViewInit, OnInit{
   private _user! : IUser;
   public chats! : IChat[];
   public groupchats! : IGroupChat[];
-  public compressedChats : IChat[] = [];
+  public privateChats : IChat[] = [];
   private chatsMap : Map<string, IChat[]> = new Map<string, IChat[]>();
 
   constructor(private router : Router){
@@ -50,6 +50,7 @@ export class FooterComponent implements AfterViewInit, OnInit{
     this.router.navigateByUrl('/Linx/conectar');    
   }
 
+  // this is in case there were several chats for the same participants
   chatCompression(){
 
     this.chats.forEach(chat => {
@@ -73,10 +74,10 @@ export class FooterComponent implements AfterViewInit, OnInit{
         unifiedChat.messages.sort((a, b) => {
           return new Date(a.timestamp).getTime() - new Date(b.timestamp).getTime();
         });
-        this.compressedChats.push(unifiedChat);
+        this.privateChats.push(unifiedChat);
       } else {
         const singlechat : IChat = chatList[0];
-        this.compressedChats.push(singlechat);
+        this.privateChats.push(singlechat);
       }
     }
 

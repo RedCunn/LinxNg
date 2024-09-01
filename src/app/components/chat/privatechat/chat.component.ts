@@ -52,7 +52,7 @@ export class ChatComponent implements OnInit, OnDestroy , AfterContentInit{
         console.log('DATA QUE ENTRA EN CHAT : ', data)
         if(this.isOpen() && data.sender.userid !== this.user.userid){
           data.isRead = true;
-          this.socketSvc.userReadMessages(this.user.userid, this.chatRef.roomkey)
+          this.socketSvc.userReadMessages(this.user.userid, this.chatRef.roomkey, this.isOpen())
         }else{
           data.isRead = false;
         }
@@ -84,8 +84,10 @@ export class ChatComponent implements OnInit, OnDestroy , AfterContentInit{
 
     effect(() => {
       if(this.isOpen()){
-        this.socketSvc.userReadMessages(this.user.userid, this.chatRef.roomkey)
+        this.socketSvc.userReadMessages(this.user.userid, this.chatRef.roomkey, this.isOpen())
         this.scrollToBottom();
+      }else{
+        this.socketSvc.userReadMessages(this.user.userid, this.chatRef.roomkey, this.isOpen())
       }
     })
 
@@ -174,7 +176,6 @@ export class ChatComponent implements OnInit, OnDestroy , AfterContentInit{
     this.message.sender.linxname = this.user.account.linxname;
     this.message.sender.userid =  this.user.userid;
     this.message.to =  this.chatRef.participants.userid_b;
-    this.chatMessages.set(this.chatRef.messages);
   }
 
   ngOnInit(): void {
