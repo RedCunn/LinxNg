@@ -139,11 +139,13 @@ async getAllChainsGroupedByAdmin (userid : string){
 
       await this.getAllMyLinxs(user)
       await this.getMyConnections(user.userid)
-      
-      this.socketSvc.userLogin(user.account._id!, user.account.linxname);
       this.utilsvc.joinRooms(this.userRooms);
+      const userKeys = [];
+      for (const [key, value] of this.userRooms) {
+        userKeys.push(value);
+      }
+      this.socketSvc.userLogin(user.userid, userKeys);
       //this.utilsvc.joinRooms(this.chainRooms);
-
       this.router.navigateByUrl('/Linx/Inicio');
     } else {
       this.loginerrors.update(v => true);

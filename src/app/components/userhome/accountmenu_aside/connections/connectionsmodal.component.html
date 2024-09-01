@@ -14,7 +14,7 @@
         <ul>
             @for (conn of connections; track conn.roomkey) {
             <li (click)="goToConnectionProfile(conn.account)">
-                <span class="material-symbols-outlined unchecked" [style.color]="connectionState() ? online : offline">
+                <span class="material-symbols-outlined unchecked" [style.color]="determineConnectionState(conn.account.userid) ? online : offline">
                     trip_origin
                 </span>
                 <span class="material-symbols-outlined checked">

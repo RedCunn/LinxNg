@@ -1,7 +1,7 @@
 import { Injectable, inject } from '@angular/core';
 import { Socket, io } from 'socket.io-client';
 import { ChatMessage, GroupMessage, IMessage } from '../models/chat/IMessage';
-import { Observable } from 'rxjs';
+import { Observable, Subject } from 'rxjs';
 import { IAccount } from '../models/account/IAccount';
 
 
@@ -12,11 +12,30 @@ const socket: Socket = io("http://localhost:3000")
 })
 export class WebsocketService {
 
+  private userConnectedSubject = new Subject<string>();
+  private userDisconnectedSubject = new Subject<string>();
 
-  constructor() { }
+  constructor() { 
+    socket.on('user_connected', (data) => {
+      this.userConnectedSubject.next(data);
+    });
 
-  disconnect() {
+    socket.on('user_disconnected', (data) => {
+      this.userDisconnectedSubject.next(data);
+    });
+  }
+
+  userConnected$() {
+    return this.userConnectedSubject.asObservable();
+  }
+
+  userDisconnected$() {
+    return this.userDisconnectedSubject.asObservable();
+  }
+
+  disconnect(userid : string , roomkeys : string[]) {
     socket.disconnect();
+    socket.emit('userDisconnected', {userid , roomkeys})
     socket.removeAllListeners();
   }
 
@@ -27,14 +46,12 @@ export class WebsocketService {
     });
   }
 
-  userLogin(accountid : string , linxname : string) {
-    socket.emit('userConnected', { accountid , linxname })
+  checkConnection(){
+    socket.emit('')
   }
 
-  linxConnected () {
-    socket.on('linx_connected', (data) => {
-      console.log('LINX INNN ', data)
-    });
+  userLogin(userid : string , roomkeys : string[]) {
+    socket.emit('userConnected', { userid , roomkeys})
   }
 
   initUserRoom (userid_key : string) {

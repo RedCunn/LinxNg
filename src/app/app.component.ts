@@ -8,6 +8,8 @@ import { Subject, takeUntil } from 'rxjs';
 import { UtilsService } from './services/utils.service';
 import { FlowbiteService } from './services/flowbite.service';
 import { WelcomefooterComponent } from './components/layouts/welcomefooter/welcomefooter.component';
+import { IUser } from './models/account/IUser';
+import { SignalStorageService } from './services/signal-storage.service';
 
 @Component({
   selector: 'app-root',
@@ -22,6 +24,7 @@ export class AppComponent implements OnInit, OnDestroy{
   private websocketsvc: WebsocketService = inject(WebsocketService);
   private flowbitesvc : FlowbiteService = inject(FlowbiteService);
   private utilsvc : UtilsService = inject(UtilsService);
+  private signalSvc = inject(SignalStorageService);
   public routePattern: RegExp = new RegExp("(/Linx/(Login|Registro|error|registrada|activa)|/Linx$|^/?$)", "g");
   public showStickyFooter = signal(true);
 
@@ -30,6 +33,8 @@ export class AppComponent implements OnInit, OnDestroy{
   public headercompo: any;
 
   public isLogged = signal(false);
+  private user! : IUser;
+  private roomkeys : string[] = [];
 
   private destroy$ = new Subject<void>();
 
@@ -62,11 +67,19 @@ export class AppComponent implements OnInit, OnDestroy{
 
   ngOnInit(): void {
     this.websocketsvc.connect()
-    this.websocketsvc.linxConnected();
+    this.websocketsvc.userConnected();
     this.flowbitesvc.loadFlowbite();
   }
   ngOnDestroy(): void {
-    this.websocketsvc.disconnect()
+    if(this.signalSvc.RetrieveUserData()() !== null){
+      this.user = this.signalSvc.RetrieveUserData()()!;
+      for(const [key, value] of this.signalSvc.RetrieveRoomKeys()()!){
+        this.roomkeys.push(value);
+      }
+      this.websocketsvc.disconnect(this.user.userid, this.roomkeys)
+    }else{
+      this.websocketsvc.disconnect('', [])
+    }
     this.destroy$.next();
     this.destroy$.complete();
   }
