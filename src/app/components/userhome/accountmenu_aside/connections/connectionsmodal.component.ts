@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, inject, Input, OnDestroy, OnInit, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject, Input, OnDestroy, OnInit, signal, WritableSignal } from '@angular/core';
 import { IConnection } from '../../../../models/account/IConnection';
 import { Router } from '@angular/router';
 import { IAccount } from '../../../../models/account/IAccount';
@@ -25,29 +25,55 @@ export class ConnectionsmodalComponent implements OnInit, OnDestroy {
   @Input() connections: IConnection[] = [];
 
   private subscriptions: Subscription = new Subscription();
+  private pongSubscription: Subscription = new Subscription();
+
+  public usersConnectionsState : Map<string, boolean>= new Map();
 
   ngOnInit(): void {
+    const user = this.signalsvc.RetrieveUserData()()!;
+    this.socketSvc.pingUsers(user.userid, this.contactsIdsToPing());
 
-    
-
-    const userConnectedSub = this.socketSvc.userConnected$().subscribe((userId: string) => {
-
-
+    this.pongSubscription = this.socketSvc.userPong().subscribe(userid => {
+      this.connections.forEach(conn => {
+        const isUserOnline = conn.account.userid === userid;
+        console.log('QUIEN ESTA AHI : ', conn.account.linxname + ' isssss : ' + isUserOnline)
+        this.usersConnectionsState.set(userid, isUserOnline);
+      })
     });
 
-    const userDisconnectedSub = this.socketSvc.userDisconnected$().subscribe((userId: string) => {
+    // const userConnectedSub = this.socketSvc.userConnected$().subscribe((userId: string) => {
+    // });
+    // const userDisconnectedSub = this.socketSvc.userDisconnected$().subscribe((userId: string) => {
+    // });
+    // this.subscriptions.add(userConnectedSub);
+    // this.subscriptions.add(userDisconnectedSub);
+  }
+  contactsIdsToPing(): string[] {
+    const connections = this.signalsvc.RetrieveConnections()();
+    const linxs = this.signalsvc.RetrieveMyLinxs()();
 
+    let ids: string[] = [];
 
-    });
-    this.subscriptions.add(userConnectedSub);
-    this.subscriptions.add(userDisconnectedSub);
+    if (connections) {
+      connections?.forEach(conn => {
+        ids.push(conn.account.userid);
+      })
+    }
+
+    if (linxs) {
+      linxs?.forEach(linx => {
+        ids.push(linx.userid);
+      })
+    }
+
+    return ids;
   }
   ngOnDestroy(): void {
     this.subscriptions.unsubscribe();
   }
 
-  determineConnectionState(userid: string): boolean {
-    return true;
+  determineConnectionState(userid: string): WritableSignal<boolean> {
+    return this.usersConnectionsState.get(userid) !== undefined ? signal(this.usersConnectionsState.get(userid)!) : signal(false);
   }
 
   closeModal() {

@@ -145,7 +145,7 @@ async getAllChainsGroupedByAdmin (userid : string){
         userKeys.push(value);
       }
       this.socketSvc.userLogin(user.userid, userKeys);
-      //this.utilsvc.joinRooms(this.chainRooms);
+      
       this.router.navigateByUrl('/Linx/Inicio');
     } else {
       this.loginerrors.update(v => true);

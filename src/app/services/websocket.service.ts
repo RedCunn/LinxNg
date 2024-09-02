@@ -46,8 +46,22 @@ export class WebsocketService {
     });
   }
 
-  checkConnection(){
-    socket.emit('')
+  pingUsers(userid : string, userids : string[]){
+    socket.emit('ping_users',{userid, userids})
+  }
+
+  userPong(){
+    return new Observable<string>(observer => {
+      const responseHandler = (userid : string) => {
+        observer.next(userid);
+      };  
+      socket.on('user_pong', responseHandler); 
+
+      return () => {
+        socket.off('user_pong', responseHandler);
+      };
+
+    });
   }
 
   userLogin(userid : string , roomkeys : string[]) {

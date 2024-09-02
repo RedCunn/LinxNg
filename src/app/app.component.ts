@@ -67,7 +67,6 @@ export class AppComponent implements OnInit, OnDestroy{
 
   ngOnInit(): void {
     this.websocketsvc.connect()
-    this.websocketsvc.userConnected();
     this.flowbitesvc.loadFlowbite();
   }
   ngOnDestroy(): void {
