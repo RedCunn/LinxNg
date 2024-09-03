@@ -12,9 +12,9 @@
     <!-- Modal body -->
     <div class="bodylist">
         <ul>
-            @for (conn of connections; track conn.roomkey) {
+            @for (conn of connections; track conn.account.userid) {
             <li (click)="goToConnectionProfile(conn.account)">
-                <span class="material-symbols-outlined unchecked" [style.color]="determineConnectionState(conn.account.userid)() ? online : offline">
+                <span class="material-symbols-outlined unchecked" [style.color]="determineState(conn.account.userid) ? online : offline">
                     trip_origin
                 </span>
                 <span class="material-symbols-outlined checked">

@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, inject, Input, OnDestroy, OnInit, signal, WritableSignal } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, inject, Input, OnDestroy, OnInit, signal, WritableSignal } from '@angular/core';
 import { IConnection } from '../../../../models/account/IConnection';
 import { Router } from '@angular/router';
 import { IAccount } from '../../../../models/account/IAccount';
@@ -14,7 +14,7 @@ import { WebsocketService } from '../../../../services/websocket.service';
   styleUrl: './connectionsmodal.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class ConnectionsmodalComponent implements OnInit, OnDestroy {
+export class ConnectionsmodalComponent implements OnDestroy {
 
   private router = inject(Router);
   private signalsvc = inject(SignalStorageService);
@@ -24,30 +24,42 @@ export class ConnectionsmodalComponent implements OnInit, OnDestroy {
   @Input() isMenuOpen = signal(true);
   @Input() connections: IConnection[] = [];
 
-  private subscriptions: Subscription = new Subscription();
   private pongSubscription: Subscription = new Subscription();
 
-  public usersConnectionsState : Map<string, boolean>= new Map();
+  public usersConnectionsState: { userid: string; isOnline: boolean }[] = [];
 
-  ngOnInit(): void {
+  constructor(private cdr : ChangeDetectorRef){
     const user = this.signalsvc.RetrieveUserData()()!;
     this.socketSvc.pingUsers(user.userid, this.contactsIdsToPing());
 
-    this.pongSubscription = this.socketSvc.userPong().subscribe(userid => {
-      this.connections.forEach(conn => {
-        const isUserOnline = conn.account.userid === userid;
-        console.log('QUIEN ESTA AHI : ', conn.account.linxname + ' isssss : ' + isUserOnline)
-        this.usersConnectionsState.set(userid, isUserOnline);
-      })
-    });
+    this.pongSubscription = this.socketSvc.userPong()
+                                          .subscribe(userid => {
+                                            this.updateConnectionState(userid, true);
+                                            this.cdr.detectChanges();
+                                          });
 
-    // const userConnectedSub = this.socketSvc.userConnected$().subscribe((userId: string) => {
-    // });
-    // const userDisconnectedSub = this.socketSvc.userDisconnected$().subscribe((userId: string) => {
-    // });
-    // this.subscriptions.add(userConnectedSub);
-    // this.subscriptions.add(userDisconnectedSub);
   }
+
+  determineState(userid : string) : boolean{
+    const userState = this.usersConnectionsState.find(u => u.userid === userid)?.isOnline;
+    return userState !== undefined ? userState : false;
+  }
+
+  updateConnectionState(userid : string, isConnected : boolean){
+    const connection = this.connections.find(conn => conn.account.userid === userid);
+
+    if(connection){
+      const userState = this.usersConnectionsState.find(u => u.userid === userid);
+      if (userState) {
+        userState.isOnline = isConnected;
+      } else {
+        this.usersConnectionsState.push({ userid, isOnline: isConnected});
+      }
+    }else{
+      this.usersConnectionsState.push({ userid, isOnline: false });
+    }
+  }
+
   contactsIdsToPing(): string[] {
     const connections = this.signalsvc.RetrieveConnections()();
     const linxs = this.signalsvc.RetrieveMyLinxs()();
@@ -68,14 +80,6 @@ export class ConnectionsmodalComponent implements OnInit, OnDestroy {
 
     return ids;
   }
-  ngOnDestroy(): void {
-    this.subscriptions.unsubscribe();
-  }
-
-  determineConnectionState(userid: string): WritableSignal<boolean> {
-    return this.usersConnectionsState.get(userid) !== undefined ? signal(this.usersConnectionsState.get(userid)!) : signal(false);
-  }
-
   closeModal() {
     this.isOpen.set(false);
     this.isMenuOpen.set(true);
@@ -86,4 +90,9 @@ export class ConnectionsmodalComponent implements OnInit, OnDestroy {
     console.log('SAVING ACCOUNT connected : ', this.signalsvc.RetrieveLinxData()());
     this.router.navigateByUrl(`Linx/conecta/${account.linxname}`)
   }
+  ngOnDestroy(): void {
+    this.pongSubscription.unsubscribe();
+  }
+
+
 }
