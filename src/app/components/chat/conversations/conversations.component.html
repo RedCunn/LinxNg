@@ -23,9 +23,7 @@
                                 <button (click)="openGroupChat(groupchat)" class="group">
                                     <div class="flex flex-row items-center">
                                         <p class="pe-2 pt-1">
-                                            <span class="material-symbols-outlined">
-                                                link
-                                            </span>
+                                            <span class="material-symbols-outlined">deployed_code</span>
                                         </p>
                                         <p>{{groupchat.name}}</p>
                                         @let count = this.countMessagesUnread(groupchat.messages, 'group');
@@ -41,9 +39,7 @@
                                 <button (click)="openChat(chat)">
                                     <div class="flex flex-row items-center">
                                         <p class="pe-2 pt-1">
-                                            <span class="material-symbols-outlined">
-                                                link
-                                            </span>
+                                            <span class="material-symbols-outlined">deployed_code</span>
                                         </p>
                                         <p>{{chat.name}}</p>
                                     </div>

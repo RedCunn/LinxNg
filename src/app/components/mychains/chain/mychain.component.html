@@ -4,43 +4,52 @@
     <div id="modalBackground" class="modalbg"></div>
     <!-- Modal content -->
     <div id="modalchain" tabindex="-1" aria-hidden="true" class="modalcontainer">
-                <!-- Modal header -->
-                <div class="modalheader">
-                    <div class="col-span-3 flex align-middle justify-end mt-5">
-                        <button type="button" class= "bg-transparent hover:text-white rounded-lg ms-auto me-3 inline-flex justify-center items-center "
-                            (click)="closeModal()">
-                            <span class="material-symbols-outlined">close</span>
-                        </button>
-                    </div>
-                
-                    <div class="col-span-3 flex flex-row text-center ps-2 pt-4 mb-3">
-                        <div class="w-full">
-                            <img src="../../../assets/imgs/logos/mychainicon.png"
-                                style="width: 40px ; height: auto;opacity: 80%;">
-                        </div>
-                    </div>
-                
+        <!-- Modal header -->
+        <div class="modalheader">
+            <div class="col-span-3 flex align-middle justify-between mt-5">
+                <div class="w-1/5 flex text-center items-center justify-center">
+                    <img src="../../../assets/imgs/logos/mychainicon.png"
+                        style="width: 40px ; height: auto;opacity: 80%;">
                 </div>
-                <!-- Modal body -->
-                <div class="modalbody">
-                    <ul>
-                        <h2 class="userchainTitle">Mis cadenas</h2>
-                        @for(chain of this.chains; track chain.chainId){
-                        <li>
-                            <button (click)="this.showLinxsOnChain(chain)" class="chainsbutt">
-                                <p>{{chain.chainName}}</p>
-                            </button>
-                        </li>
-                        }@empty{
-                        <li>
-                            <p style="font-style: italic;">No hay cadenas en común por el momento...</p>
-                        </li>
-                        }
-                    </ul>
+                <div class="w-1/5 flex justify-end items-start">
+                    <button type="button"
+                        class="bg-transparent hover:text-white rounded-lg ms-auto me-3 inline-flex justify-center items-center "
+                        (click)="closeModal()">
+                        <span class="material-symbols-outlined">close</span>
+                    </button>
                 </div>
             </div>
         </div>
+        <!-- Modal body -->
+        <div class="modalbody">
+            <ul>
+                @for(chain of this.chains; track chain.chainId){
+                <li>
+                    <button (click)="this.showLinxsOnChain(chain)" class="chainsbutt">
+                        <p>{{chain.chainName}}</p>
+                    </button>
+                </li>
+                }@empty{
+                <li>
+                    <p style="font-style: italic;">No hay cadenas...</p>
+                </li>
+                }
+            </ul>
+            <div class="modalfooter">
+                <button class="newChainButt" type="button" (click)="openContactsListModal()">
+                    <span class="material-symbols-outlined addlink">
+                        link
+                    </span>
+                    <span class="material-symbols-outlined">
+                        add
+                    </span>
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
 }
 
-<app-linxsonchain [chain]="this.chain" [group]="this.group" [isOpen]="this.isLinxsOnChainOpen"
+<app-linxsonchain [chain]="this.chain" [group]="this.group" [isOpen]="this.linxsOnChainOpen"
     [chainName]="this.chainName" [chainId]="this.chainId" [groupChat]="this.groupChats"></app-linxsonchain>
+<app-pickcontactsmodal [isOpen]="contactsOpen"></app-pickcontactsmodal>

@@ -1,0 +1,190 @@
+@import '../../../scss/modules/cards';
+@import '../../../scss/base/mixins.scss';
+@import '../../../scss/base/variables';
+
+$errorAlertsColor : rgb(255, 95, 162);
+
+.butt {
+    padding: 0.5rem;
+    background-color: $buttonbgcolor;
+    color: $buttonhovercolor;
+    border-radius: 25px;
+    display: flex;
+    text-align: center;
+}
+
+.modalfooter {
+    width: 95%;
+    height: 45px;
+    position: fixed;
+    bottom: 2%;
+    display: flex;
+}
+
+.modalcard {
+    @include m-modal-card;
+
+
+    .headerIcons {
+        color: $buttonhovercolor;
+    }
+
+
+    .modalfooter {
+        @extend .modalfooter;
+        justify-content: end;
+        align-items: center;
+
+        .createChainButt {
+            @extend .butt;
+
+            &:hover {
+                color: $greenfontcolor;
+                background-color: $buttonbghover;
+            }
+
+        }
+
+        .createChainButtDis {
+            @extend .butt;
+
+            &:hover {
+                @extend .butt;
+            }
+        }
+    }
+
+    .contactscontainer {
+        @include simplegrid(2);
+        justify-content: start;
+        align-items: center;
+        width: 100%;
+        margin-top: 1rem;
+
+        .contactlist {
+            width: 100%;
+            height: 100%;
+            @include flexcol(center);
+            align-items: flex-start;
+
+            .contactlitem {
+                width: 100%;
+                @include flexrow(start);
+                padding-bottom: 1rem;
+                .inputlist {
+                    margin-left: 1rem;
+                    width: fit-content;
+                    @include flexrow(start);
+                }
+            }
+        }
+
+        .addedContactsList {
+            @include flexcol(center);
+            width: 100%;
+            height: 100%;
+            align-items: flex-start;
+
+            .pickeditem {
+                @include flexrow(start);
+                color: $buttonhovercolor;
+                font-weight: 600;
+                width: 100%;
+                padding-bottom: 0.5rem;
+                .pickeditemdiv {
+                    width: fit-content;
+                    @include flexrow(start);
+                }
+            }
+        }
+    }
+
+    .choosenamecontainer {
+        @include flexcol(center);
+        align-items: center;
+        width: 100%;
+
+        .returndiv {
+            width: 100%;
+            @include flexrow(start);
+
+            .returnbutt{
+                &:hover{
+                    color: $buttonhovercolor;
+                }
+            }
+        }
+
+        .inputchainnamediv {
+            width: 100%;
+            @include flexcol(center);
+        }
+
+        .confirmchainbuttdiv {
+            @include flexrow(center);
+
+            margin-top: 2rem;
+
+            .confirmbutt {
+                @extend .butt;
+                color: $greenfontcolor;
+                @include flexrow(inline-flex);
+                .chainmoji{
+                    display: none;
+                }
+                &:hover {
+                    .chainmoji{
+                        display: block;
+                    }
+                    background-color: $buttonbghover;
+                }
+            }
+
+            .confirmbuttDis{
+                @extend .butt;
+                color: $greenfontcolor;
+                @include flexrow(inline-flex);
+                .chainmoji{
+                    display: none;
+                }
+                &:hover {
+                    .chainmoji{
+                        display: none;
+                    }
+                }
+            }
+        }
+
+        .alertNotAvailableDiv{
+            width: 100%;
+            height: 1.5rem;
+            @include flexrow(center);
+            text-align: center;
+            .alertNotAvailable{
+                color : $errorAlertsColor;
+            }
+        }
+    }
+
+    .successdiv{
+        height: 100%;
+        width: 100%;
+        @include flexcol(center);
+        text-align: center;
+        .successAlert{
+            width: 85%;
+            height: 100%;
+            font-size: 1.3rem;
+            font-weight: 400;
+            font-style: italic;
+        }
+        .unsuccessAlert{
+            width: 85%;
+            height: 100%;
+            font-size: 1.3rem;
+            font-weight: 400;
+            color : $errorAlertsColor;
+        }
+    }
+
+}

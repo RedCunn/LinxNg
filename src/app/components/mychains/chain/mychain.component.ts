@@ -7,11 +7,12 @@ import { UtilsService } from '../../../services/utils.service';
 import { IUser } from '../../../models/account/IUser';
 import { IAccount } from '../../../models/account/IAccount';
 import { IGroupChat } from '../../../models/chat/IGroupChat';
+import { PickcontactsmodalComponent } from '../contactlist/pickcontactsmodal.component';
 
 @Component({
   selector: 'app-mychain',
   standalone: true,
-  imports: [LinxsonchainComponent],
+  imports: [LinxsonchainComponent, PickcontactsmodalComponent],
   templateUrl: './mychain.component.html',
   styleUrl: './mychain.component.scss'
 })
@@ -26,13 +27,15 @@ export class MyChainComponent implements OnInit{
   private utilsvc = inject(UtilsService);
 
   public user! : IUser; 
-  public isLinxsOnChainOpen = signal(false);
   public chain! : IChain;
   public group : IAccount[] = [];
   public myLinxs : IAccount[] = [];
   public chainName : string = '';
   public chainId! : string;
   public groupChats : IGroupChat[] = [];
+
+  public linxsOnChainOpen = signal(false);
+  public contactsOpen = signal(false);
 
   constructor(){
     console.log('CHAINS ON MYCHAINCOMPO : ', this.chains)
@@ -42,17 +45,21 @@ export class MyChainComponent implements OnInit{
     this.isOpen.set(false);
   }
 
+  openContactsListModal(){
+    this.contactsOpen.set(true);
+  }
+
   showLinsOnGroup (adgroup : IChain){
     this.chainName = adgroup.chainName;
     this.group = adgroup.accounts;
     this.chainId = adgroup.chainId;
     this.retrieveGroupChat();
-    this.isLinxsOnChainOpen.set(true);
+    this.linxsOnChainOpen.set(true);
   }
   showLinxsOnChain(chain : IChain){
     this.chainName = chain.chainName;
     this.chain = chain;
-    this.isLinxsOnChainOpen.set(true);
+    this.linxsOnChainOpen.set(true);
   }
 
   searchAdminNamesOnMyLinxs (userid : string) : string{

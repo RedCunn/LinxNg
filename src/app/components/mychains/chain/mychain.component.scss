@@ -4,6 +4,36 @@
 
 .modalcard {
     @include m-modal-card;
+
+    .modalfooter{
+        width: 95%;
+        height: 45px;
+        position: fixed;
+        bottom: 2%;
+        display: flex;
+        justify-content: end;
+        align-items: center;
+        .newChainButt{
+            padding: 0.7rem;
+            background-color: $buttonbgcolor;
+            color: $buttonhovercolor;
+            border-radius: 25px;
+            display: flex;
+            justify-items: end;
+            align-items: center;
+            .addlink{
+                display: none;
+            }
+            &:hover {
+                color: $greenfontcolor;
+                background-color: $buttonbghover;
+                .addlink{
+                    display: inline-block;
+                }
+            }
+
+        }
+    }
 }
 
 .chainsbutt {

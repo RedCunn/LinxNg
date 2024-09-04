@@ -6,6 +6,7 @@ import { Observable, lastValueFrom } from 'rxjs';
 import { ChatMessage, GroupMessage, IMessage } from '../models/chat/IMessage';
 import { IUser } from '../models/account/IUser';
 import { IArticle } from '../models/account/IArticle';
+import { IChain } from '../models/chain/IChain';
 
 
 @Injectable({
@@ -156,6 +157,18 @@ export class RestnodeService {
     const res = this._httpClient.get<IRestMessage>(`http://localhost:3000/api/Chain/${userid}/chain/${chainid}`);
     return lastValueFrom(res);
   }
+
+  public createChain(userid : string , chain : IChain) : Promise<IRestMessage> {
+    const res = this._httpClient.post<IRestMessage>(`http://localhost:3000/api/Chain/${userid}`, chain);
+    return lastValueFrom(res);
+  }
+
+  public checkChainNameAvailability(userid : string , chainname : string) : Promise<IRestMessage> {
+    const res = this._httpClient.get<IRestMessage>(`http://localhost:3000/api/Chain/${userid}/name/${chainname}`);
+    return lastValueFrom(res);
+  }
+
+  //....... pending review
   
   public getMyChainExtents (userid: string , linxid : string | null) : Promise<IRestMessage> {
     const res = this._httpClient.get<IRestMessage>(`http://localhost:3000/api/Chain/${userid}/extents/${linxid}`);

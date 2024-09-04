@@ -1,0 +1,121 @@
+@let anyContact = this.pickedContacts().length > 0 ? true : false;
+
+<!-- Main modal -->
+@if(isOpen()){
+<div class="modalcard">
+    <div id="modalBackground" class="modalbg"></div>
+    <!-- Modal content -->
+    <div id="modalchain" tabindex="-1" aria-hidden="true" class="modalcontainer">
+        <!-- Modal header -->
+        <div class="modalheader">
+            <div class="col-span-3 flex align-middle justify-between mt-5">
+                <div class="w-1/5 flex text-center items-center justify-center headerIcons">
+                    <span class="material-symbols-outlined " style="font-size: 2rem;">
+                        group_add
+                    </span>
+                </div>
+                <div class="w-1/5 flex justify-end items-start headerIcons">
+                    <button type="button"
+                        class="bg-transparent rounded-lg ms-auto me-3 inline-flex justify-center items-center "
+                        (click)="closeModal()">
+                        <span class="material-symbols-outlined">close</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+        <!-- Modal body -->
+        <div class="modalbody">
+            @if(this.reqSent()){
+                @if(successfulRequest()){
+                    <div class="successdiv">
+                        <span class="material-symbols-outlined successAlert" style="font-size: 2.2rem;">
+                            markunread_mailbox
+                        </span>
+                        <p class="successAlert">Se han enviado invitaciones a los contactos seleccionados</p>
+                    </div>
+                }
+    
+                @if(unsuccessfulRequest()){
+                    <div class="successdiv">
+                        <span class="material-symbols-outlined unsuccessAlert" style="font-size: 2.2rem;">
+                            error
+                        </span>
+                        <p class="unsuccessAlert">Hemos tenido problemas con tu solicitud de cadena... inténtalo más tarde</p>
+                    </div>
+                }
+            }@else {
+                @if(this.showNamePicking() && this.pickedContacts().length > 0){
+                    <div class="choosenamecontainer">
+                        <div class="returndiv">
+                            <button type="button" (click)="this.showNamePicking.set(false)" class="returnbutt">
+                                <span class="material-symbols-outlined">
+                                    undo
+                                </span>
+                            </button>
+                        </div>
+                        <div class="inputchainnamediv">
+                            <label for="chainname">Nombre de cadena : </label>
+                            <input type="text" id="chainname" class="chainameinput" (change)="setChainName($event)" class="flex text-center w-3/5 p-2 text-2xl text-lime-700 font-bold border border-purple-500 rounded-lg bg-violet-300 focus:ring-purple-700 focus:border-purple-700" maxlength="50">
+                        </div>
+                        <div class="alertNotAvailableDiv">
+                            @if(this.chainNameTaken()){
+                                <p class="alertNotAvailable">Ya existe una cadena con ese nombre... piensa algo diferente</p>
+                            }
+                        </div>
+                        <div class="confirmchainbuttdiv">
+                            <button type="button" (click)="createChain()" [class.confirmbutt]='this.abledCreateChain()' [class.confirmbuttDis]='!this.abledCreateChain()' [disabled]="!this.abledCreateChain()">
+                                <span class="chainmoji">🔗</span>
+                                Crear cadena
+                                <span class="chainmoji">🔗</span>
+                            </button>
+                        </div>
+                    </div>
+                }@else {
+                <div class="w-full flex justify-center">
+                    <input (input)="searchContact($event)" type="search" id="default-search"
+                        class="block w-3/5 p-2 ps-10 text-sm text-gray-900 border border-purple-500 rounded-lg bg-violet-300 focus:ring-purple-700 focus:border-purple-700 "
+                        placeholder="Añade contactos..." />
+                </div>
+                <div class="contactscontainer">
+                    <ul class="contactlist">
+                        @for(contact of this.contacts(); track contact.userid){
+                        <li class="contactlitem">
+                            <div class="inputlist">
+                                <input (change)="addContact($event)" type="checkbox" id="contact" [value]="contact.userid"
+                                    [name]="contact.linxname"  [checked]="isSelected(contact.userid)"
+                                    class="w-4 h-4 text-purple-600 bg-gray-100 border-gray-300 rounded focus:ring-purple-500 dark:focus:ring-purple-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
+                                <label for="contact" class="ms-2">{{contact.linxname}}</label>
+                            </div>
+                        </li>
+                        }@empty{
+                        <li>
+                            <p style="font-style: italic;">No tienes contactos que añadir...</p>
+                        </li>
+                        }
+                    </ul>
+                    <ul class="addedContactsList">
+                        @for (contact of this.pickedContacts(); track contact.userid) {
+                        <li class="pickeditem">
+                            <div class="pickeditemdiv">
+                                <span class="material-symbols-outlined">
+                                    link
+                                </span>
+                                <p class="ms-2">{{contact.linxname}}</p>
+                            </div>
+                        </li>
+                        }
+                    </ul>
+                </div>
+                <div class="modalfooter">
+                    <button [class.createChainButt]='anyContact' [class.createChainButtDis]='!anyContact'  type="button" (click)="pickName()" [disabled]="!anyContact">
+                        Invitar
+                    </button>
+                </div>
+                }
+    
+            }
+            
+        </div>
+    </div>
+</div>
+}
