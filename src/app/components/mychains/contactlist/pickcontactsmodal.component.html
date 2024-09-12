@@ -40,7 +40,7 @@
                         <span class="material-symbols-outlined unsuccessAlert" style="font-size: 2.2rem;">
                             error
                         </span>
-                        <p class="unsuccessAlert">Hemos tenido problemas con tu solicitud de cadena... inténtalo más tarde</p>
+                        <p class="unsuccessAlert">Hemos tenido problemas con tu solicitud ... inténtalo más tarde</p>
                     </div>
                 }
             }@else {
@@ -74,37 +74,39 @@
                 <div class="w-full flex justify-center">
                     <input (input)="searchContact($event)" type="search" id="default-search"
                         class="block w-3/5 p-2 ps-10 text-sm text-gray-900 border border-purple-500 rounded-lg bg-violet-300 focus:ring-purple-700 focus:border-purple-700 "
-                        placeholder="Añade contactos..." />
+                        placeholder="Buscar contacto..." />
                 </div>
                 <div class="contactscontainer">
-                    <ul class="contactlist">
-                        @for(contact of this.contacts(); track contact.userid){
-                        <li class="contactlitem">
-                            <div class="inputlist">
-                                <input (change)="addContact($event)" type="checkbox" id="contact" [value]="contact.userid"
-                                    [name]="contact.linxname"  [checked]="isSelected(contact.userid)"
-                                    class="w-4 h-4 text-purple-600 bg-gray-100 border-gray-300 rounded focus:ring-purple-500 dark:focus:ring-purple-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
-                                <label for="contact" class="ms-2">{{contact.linxname}}</label>
-                            </div>
-                        </li>
-                        }@empty{
-                        <li>
-                            <p style="font-style: italic;">No tienes contactos que añadir...</p>
-                        </li>
-                        }
-                    </ul>
-                    <ul class="addedContactsList">
-                        @for (contact of this.pickedContacts(); track contact.userid) {
-                        <li class="pickeditem">
-                            <div class="pickeditemdiv">
-                                <span class="material-symbols-outlined">
-                                    link
-                                </span>
-                                <p class="ms-2">{{contact.linxname}}</p>
-                            </div>
-                        </li>
-                        }
-                    </ul>
+                    <div class="listsdiv">
+                        <ul class="contactlist">
+                            @for(contact of this.contacts(); track contact.userid){
+                            <li class="contactlitem">
+                                <div class="inputlist">
+                                    <input (change)="addContact($event)" type="checkbox" id="contact" [value]="contact.userid"
+                                        [name]="contact.linxname" [checked]="isSelected(contact.userid)"
+                                        class="w-4 h-4 text-purple-600 bg-gray-100 border-gray-300 rounded focus:ring-purple-500 dark:focus:ring-purple-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
+                                    <label for="contact" class="ms-2">{{contact.linxname}}</label>
+                                </div>
+                            </li>
+                            }@empty{
+                            <li>
+                                <p style="font-style: italic;">No tienes contactos que añadir...</p>
+                            </li>
+                            }
+                        </ul>
+                        <ul class="addedContactsList">
+                            @for (contact of this.pickedContacts(); track contact.userid) {
+                            <li class="pickeditem">
+                                <div class="pickeditemdiv">
+                                    <span class="material-symbols-outlined">
+                                        link
+                                    </span>
+                                    <p class="ms-2">{{contact.linxname}}</p>
+                                </div>
+                            </li>
+                            }
+                        </ul>
+                    </div>
                 </div>
                 <div class="modalfooter">
                     <button [class.createChainButt]='anyContact' [class.createChainButtDis]='!anyContact'  type="button" (click)="pickName()" [disabled]="!anyContact">

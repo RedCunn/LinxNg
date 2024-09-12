@@ -37,10 +37,9 @@ $errorAlertsColor : rgb(255, 95, 162);
 
         .createChainButt {
             @extend .butt;
-
+            background-color: $buttonbghover;
             &:hover {
                 color: $greenfontcolor;
-                background-color: $buttonbghover;
             }
 
         }
@@ -55,45 +54,51 @@ $errorAlertsColor : rgb(255, 95, 162);
     }
 
     .contactscontainer {
-        @include simplegrid(2);
-        justify-content: start;
-        align-items: center;
+        
         width: 100%;
         margin-top: 1rem;
+        @include flexcol(center);
+        
+        .listsdiv{
+            width: 60%;
+            @include simplegrid(2);
+            justify-content: start;
+            align-items: center;
 
-        .contactlist {
-            width: 100%;
-            height: 100%;
-            @include flexcol(center);
-            align-items: flex-start;
-
-            .contactlitem {
+            .contactlist {
                 width: 100%;
-                @include flexrow(start);
-                padding-bottom: 1rem;
-                .inputlist {
-                    margin-left: 1rem;
-                    width: fit-content;
+                height: 100%;
+                @include flexcol(center);
+                align-items: flex-start;
+    
+                .contactlitem {
+                    width: 100%;
                     @include flexrow(start);
+                    padding-bottom: 1rem;
+                    .inputlist {
+                        margin-left: 1rem;
+                        width: fit-content;
+                        @include flexrow(start);
+                    }
                 }
             }
-        }
-
-        .addedContactsList {
-            @include flexcol(center);
-            width: 100%;
-            height: 100%;
-            align-items: flex-start;
-
-            .pickeditem {
-                @include flexrow(start);
-                color: $buttonhovercolor;
-                font-weight: 600;
+    
+            .addedContactsList {
+                @include flexcol(center);
                 width: 100%;
-                padding-bottom: 0.5rem;
-                .pickeditemdiv {
-                    width: fit-content;
+                height: 100%;
+                align-items: flex-start;
+    
+                .pickeditem {
                     @include flexrow(start);
+                    color: $buttonhovercolor;
+                    font-weight: 600;
+                    width: 100%;
+                    padding-bottom: 0.5rem;
+                    .pickeditemdiv {
+                        width: fit-content;
+                        @include flexrow(start);
+                    }
                 }
             }
         }
@@ -127,6 +132,7 @@ $errorAlertsColor : rgb(255, 95, 162);
 
             .confirmbutt {
                 @extend .butt;
+                background-color: $buttonbghover;
                 color: $greenfontcolor;
                 @include flexrow(inline-flex);
                 .chainmoji{
@@ -136,7 +142,6 @@ $errorAlertsColor : rgb(255, 95, 162);
                     .chainmoji{
                         display: block;
                     }
-                    background-color: $buttonbghover;
                 }
             }
 

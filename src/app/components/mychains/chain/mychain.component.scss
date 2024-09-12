@@ -2,31 +2,36 @@
 @import '../../../scss/base/mixins.scss';
 @import '../../../scss/base/variables';
 
+$pinkness : #EA77FE;
+
 .modalcard {
     @include m-modal-card;
-
     .modalfooter{
-        width: 95%;
+        width: 100%;
         height: 45px;
         position: fixed;
         bottom: 2%;
         display: flex;
-        justify-content: end;
+        justify-content: start;
         align-items: center;
         .newChainButt{
-            padding: 0.7rem;
-            background-color: $buttonbgcolor;
+            height: 2.2rem;
+            width:  2.2rem;
+            margin-right: 0.5rem;
+            background-color: $buttonbghover;
             color: $buttonhovercolor;
             border-radius: 25px;
-            display: flex;
-            justify-items: end;
-            align-items: center;
+            text-align: center;
+            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.3);
+            transition: box-shadow 0.3s ease; 
+            
             .addlink{
                 display: none;
             }
             &:hover {
+                width:  4.4rem;
+                box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.5); 
                 color: $greenfontcolor;
-                background-color: $buttonbghover;
                 .addlink{
                     display: inline-block;
                 }
@@ -36,31 +41,62 @@
     }
 }
 
+.searchdiv{
+    width: 100%;
+    height: 2.5rem;
+    .searchicon{
+        width: 100%;
+        @include flexrow(end);
+
+        .searchbutt{
+            height: 2.2rem;
+            width:  2.2rem;
+            text-align: center;
+            border-radius: 25px;
+            background-color: rgb(68, 0, 193);
+            color : $darkerbgcolor;
+            font-size: 1.5rem;
+
+            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.3);
+            transition: box-shadow 0.3s ease; 
+            
+            &:hover{
+                color : $pinkness;
+                box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.5); 
+            }
+        }
+    }
+    .searchbardiv{
+        width: 100%;
+        @include flexrow(center);
+
+        .closesearchbutt{
+            color : rgb(68, 0, 193);
+        }
+    }
+}
+
 .chainsbutt {
     @include standardbutton($width : 100%, $justcont : start);
 
     @include flexrow($content:start);
 
+    color : $pinkness;
+
     p{
         flex-grow: 1;
     }
 
+    .iconhover{
+        display: none;
+    }
+
     &:hover {
         box-shadow: none;
-
-        p{
-            color :  $buttonhovercolor;
-        }
-        .listpoint{
-            display: none;
-        }
-        .chainico {
+        .iconhover{
             display: block;
         }
     }
-}
-.chainico{
-    display: none;
 }
 
 .mychainsbutt {

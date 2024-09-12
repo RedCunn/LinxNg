@@ -1,4 +1,4 @@
-import { Component, Input, OnInit, inject, signal } from '@angular/core';
+import { Component, Input, OnInit, WritableSignal, inject, signal } from '@angular/core';
 import { LinxsonchainComponent } from '../linxs/linxsonchain.component';
 import { IChain } from '../../../models/chain/IChain';
 import { SignalStorageService } from '../../../services/signal-storage.service';
@@ -19,8 +19,7 @@ import { PickcontactsmodalComponent } from '../contactlist/pickcontactsmodal.com
 export class MyChainComponent implements OnInit{
 
   @Input() isOpen = signal(false);
-  @Input() chains ? : Array<IChain>;
-
+  @Input() chains : WritableSignal<IChain[]> = signal([]);
 
   private signalsvc = inject(SignalStorageService)
   private restsvc = inject(RestnodeService)
@@ -34,11 +33,43 @@ export class MyChainComponent implements OnInit{
   public chainId! : string;
   public groupChats : IGroupChat[] = [];
 
+  public showSearchBar = signal(false);
+  public searchedChains : WritableSignal<{chainid : string, chainname : string}[]> = signal([]);
+
   public linxsOnChainOpen = signal(false);
   public contactsOpen = signal(false);
 
-  constructor(){
-    console.log('CHAINS ON MYCHAINCOMPO : ', this.chains)
+
+  groupChains(){
+        
+    //!GROUP --------------- Chains ------> MyChains --/Active
+    //!                              \                 \Unactive
+    //!                               ----> LinxChains --/Active
+    //!                                                  \Unactive
+
+  }
+
+  searchChain(event : any){
+    const name = event.target.value.toLowerCase().trim();
+  
+    if(name.trim() !== ''){
+      this.searchedChains.set(this.user.account.chains!.filter(chain => chain.chainname.toLowerCase().includes(name)));
+    }else{
+      this.searchedChains.set(this.signalsvc.RetrieveUserData()()?.account.chains!);
+    }
+  }
+
+
+  isAdmin(chainid : string): boolean{
+    const chain = this.chains().find(chain => chain.chainId === chainid);
+
+    const idx = chain?.chainAdminsId.findIndex(id => id === this.user.userid)
+
+    if(idx !== -1){
+      return true;
+    }else{
+      return false;
+    } 
   }
 
   closeModal() {
@@ -56,7 +87,8 @@ export class MyChainComponent implements OnInit{
     this.retrieveGroupChat();
     this.linxsOnChainOpen.set(true);
   }
-  showLinxsOnChain(chain : IChain){
+  showLinxsOnChain(chainid : string){
+    const chain = this.chains().find(chain => chain.chainId === chainid)!;
     this.chainName = chain.chainName;
     this.chain = chain;
     this.linxsOnChainOpen.set(true);
@@ -95,6 +127,7 @@ export class MyChainComponent implements OnInit{
 
   ngOnInit(): void {
     this.user = this.signalsvc.RetrieveUserData()()!;
+    this.searchedChains.set(this.user.account.chains!);
   }
 
 }

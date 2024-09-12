@@ -22,26 +22,60 @@
         </div>
         <!-- Modal body -->
         <div class="modalbody">
+            <div class="searchdiv">
+                @if(showSearchBar()){
+                    <div class="searchbardiv">
+                        <input (input)="searchChain($event)" type="search" id="default-search"
+                            class="block w-3/5 p-2 ps-10 text-sm text-gray-900 border border-purple-500 rounded-lg bg-violet-300 focus:ring-purple-700 focus:border-purple-700 "
+                            placeholder="Buscar cadena..." />
+                        <button type="button" class="closesearchbutt" (click)="showSearchBar.set(false)">
+                            <span class="material-symbols-outlined">
+                                close_small
+                            </span>
+                        </button>
+                    </div>
+                }@else {
+                    <div class="searchicon">
+                        <button type="button" class="searchbutt" (click)="showSearchBar.set(true)">
+                            <span class="material-symbols-outlined">
+                                search
+                            </span>
+                        </button>
+                    </div>
+                }
+            </div>
             <ul>
-                @for(chain of this.chains; track chain.chainId){
-                <li>
-                    <button (click)="this.showLinxsOnChain(chain)" class="chainsbutt">
-                        <p>{{chain.chainName}}</p>
-                    </button>
-                </li>
+                @for(chain of this.searchedChains(); track chain.chainid){
+                    <li>
+                        <button (click)="this.showLinxsOnChain(chain.chainid)" class="chainsbutt">
+                            <div class="text-center w-8 text-xl">
+                                <span class="iconhover">
+                                    🔗
+                                </span>
+                            </div>
+                            @if(isAdmin(chain.chainid)){
+                            <span class="material-symbols-outlined">
+                                shield_person
+                            </span>
+                            }
+                            <p class="text-start w-fit" [class.inactive]="true" [class.active]="false">
+                                {{chain.chainname}}
+                            </p>
+                        </button>
+                    </li>
                 }@empty{
-                <li>
-                    <p style="font-style: italic;">No hay cadenas...</p>
-                </li>
+                    <li>
+                        <p style="font-style: italic;">No hay cadenas...</p>
+                    </li>
                 }
             </ul>
             <div class="modalfooter">
                 <button class="newChainButt" type="button" (click)="openContactsListModal()">
-                    <span class="material-symbols-outlined addlink">
-                        link
-                    </span>
                     <span class="material-symbols-outlined">
                         add
+                    </span>
+                    <span class="material-symbols-outlined addlink">
+                        link
                     </span>
                 </button>
             </div>

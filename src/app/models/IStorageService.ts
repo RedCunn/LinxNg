@@ -28,14 +28,9 @@ export interface IStorageService {
     StoreCandidateIndex (index : number) : void;
     RetrieveCandidateIndex() : WritableSignal<number>;
 
-    //#region ---------------NEW AND OLD ----------------
-
-    //NEW : 
-
     StoreMyLinxs ( mylinxs : IAccount[] | null) : void;
     RetrieveMyLinxs () : WritableSignal<IAccount[] | null>;
 
-    //#endregion
 
     //#endregion
 

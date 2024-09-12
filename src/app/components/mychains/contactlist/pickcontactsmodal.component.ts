@@ -1,4 +1,4 @@
-import { Component, inject, Input, OnInit, signal, WritableSignal } from '@angular/core';
+import { Component, inject, Input, OnDestroy, OnInit, signal, WritableSignal } from '@angular/core';
 import { SignalStorageService } from '../../../services/signal-storage.service';
 import { RestnodeService } from '../../../services/restnode.service';
 import { IAccount } from '../../../models/account/IAccount';
@@ -12,7 +12,7 @@ import { IUser } from '../../../models/account/IUser';
   templateUrl: './pickcontactsmodal.component.html',
   styleUrl: './pickcontactsmodal.component.scss'
 })
-export class PickcontactsmodalComponent implements OnInit{
+export class PickcontactsmodalComponent implements OnInit, OnDestroy{
 
   @Input() isOpen = signal(false);
 
@@ -32,10 +32,6 @@ export class PickcontactsmodalComponent implements OnInit{
   private now : Date = new Date();
   private newChain : IChain = {chainAdminsId : [], active : false, chainId : '', chainName : '', createdAt : this.now.toISOString(), accounts : []}
 
-  pickName(){
-    this.showNamePicking.set(true);
-  }
-
   async createChain(){
     try {
       const nameAvailable = await this.checkChainNameNotTaken();
@@ -43,13 +39,10 @@ export class PickcontactsmodalComponent implements OnInit{
       if(nameAvailable){
         this.chainNameTaken.set(false);
         this.reqSent.set(true);
-        this.newChain.chainAdminsId.push(this.user.userid);
-        this.newChain.chainName = this.chainName;
-  
-        this.pickedContacts().forEach(element => {
-          this.newChain.accounts.push(element);
-          this.newChain.accounts.push(this.user.account);
-        });
+
+        this.setChainValues(this.chainName, this.user.userid, this.pickedContacts());
+
+        console.log('CHAIN TO SEND FROM PICKCONTACST : ', this.newChain)
   
         const res = await this.restsvc.createChain(this.user.userid, this.newChain)
   
@@ -69,12 +62,17 @@ export class PickcontactsmodalComponent implements OnInit{
       console.log('ERROR REQUESTING CREATE CHAIN ON PICKCONTACTS COMPO : ', error)
       this.successfulRequest.set(false);
       this.unsuccessfulRequest.set(true);
+
+    }finally{
+      this.clearValues();
     }
+
+    
   }
 
   async checkChainNameNotTaken() : Promise<boolean>{
     try {
-      const res = await this.restsvc.checkChainNameAvailability(this.user.userid , this.chainName);
+      const res = await this.restsvc.checkChainNameAvailability( this.chainName);
       if(res.code === 0){
         return res.userdata;
       }else{
@@ -104,6 +102,37 @@ export class PickcontactsmodalComponent implements OnInit{
   isSelected(userid : string) : boolean{
     return this.pickedContacts().find(account => account.userid === userid) !== undefined
   }
+  addContact(event : any){
+    const isChecked = event.target.checked; 
+    const userId = event.target.value; 
+
+    const contactIdx = this.pickedContacts().findIndex(contact => contact.userid === userId)
+
+    if(isChecked){
+      
+      if(contactIdx === -1){
+        const account = this.contacts().find(contact => contact.userid === userId);
+
+        if(account){
+          this.pickedContacts.update(current => {
+            if (!current.some(contact => contact.userid === userId)) {
+              return [...current, account];
+            }
+            return current;
+          });
+        }
+      }
+    }else{
+      if(contactIdx !== -1){
+        this.pickedContacts.update(current => current.filter(contact => contact.userid !== userId));
+      }
+    }
+    
+  }
+
+  pickName(){
+    this.showNamePicking.set(true);
+  }
 
   setChainName(event : any){
     const chainname = event.target.value.trim(); 
@@ -116,23 +145,6 @@ export class PickcontactsmodalComponent implements OnInit{
     }
   }
 
-  addContact(event : any){
-    const isChecked = event.target.checked; 
-    const userId = event.target.value; 
-
-    if(isChecked){
-      const account = this.contacts().find(contact => contact.userid === userId);
-      if(account){
-        this.pickedContacts.update(current => [...current, account])
-      }
-    }else{
-      const contactIdx = this.pickedContacts().findIndex(contact => contact.userid === userId)
-      if(contactIdx !== -1){
-        this.pickedContacts.update(current => current.filter(contact => contact.userid !== userId));
-      }
-    }
-    
-  }
 
   loadContacts(){
 
@@ -157,15 +169,33 @@ export class PickcontactsmodalComponent implements OnInit{
     })
   }
 
+  setChainValues(name : string , chainAdminId : string , accounts : IAccount[]){
+    this.newChain.chainName = name;
+    this.newChain.chainAdminsId.push(chainAdminId);
+    accounts.forEach(element => {
+      this.newChain.accounts.push(element);
+    });
+    this.newChain.accounts.push(this.user.account);
+  }
+
+  clearValues(){
+    this.pickedContacts.set([]);
+    this.newChain = {chainAdminsId : [], active : false, chainId : '', chainName : '', createdAt : this.now.toISOString(), accounts : []}
+  }
+
   ngOnInit(): void {
     this.loadContacts();
     this.user = this.signalsvc.RetrieveUserData()()!;
   }
 
+  ngOnDestroy(): void {
+   this.clearValues(); 
+  }
+
   closeModal() {
+    this.clearValues();
     this.reqSent.set(false);
     this.showNamePicking.set(false);
-    this.pickedContacts.set([]);
     this.abledCreateChain.set(false);
     this.isOpen.set(false);
   }

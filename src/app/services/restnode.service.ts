@@ -152,19 +152,29 @@ export class RestnodeService {
 
   //#region ----------------------------- MY CHAIN --------------------------------
 
+  private CHAIN_URL : string = 'http://localhost:3000/api/Chain';
+
   
   public getMyLinxs(userid: string , chainid : string | null): Promise<IRestMessage> {
-    const res = this._httpClient.get<IRestMessage>(`http://localhost:3000/api/Chain/${userid}/chain/${chainid}`);
+    const res = this._httpClient.get<IRestMessage>(`${this.CHAIN_URL}/${userid}/chain/${chainid}`);
     return lastValueFrom(res);
   }
 
   public createChain(userid : string , chain : IChain) : Promise<IRestMessage> {
-    const res = this._httpClient.post<IRestMessage>(`http://localhost:3000/api/Chain/${userid}`, chain);
+    const res = this._httpClient.post<IRestMessage>(`${this.CHAIN_URL}`, {chain, userid});
     return lastValueFrom(res);
   }
 
-  public checkChainNameAvailability(userid : string , chainname : string) : Promise<IRestMessage> {
-    const res = this._httpClient.get<IRestMessage>(`http://localhost:3000/api/Chain/${userid}/name/${chainname}`);
+  public checkChainNameAvailability( chainname : string) : Promise<IRestMessage> {
+    const res = this._httpClient.get<IRestMessage>(`${this.CHAIN_URL}/${chainname}`);
+    return lastValueFrom(res);
+  }
+
+  public getChains ( chainids : string[]) : Promise<IRestMessage> {
+    const idsParam = chainids.join(","); 
+    const route = `${this.CHAIN_URL}?ids=${encodeURIComponent(idsParam)}`; 
+  
+    const res = this._httpClient.get<IRestMessage>(route);
     return lastValueFrom(res);
   }
 
