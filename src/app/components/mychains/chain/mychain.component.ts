@@ -8,6 +8,7 @@ import { IUser } from '../../../models/account/IUser';
 import { IAccount } from '../../../models/account/IAccount';
 import { IGroupChat } from '../../../models/chat/IGroupChat';
 import { PickcontactsmodalComponent } from '../contactlist/pickcontactsmodal.component';
+import { IArticle } from '../../../models/account/IArticle';
 
 @Component({
   selector: 'app-mychain',
@@ -27,7 +28,6 @@ export class MyChainComponent implements OnInit{
 
   public user! : IUser; 
   public chain! : IChain;
-  public group : IAccount[] = [];
   public myLinxs : IAccount[] = [];
   public chainName : string = '';
   public chainId! : string;
@@ -39,16 +39,6 @@ export class MyChainComponent implements OnInit{
   public linxsOnChainOpen = signal(false);
   public contactsOpen = signal(false);
 
-
-  groupChains(){
-        
-    //!GROUP --------------- Chains ------> MyChains --/Active
-    //!                              \                 \Unactive
-    //!                               ----> LinxChains --/Active
-    //!                                                  \Unactive
-
-  }
-
   searchChain(event : any){
     const name = event.target.value.toLowerCase().trim();
   
@@ -59,6 +49,10 @@ export class MyChainComponent implements OnInit{
     }
   }
 
+  isActive(chainid : string) : boolean{
+    const chain = this.chains().find(chain => chain.chainId === chainid);
+    return chain!.active; 
+  }
 
   isAdmin(chainid : string): boolean{
     const chain = this.chains().find(chain => chain.chainId === chainid);
@@ -82,32 +76,38 @@ export class MyChainComponent implements OnInit{
 
   showLinsOnGroup (adgroup : IChain){
     this.chainName = adgroup.chainName;
-    this.group = adgroup.accounts;
     this.chainId = adgroup.chainId;
     this.retrieveGroupChat();
     this.linxsOnChainOpen.set(true);
   }
-  showLinxsOnChain(chainid : string){
+
+  async showLinxsOnChain(chainid : string){
     const chain = this.chains().find(chain => chain.chainId === chainid)!;
     this.chainName = chain.chainName;
     this.chain = chain;
+    this.chain.accounts = [];
+    this.chain.accounts = await this.retrieveLinxAccountsOnChain(chainid);
+    console.log('CHAIN SETTED ON MYCHAIN : ', this.chain)
     this.linxsOnChainOpen.set(true);
   }
 
-  searchAdminNamesOnMyLinxs (userid : string) : string{
-    let adminname = "";
+  async retrieveLinxAccountsOnChain(chainid : string) : Promise<IAccount[]>{
+    try {
+      const res = await this.restsvc.getMyLinxs(this.user.userid , chainid)
 
-    if(userid === this.user.userid){
-      return "";
+      if(res.code === 0 ){
+        const accounts : IAccount[] = res.userdata;
+        const articles : IArticle[] = res.others;
+        //return this.utilsvc.putArticleObjectsIntoAccounts(articles , accounts);
+        return accounts;
+      }else{
+        console.log('ERROR RETRIEVING LINXS ACCOUNTS ON CHAIN : ', res.error)
+      }
+
+    } catch (error) {
+      console.log('ERROR RETRIEVING LINXS ACCOUNTS ON CHAIN : ', error)
     }
-
-    const linx = this.myLinxs.find(li => li.userid === userid)
-
-    if(linx){
-      adminname = linx?.linxname;
-    }
-
-    return adminname;
+    return [];
   }
 
   async retrieveGroupChat(){

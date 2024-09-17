@@ -6,107 +6,141 @@ $pinkness : #EA77FE;
 
 .modalcard {
     @include m-modal-card;
-    .modalfooter{
-        width: 100%;
-        height: 45px;
-        position: fixed;
-        bottom: 2%;
-        display: flex;
-        justify-content: start;
-        align-items: center;
-        .newChainButt{
-            height: 2.2rem;
-            width:  2.2rem;
-            margin-right: 0.5rem;
-            background-color: $buttonbghover;
-            color: $buttonhovercolor;
-            border-radius: 25px;
-            text-align: center;
-            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.3);
-            transition: box-shadow 0.3s ease; 
-            
-            .addlink{
-                display: none;
-            }
-            &:hover {
-                width:  4.4rem;
-                box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.5); 
-                color: $greenfontcolor;
-                .addlink{
-                    display: inline-block;
-                }
-            }
 
+        .modalfooter {
+            width: 100%;
+            height: 2.5rem;
+            position: fixed;
+            left: 0%;
+            bottom: 0%;
+            display: flex;
+            justify-content: start;
+            align-items: center;
+    
+            .newChainButt {
+                height: 2.2rem;
+                width: 2.2rem;
+                margin-left: 0.5rem;
+                margin-bottom: 0.5rem;
+                background-color: $buttonbghover;
+                color: $buttonhovercolor;
+                border-radius: 25px;
+                text-align: center;
+                box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.3);
+                transition: box-shadow 0.3s ease;
+    
+                .addlink {
+                    display: none;
+                }
+    
+                &:hover {
+                    width: 4.4rem;
+                    box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.5);
+                    color: $greenfontcolor;
+    
+                    .addlink {
+                        display: inline-block;
+                    }
+                }
+    
+            }
         }
     }
-}
+    
 
-.searchdiv{
+.searchdiv {
     width: 100%;
     height: 2.5rem;
-    .searchicon{
-        width: 100%;
-        @include flexrow(end);
 
-        .searchbutt{
-            height: 2.2rem;
-            width:  2.2rem;
-            text-align: center;
-            border-radius: 25px;
-            background-color: rgb(68, 0, 193);
-            color : $darkerbgcolor;
-            font-size: 1.5rem;
-
-            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.3);
-            transition: box-shadow 0.3s ease; 
-            
-            &:hover{
-                color : $pinkness;
-                box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.5); 
-            }
-        }
-    }
-    .searchbardiv{
+    .searchicon {
         width: 100%;
         @include flexrow(center);
 
-        .closesearchbutt{
-            color : rgb(68, 0, 193);
+        .searchbutt {
+            height: 2.2rem;
+            width: 2.2rem;
+            margin-right: 0.5rem;
+            text-align: center;
+            border-radius: 25px;
+            color: $baseplaintextcolor;
+            font-size: 1.5rem;
+
+            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.3);
+            transition: box-shadow 0.3s ease;
+
+            &:hover {
+                color: $pinkness;
+                box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.5);
+            }
+        }
+    }
+
+    .searchbardiv {
+        width: 100%;
+        @include flexrow(center);
+
+        .closesearchbutt {
+            color: rgb(68, 0, 193);
         }
     }
 }
 
-.chainsbutt {
-    @include standardbutton($width : 100%, $justcont : start);
+.chainlistdiv {
+    width: 100%;
+    @include flexcol(center);
 
-    @include flexrow($content:start);
+    .chainslist {
+        width: 80%;
+        margin-bottom: 2rem;
+        button{
+            @include standardbutton($width : 100%, $justcont : start);
 
-    color : $pinkness;
+            @include flexrow($content: start);
 
-    p{
-        flex-grow: 1;
-    }
+            &.chainbuttInactive{
+                color: $baseplaintextcolor;
+                p{
+                    color: $baseplaintextcolor;
+                }
+            }
 
-    .iconhover{
-        display: none;
-    }
+            &.chainbuttActive{
+                color: $pinkness;
+                p{
+                    color: $pinkness;
+                }
+            }
 
-    &:hover {
-        box-shadow: none;
-        .iconhover{
-            display: block;
+            p {
+                flex-grow: 1;
+            }
+
+            .iconhover {
+                display: none;
+            }
+
+            &:hover {
+                box-shadow: none;
+
+                .iconhover {
+                    display: block;
+                }
+            }
         }
+
     }
+
 }
 
 .mychainsbutt {
     @include standardbutton($width : 100%, $justcont : center);
     @include boxshadow;
+
     &:hover {
         box-shadow: none;
-        
-        p{
-            color : $greenfontcolor;
+
+        p {
+            color: $greenfontcolor;
         }
     }
 }
@@ -114,12 +148,8 @@ $pinkness : #EA77FE;
 ul {
     li {
         p {
-            padding-left: 0.5rem
-                /* 8px */
-            ;
-            padding-right: 0.5rem
-                /* 8px */
-            ;
+            padding-left: 0.5rem;
+            padding-right: 0.5rem;
             font-size: 1.5rem;
             color: $buttoncolor;
         }

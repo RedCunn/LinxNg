@@ -6,7 +6,12 @@
     <div id="modalchain" tabindex="-1" aria-hidden="true" class="modalcontainer">
         <!-- Modal header -->
         <div class="modalheader">
-            <div class="col-span-3 flex align-middle justify-end mt-5">
+            <div class="col-span-3 flex align-middle justify-between mt-5">
+                <button (click)="toggleChatModal()" class="ms-5 text-purple-400 hover:text-lime-300">
+                    <span class="material-symbols-outlined" style="font-size: 2.5rem;">
+                        forum
+                    </span>
+                </button>
                 <button type="button"
                     class="bg-transparent hover:text-white rounded-lg ms-auto me-3 inline-flex justify-center items-center "
                     (click)="closeModal()">
@@ -14,61 +19,52 @@
                 </button>
             </div>
             <div class="col-span-3 flex flex-row justify-center items-baseline text-center">
-                <p style="color: rgb(121, 35, 240); font-weight: 600; font-size: 1.5rem;">⛓️ {{this.chainName}}</p>
-                <button (click)="toggleChatModal()" class="ms-3 text-purple-400 hover:text-purple-500 pt-3">
-                    <span class="material-symbols-outlined">
-                        chat_bubble
-                    </span>
-                </button>
+                <p style="color: rgb(110, 14, 245); font-weight: 600; font-size: 1.5rem;">⛓️ {{this.chainName}}</p>
             </div>
         </div>
         <!-- Modal body -->
         <div class="modalbody">
-            <ul class="my-4 space-y-3">
-                @if(this.isMyChain()){
+            <ul>
                 @for(linx of chain.accounts ; track linx.userid){
                 <li>
-                    <div
-                        class="flex items-center justify-between w-full p-3 text-base font-bold text-gray-900 rounded-lg bg-gray-50 dark:bg-gray-600 dark:text-white">
-                        @if(this.showBreakChainAlert()[linx.userid]){
-                        <div class="breakalert">
-                            @if(linx.userid === this._user?.userid){
-                            <h4 style="color: rgb(173, 103, 3);">⚠️ Al romper cadena rompes la comunicación de todxs lxs
-                                linxs unidxs por esta cadena, ¿estás segurx de querer continuar?</h4>
-                            }@else {
-                            <h4>Al romper cadena perderás a {{linx.linxname}} y todxs sus linxs en esta cadena, ¿estás
-                                segurx de querer continuar?</h4>
-                            }
-                            <div [class.alertadmin]="linx.userid === this._user?.userid"
-                                [class.alertlinx]="linx.userid !== this._user?.userid">
-                                <button type="button" (click)="showAlert(false, linx.userid)"
-                                    class="alertbutt text-violet-400 bg-white border border-violet-300 hover:bg-violet-100 font-normal rounded-lg text-sm px-2 me-2 mb-2">
-                                    Cancelar
-                                </button>
-                                <button type="button" (click)="breakChain(linx.userid)"
-                                    class="alertbutt text-red-700 bg-white border border-red-600 hover:bg-red-100 font-normal rounded-lg text-sm px-2 me-2 mb-2 ">
-                                    {{ linx.userid !== this._user?.userid ? 'Romper linx' : 'Romper cadena'}}
-                                </button>
-                            </div>
-                        </div>
+                    @if(this.showBreakChainAlert()[linx.userid]){
+                    <div class="breakalert">
+                        @if(linx.userid === this._user?.userid){
+                        <h4 style="color: rgb(173, 103, 3);">⚠️ Al romper cadena rompes la comunicación de todxs lxs
+                            linxs unidxs por esta cadena, ¿estás segurx de querer continuar?</h4>
                         }@else {
-                        <button (click)="this.goToLinxProfile(linx)" class="flex flex-row items-center">
-                            <p style="color: rgb(45, 3, 82);" class="px-2 pt-2">
-                                <span class="material-symbols-outlined">
-                                    account_circle
-                                </span>
-                            </p>
-                            <p style="color: rgb(45, 3, 82);">{{linx.linxname}}</p>
-                        </button>
-                        <div class="chainbutt">
-                            <button (click)="showAlert(true, linx.userid)"
-                                class="flex flex-row hover:bg-slate-100 p-3 rounded-md">
-                                <img style="width: 30px; height: auto;"
-                                    src="../../../../assets/imgs/logos/breakchainbutt.png">
+                        <h4>Al romper cadena perderás a {{linx.linxname}} y todxs sus linxs en esta cadena, ¿estás
+                            segurx de querer continuar?</h4>
+                        }
+                        <div [class.alertadmin]="linx.userid === this._user?.userid"
+                            [class.alertlinx]="linx.userid !== this._user?.userid">
+                            <button type="button" (click)="showAlert(false, linx.userid)"
+                                class="alertbutt text-violet-400 bg-white border border-violet-300 hover:bg-violet-100 font-normal rounded-lg text-sm px-2 me-2 mb-2">
+                                Cancelar
+                            </button>
+                            <button type="button" (click)="breakChain(linx.userid)"
+                                class="alertbutt text-red-700 bg-white border border-red-600 hover:bg-red-100 font-normal rounded-lg text-sm px-2 me-2 mb-2 ">
+                                {{ linx.userid !== this._user?.userid ? 'Romper linx' : 'Romper cadena'}}
                             </button>
                         </div>
-                        }
                     </div>
+                    }@else {
+                    <button (click)="this.goToLinxProfile(linx)" class="flex flex-row items-center">
+                        <p style="color: rgb(45, 3, 82);" class="px-2 pt-2">
+                            <span class="material-symbols-outlined">
+                                account_circle
+                            </span>
+                        </p>
+                        <p style="color: rgb(45, 3, 82);">{{linx.linxname}}</p>
+                    </button>
+                    <div class="chainbutt">
+                        <button (click)="showAlert(true, linx.userid)"
+                            class="flex flex-row hover:bg-slate-100 p-3 rounded-md">
+                            <img style="width: 30px; height: auto;"
+                                src="../../../../assets/imgs/logos/breakchainbutt.png">
+                        </button>
+                    </div>
+                    }
                 </li>
                 }@empty {
                 <li>
@@ -76,27 +72,6 @@
                 </li>
                 }
                 
-                }
-
-                @if(this.isAllChains()){
-                @for(linx of group ; track linx.userid){
-                <li>
-                    <button (click)="this.goToLinxProfile(linx)" [disabled]="linx.userid === this._user?.userid">
-                        <p class="px-2 pt-2">
-                            <span class="material-symbols-outlined">
-                                account_circle
-                            </span>
-                        </p>
-                        <p>{{linx.linxname}}</p>
-                    </button>
-                </li>
-                }@empty {
-                <li>
-                    <p style="font-style: italic;">No hay linxs en esta cadena...</p>
-                </li>
-                }
-                }
-
             </ul>
         </div>
     </div>
@@ -104,19 +79,3 @@
 }
 
 <ng-container #chatContainer></ng-container>
-
-<!-- @if (this.showBreakChainAlert()) {
-      <div class="breakalert">
-        <h4>Al romper cadena perderás a Calle y a todxs lxs linxs de su cadena , ¿estás segurx de querer continuar?</h4>
-        <div class="alertbuttcontainer">
-          <button type="button" (click)="showAlert('breakchain', false)"
-            class="alertbutt text-violet-400 bg-white border border-violet-300 hover:bg-violet-100 font-normal rounded-lg text-sm px-2 me-2 mb-2">
-            Cancelar
-          </button>
-          <button type="button" (click)="breakChain()"
-            class="alertbutt text-red-700 bg-white border border-red-600 hover:bg-red-100 font-normal rounded-lg text-sm px-2 me-2 mb-2 ">
-            Romper cadena
-          </button>
-        </div>
-      </div>
-      } -->

@@ -106,7 +106,6 @@ export class RestnodeService {
     const res = this._httpClient.get<IRestMessage>(`http://localhost:3000/api/Account/${userid}/articles`);
     return lastValueFrom(res);
   }
-
   //#endregion
 
   //#region ------------------------------ PROFILE -----------------------------------------
@@ -156,7 +155,7 @@ export class RestnodeService {
 
   
   public getMyLinxs(userid: string , chainid : string | null): Promise<IRestMessage> {
-    const res = this._httpClient.get<IRestMessage>(`${this.CHAIN_URL}/${userid}/chain/${chainid}`);
+    const res = this._httpClient.get<IRestMessage>(`${this.CHAIN_URL}/${chainid}/user/${userid}/linxs`);
     return lastValueFrom(res);
   }
 
@@ -221,6 +220,16 @@ export class RestnodeService {
   //#endregion
 
   //#region ----------------------------- MY INTERACTIONS ------------------------
+
+  public getChainInvites(userid: string, chainid : string) : Promise<IRestMessage> {
+    const res = this._httpClient.get<IRestMessage>(`http://localhost:3000/api/Interaction/chain/${chainid}/invites?from=${userid}`);
+    return lastValueFrom(res);
+  }
+
+  public getInteractions(userid: string) : Promise<IRestMessage> {
+    const res = this._httpClient.get<IRestMessage>(`http://localhost:3000/api/Interaction?to=${userid}`);
+    return lastValueFrom(res);
+  }
 
   public getMyConnections(userid: string): Promise<IRestMessage> {
     const res = this._httpClient.get<IRestMessage>(`http://localhost:3000/api/Connection/${userid}`);

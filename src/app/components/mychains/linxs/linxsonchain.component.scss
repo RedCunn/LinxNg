@@ -8,16 +8,14 @@
 
 ul{
     li{
-        display: flex;
-        justify-content: center;
+        @include flexrow(center);
         p{
             color: $greenfontcolor;
         }
         button{
             @include standardbutton($width : 80%, $justcont:start);
-            @include boxshadow;
             &:hover {
-                box-shadow: none;
+                @include boxshadow;
             }
         }
     }

@@ -21,9 +21,6 @@ export class LinxsonchainComponent implements OnInit{
   
 
   @Input() groupChat! : IGroupChat[];
-  @Input() isMyChain = signal(false)
-  @Input() isSharedChain = signal(false)
-  @Input() isAllChains = signal(false)
   @Input() chain! : IChain;
   // @Input()
   // set chain(value: IChainGroup) {
@@ -34,21 +31,19 @@ export class LinxsonchainComponent implements OnInit{
   // get chain(): IChainGroup {
   //   return this._chain;
   // }
-
-  @Input() group! : IAccount[];
   @Input() isOpen = signal(false);
   @Input() chainName! : string;
   @Input() chainId! : string;
 
-  onChainInputChange() {
-    if (this.isMyChain()) {
-      this.chain.accounts.forEach(linx => {
-        if (!this.setBreakAlertOpen[linx.userid]) {
-          this.setBreakAlertOpen[linx.userid] = false;
-        }
-      });
-    }
-  }
+  // onChainInputChange() {
+  //   if (this.isMyChain()) {
+  //     this.chain.accounts.forEach(linx => {
+  //       if (!this.setBreakAlertOpen[linx.userid]) {
+  //         this.setBreakAlertOpen[linx.userid] = false;
+  //       }
+  //     });
+  //   }
+  // }
 
   private signalStorageSvc = inject(SignalStorageService);
   private restsvc = inject(RestnodeService);
@@ -66,11 +61,10 @@ export class LinxsonchainComponent implements OnInit{
 
   goToLinxProfile(linx : IAccount){
     this.isOpen.set(false);
-    this.signalStorageSvc.StoreCandidateData(null);
-    //!INICIAR CHAT si es extent 
+    this.signalStorageSvc.StoreCandidateData(null); 
     this.signalStorageSvc.StoreLinxData(linx);
 
-    this.router.navigateByUrl(`/Linx/Profile/${linx.linxname}`);
+    this.router.navigateByUrl(`/Linx/inx/${linx.linxname}`);
   }
 
   async getWholeProfile(linxid : string){
@@ -125,7 +119,7 @@ export class LinxsonchainComponent implements OnInit{
   setChat(){
     this.groupchat.name = this.chainName;
     this.groupchat.roomkey = this.chainId;
-    this.group.forEach(linx => {
+    this.chain.accounts.forEach(linx => {
       this.groupchat.groupParticipants?.push({userid : linx.userid, linxname : linx.linxname})
     }) 
 
