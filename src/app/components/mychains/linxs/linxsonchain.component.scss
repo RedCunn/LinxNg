@@ -2,6 +2,18 @@
 @import '../../../scss/base/mixins.scss';
 @import '../../../scss/base/variables';
 
+
+$darktext : rgb(45, 3, 82);
+$lighttext : #CCBCD7;
+
+.pendingLinx{
+    color : $lighttext;
+}
+
+.activeLinx{
+    color : $darktext;
+}
+
 .modalcard{
     @include m-modal-card;
 }
@@ -9,13 +21,22 @@
 ul{
     li{
         @include flexrow(center);
-        p{
-            color: $greenfontcolor;
-        }
-        button{
+        .linxbutt{
+            width: 100%;
+            @include flexrow(space-between);
+            align-items: center;
             @include standardbutton($width : 80%, $justcont:start);
             &:hover {
                 @include boxshadow;
+            }
+
+            .chainbutt{
+                flex-grow: 1;
+                @include flexrow(end);
+            }
+
+            .linxnamediv{
+                @include flexrow(start);
             }
         }
     }

@@ -1,6 +1,6 @@
-@if(isOpen()){
 
-    @let name = "Hi everyone";
+
+@if(isOpen()){
 
 <!-- Main modal -->
 <div class="modalcard">
@@ -10,9 +10,9 @@
                 <!-- Modal header -->
                 <div class="flex items-center justify-between rounded-t dark:border-gray-600">
                     <h3>
-                        <span id="intericon" class="material-symbols-outlined text-purple-300 p-3">bubble_chart</span>
+                        <span id="intericon" class="material-symbols-outlined text-purple-700 p-3">bubble_chart</span>
                     </h3>
-                    <button type="button" class="text-purple-300 hover:text-purple-400 bg-transparent ms-auto me-3 inline-flex justify-center items-center "
+                    <button type="button" class="text-purple-700 hover:text-purple-800 bg-transparent ms-auto me-3 inline-flex justify-center items-center "
                         (click)="closeModal()">
                         <span class="material-symbols-outlined">close</span>
                     </button>
@@ -21,43 +21,56 @@
                 <div class="modalbody">
                     <ul>
                         @for (inter of interactionsInbox; track inter.id) {
-                            <!-- @switch (inter.type) {
-                                @case ('INVITE') {
-                                    <li>
-                                        <p>⛓️ {{inter.fromAccount.linxname}} te invita a unirte a la cadena {{inter.chain.chainname}}</p>
-                                        <div class="invitebuttons">
-                                            <button>
-                                                Aceptar
-                                            </button>
-                                            <button>
-                                                Declinar
+                            @if(isChainInvite(inter)){
+                                    <li class="inviteListItem">
+                                        <div class="listitem">
+                                            <p>⛓️ <span class="username">{{inter.from.linxname}}</span> te invita a unirte a la cadena <span class="chainname"> {{inter.object.chain.chainName}}</span></p>
+                                            @let isOpen = openReplyOptions()[inter.id];
+                                            <button type="button" [class.replyOpen]="isOpen" [class.replyClose]="!isOpen"
+                                            (click)="toggleReplyOptions(!isOpen, inter.id)">
+                                                <span class="material-symbols-outlined">
+                                                    quiz
+                                                </span>
                                             </button>
                                         </div>
-                                        <div class="alertinvite">
-                                            <p>¿Estás segurx de querer declinar la invitación?</p>
-                                            <div class="confirmbuttons">
-                                                <button>
-                                                    Volver
+                                        @if(isOpen){
+                                            <div class="optionbuttons">
+                                                <button type="button" (click)="replyToInvite(inter.id , false)" class="declineInvitebutt">
+                                                    Declinar
                                                 </button>
-                                                <button>
-                                                    Estoy segurx
+                                                <button type="button" (click)="replyToInvite(inter.id , true)" class="acceptInvitebutt">
+                                                    Aceptar
                                                 </button>
                                             </div>
-                                        </div>
+                                        }
                                     </li>
                                 }
-                                @case ('ONCHAIN') {
-                                    
+                                @if(isNewConnection(inter)){
+                                    <li class="connectionListItem">
+                                        <div class="connmessage">
+                                            <p>🌼 Has hecho una nueva conexión con <button type="button" class="chainname" (click)="goToProfile(inter.from)">{{inter.from.linxname}}</button></p>
+                                        </div>
+                                        <button type="button" class="closeinterbutt" (click)="removeInteractionFromInbox(inter.id)">
+                                            <div style="width: 4rem;">
+                                                <p class="dropleft">cerrar</p>
+                                            </div>
+                                            <span class="material-symbols-outlined">
+                                                unknown_5
+                                            </span>
+                                        </button>
+                                    </li>
+                                }
+                                <!-- @case ('ONCHAIN') {
                                         <li>
                                             <button (click)="removeInteractionFromInbox(inter.id)">
                                                 <span class="material-symbols-outlined">
                                                     disabled_by_default
                                                 </span>
                                             </button>
-                                            @if (inter.fromAccount.userid !== this._user?.userid) {
-                                                <p>🔗 {{inter.fromAccount.linxname}} es ahora linx de la cadena {{inter.chainName}}</p>
+                                            @if (inter.from.userid !== this._user?.userid) {
+                                                <p>🔗 {{inter.from.linxname}} es ahora linx de la cadena </p>
                                             }@else {
-                                                <p>🔗 Ahora eres linx en la cadena {{inter.chainName}} 🔗</p>
+                                                <p>🔗 Ahora eres linx en la cadena  🔗</p>
                                             }
                                         </li>
                                 }
@@ -68,31 +81,18 @@
                                                 disabled_by_default
                                             </span>
                                         </button>
-                                        @if (inter.userid === this._user?.userid) {
-                                            <p>👁️ Ya no formas parte de la cadena {{inter.chain?.chainName}}</p>
+                                        @if (inter.from.userid === this._user?.userid) {
+                                            <p>👁️ Ya no formas parte de la cadena </p>
                                         }@else {
                                             <div class="offchainmessage">
-                                                <p>👀 {{inter.linxname}} ya no está en la cadena</p>
+                                                <p>👀 {{inter.from.linxname}} ya no está en la cadena</p>
                                                 <button (click)="openChain(inter.chain!)" >{{inter.chain?.chainName}}</button>
                                             </div>
                                         }
                                     </li>
-                                }
-                                @case ('CONNECTION') {
-                                    <li>
-                                        <button (click)="removeInteractionFromInbox(inter.id)">
-                                            <span class="material-symbols-outlined">
-                                                disabled_by_default
-                                            </span>
-                                        </button>
-                                        <div class="connmessage">
-                                            <p>🌼 Has hecho una nueva conexión con </p>
-                                            <button (click)="goToProfile(inter.account!)">{{inter.account?.linxname}}</button>
-                                        </div>
-                                    </li>
-                                }
-                            } -->
-                        }
+                                } -->
+                              
+                            }
                     </ul>
                 </div>
     </div>

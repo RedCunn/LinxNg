@@ -9,6 +9,7 @@ import { IUser } from '../../../models/account/IUser';
 import { IArticle } from '../../../models/account/IArticle';
 import { GroupchatComponent } from '../../chat/groupchat/groupchat.component';
 import { IChain } from '../../../models/chain/IChain';
+import { ChainInvite } from '../../../models/account/IInteractions';
 
 @Component({
   selector: 'app-linxsonchain',
@@ -21,6 +22,7 @@ export class LinxsonchainComponent implements OnInit{
   
 
   @Input() groupChat! : IGroupChat[];
+  @Input() chainInvites! : ChainInvite[];
   @Input() chain! : IChain;
   // @Input()
   // set chain(value: IChainGroup) {
@@ -58,6 +60,12 @@ export class LinxsonchainComponent implements OnInit{
 
   @ViewChild('chatContainer', { read: ViewContainerRef, static: true })
   public chatcompoContainer!: ViewContainerRef;
+
+  determineInviteState(linxid : string) : string{
+    //"REFUSED" | "ACCEPTED" | "PENDING"
+    const state = this.chainInvites.find(inv => inv.to === linxid)?.state
+    return state ?? 'PENDING';
+  }
 
   goToLinxProfile(linx : IAccount){
     this.isOpen.set(false);

@@ -19,7 +19,7 @@
                 </button>
             </div>
             <div class="col-span-3 flex flex-row justify-center items-baseline text-center">
-                <p style="color: rgb(110, 14, 245); font-weight: 600; font-size: 1.5rem;">⛓️ {{this.chainName}}</p>
+                <p style="color: rgb(93, 0, 224); font-weight: 600; font-size: 1.5rem;">⛓️ {{this.chainName}}</p>
             </div>
         </div>
         <!-- Modal body -->
@@ -48,22 +48,39 @@
                             </button>
                         </div>
                     </div>
-                    }@else {
-                    <button (click)="this.goToLinxProfile(linx)" class="flex flex-row items-center">
-                        <p style="color: rgb(45, 3, 82);" class="px-2 pt-2">
-                            <span class="material-symbols-outlined">
-                                account_circle
-                            </span>
-                        </p>
-                        <p style="color: rgb(45, 3, 82);">{{linx.linxname}}</p>
+                    }@else if(linx.userid !== this._user?.userid){
+                    <button (click)="this.goToLinxProfile(linx)" class="linxbutt" 
+                    [class.activeLinx]="determineInviteState(linx.userid) === 'ACCEPTED' ? true : false"
+                    [class.pendingLinx]="determineInviteState(linx.userid) === 'PENDING' ? true : false">
+                        <div class="linxnamediv">
+                            <p class="px-2 pt-2">
+                                <span class="material-symbols-outlined">
+                                    account_circle
+                                </span>
+                            </p>
+                            <p>{{linx.linxname}}</p>
+                        </div>
+                        <div class="chainbutt">
+                            @switch (this.determineInviteState(linx.userid)) {
+                                @case ('PENDING') {
+                                    <div class="p-3 rounded-md"> 
+                                        <span class="material-symbols-outlined" style="font-size: 1rem;">
+                                            hourglass_empty
+                                        </span>
+                                    </div>                                
+                                }@case('ACCEPTED'){
+                                <button (click)="showAlert(true, linx.userid)"
+                                    class="flex flex-row hover:bg-slate-100 p-3 rounded-md">
+                                    <img style="width: 30px; height: auto;"
+                                        src="../../../../assets/imgs/logos/breakchainbutt.png">
+                                </button>
+                                }@default {
+                                    <div class="p-3 rounded-md" style="width: 30px; height: auto;"></div>
+                                }
+                            }
+    
+                        </div>
                     </button>
-                    <div class="chainbutt">
-                        <button (click)="showAlert(true, linx.userid)"
-                            class="flex flex-row hover:bg-slate-100 p-3 rounded-md">
-                            <img style="width: 30px; height: auto;"
-                                src="../../../../assets/imgs/logos/breakchainbutt.png">
-                        </button>
-                    </div>
                     }
                 </li>
                 }@empty {
@@ -71,7 +88,7 @@
                     <p style="font-style: italic;">No hay linxs en esta cadena...</p>
                 </li>
                 }
-                
+
             </ul>
         </div>
     </div>

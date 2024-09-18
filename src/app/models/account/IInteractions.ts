@@ -9,6 +9,8 @@ export interface IInteraction {
     type: string;
     from: IAccount;
     to: string;
+    checked : boolean;
+    object : any;
 }
 
 export class Interaction implements IInteraction {
@@ -17,24 +19,30 @@ export class Interaction implements IInteraction {
     type: string;
     from: IAccount;
     to: string;
+    checked : boolean;
+    object : any;
 
     constructor(
         id: string,
         date: string,
         type: string,
         from: IAccount,
-        to: string
+        to: string,
+        checked : boolean,
+        object : any
     ) {
         this.id = id;
         this.date = date;
         this.type = type;
         this.from = from;
         this.to = to;
+        this.checked = checked;
+        this.object = object;
     }
 }
 
 export class ChainInvite extends Interaction {
-    chain: { chainid: string, chainname: string };
+    chain: IChain;
     state: "REFUSED" | "ACCEPTED" | "PENDING";
 
     constructor(
@@ -42,10 +50,11 @@ export class ChainInvite extends Interaction {
         date: string,
         from: IAccount,
         to: string,
-        chain: { chainid: string, chainname: string },
+        checked : boolean,
+        chain : IChain,
         state: "REFUSED" | "ACCEPTED" | "PENDING"
     ) {
-        super(id, date, "INVITE", from, to);
+        super(id, date, "INVITE", from, to, checked, { chain, state }); 
         this.chain = chain;
         this.state = state;
     }
@@ -58,8 +67,9 @@ export class NewOnChain extends Interaction {
         date: string,
         from: IAccount,
         to: string,
+        checked : boolean,
         chain: IChain) {
-        super(id, date, "ONCHAIN", from, to);
+        super(id, date, "ONCHAIN", from, to, checked, chain);
         this.chain = chain;
 
     }
@@ -73,10 +83,11 @@ export class OffChain extends Interaction {
         date: string,
         from: IAccount,
         to: string,
+        checked : boolean,
         chain: IChain,
         linxname : string
     ) {
-        super(id, date, "OFFCHAIN", from, to);
+        super(id, date, "OFFCHAIN", from, to, checked, {chain , linxname});
         this.chain = chain;
         this.linxname = linxname;
     }
@@ -91,9 +102,10 @@ export class NewConnection extends Interaction  {
         date: string,
         from: IAccount,
         to: string,
+        checked : boolean,
         connection : IConnection
     ) {
-        super(id, date, "CONNECTION", from, to);
+        super(id, date, "CONNECTION", from, to, checked, connection);
         this.connection = connection;
     }
     

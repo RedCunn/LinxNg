@@ -11,6 +11,8 @@ import { IGroupChat } from '../../../models/chat/IGroupChat';
 import { IUser } from '../../../models/account/IUser';
 import { InteractionsComponent } from '../../interactions/interactions.component';
 import { FlowbiteService } from '../../../services/flowbite.service';
+import * as interactions from '../../../models/account/IInteractions';
+import { IAccount } from '../../../models/account/IAccount';
 
 @Component({
   selector: 'app-footer',
@@ -33,6 +35,8 @@ export class FooterComponent implements AfterViewInit, OnInit{
   public privateChats : IChat[] = [];
   private chatsMap : Map<string, IChat[]> = new Map<string, IChat[]>();
 
+  public interactions : Array<interactions.Interactions> = [];
+  
   constructor(private router : Router){
     this._user = this.signalStorageSvc.RetrieveUserData()()!;
   }
@@ -83,9 +87,7 @@ export class FooterComponent implements AfterViewInit, OnInit{
 
   }
 
-
-  async ngOnInit() : Promise<void>{
-    this.flowbitesvc.loadFlowbite()
+  async getChats (){
     try {
       const res = await this.restSvc.getChats( this._user?.userid!);
       if(res.code === 0){
@@ -101,7 +103,35 @@ export class FooterComponent implements AfterViewInit, OnInit{
      } catch (error) {
       console.log('ERROR ON RETRIEVING CHATS ON FOOTER ; ', error)
      } 
-  
+  }
+
+  async getInteractions(){
+    try {
+      const res = await this.restSvc.getInteractions(this._user.userid);
+      if(res.code === 0){
+        const interactions = res.userdata
+        const accounts : IAccount[] = res.others;
+
+        interactions.forEach( (inter : any) => {
+          const account = accounts.find(acc => acc.userid === inter.from)
+          inter.from = [];
+          inter.from = account;
+        })
+
+        this.interactions = interactions;
+        console.log('INTERACTIONS GOTTEN ON FOOTER : ', interactions)
+      }else{
+        console.log('ERROR ON RETRIEVING INTERACTIONS ON FOOTER ; ', res.error)
+      }
+    } catch (error) {
+      console.log('ERROR ON RETRIEVING INTERACTIONS ON FOOTER ; ', error)
+    }
+  }
+
+  async ngOnInit() : Promise<void>{
+    this.flowbitesvc.loadFlowbite()
+    await this.getChats()
+    await this.getInteractions()
   }
   ngAfterViewInit(): void {
     initTooltips();

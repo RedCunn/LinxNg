@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component, Input, OnDestroy, OnInit, inject, signal } from '@angular/core';
+import { Component, Input, OnDestroy, OnInit, inject, signal } from '@angular/core';
 import { RestnodeService } from '../../services/restnode.service';
 import { SignalStorageService } from '../../services/signal-storage.service';
 import { Router } from '@angular/router';
@@ -7,7 +7,6 @@ import { Subject, takeUntil } from 'rxjs';
 import { UtilsService } from '../../services/utils.service';
 import { IUser } from '../../models/account/IUser';
 import { IAccount } from '../../models/account/IAccount';
-import { IArticle } from '../../models/account/IArticle';
 import * as interactions from '../../models/account/IInteractions';
 import { IChain } from '../../models/chain/IChain';
 import { IConnection } from '../../models/account/IConnection';
@@ -21,7 +20,7 @@ import { IConnection } from '../../models/account/IConnection';
 })
 export class InteractionsComponent implements OnInit, OnDestroy {
 
-
+  @Input() interactionsInbox!: Array<interactions.Interaction>;
   @Input() isOpen = signal(false)
 
   closeModal() {
@@ -37,9 +36,9 @@ export class InteractionsComponent implements OnInit, OnDestroy {
   public _user!: IUser | null;
   private destroy$ = new Subject<void>();
 
-  public interactionsInbox: Array<interactions.Interaction> = [];
-
   public currentDate: Date = new Date();
+
+  public openReplyOptions = signal<{ [key: string]: boolean }>({});
 
   ngOnInit(): void {
     this.websocketsvc.getInteractions().pipe(takeUntil(this.destroy$))
@@ -51,16 +50,28 @@ export class InteractionsComponent implements OnInit, OnDestroy {
             let tempId = this.utilsvc.generateRoomkey();
             this.websocketsvc.requestInitChat(data.from.userid, this._user?.userid!, tempId);
             let connection: IConnection = { connectedAt: this.currentDate.toISOString(), active: true, roomkey: tempId, account: data.from }
-            let newConn = new interactions.NewConnection(tempId, this.currentDate.toISOString(), data.from, this._user?.userid!, connection);
-
-            
-            
+            let newConn = new interactions.NewConnection(tempId, this.currentDate.toISOString(), data.from, this._user?.userid!, false, connection);
             break;
           default:
             break;
         }
 
       })
+  }
+
+  replyToInvite(id: string, accepted: boolean) {
+    try {
+
+    } catch (error) {
+
+    }
+  }
+
+  toggleReplyOptions(open : boolean , id : string){
+    this.openReplyOptions.update((options) => ({
+      ...options,
+      [id]: open
+    })) 
   }
 
   async removeInteractionFromInbox(interactionId: string) {
@@ -83,9 +94,17 @@ export class InteractionsComponent implements OnInit, OnDestroy {
 
   }
 
+  isChainInvite(interaction: interactions.Interaction): interaction is interactions.ChainInvite {
+    return interaction.type === 'INVITE';
+  }
+
+  isNewConnection(interaction: interactions.Interaction): interaction is interactions.NewConnection {
+    return interaction.type === 'CONNECTION';
+  }
+
   goToProfile(account: IAccount) {
     this.signalStorageSvc.StoreLinxData(account);
-    this.router.navigateByUrl(`/Linx/profile/${account.linxname}`)
+    this.router.navigateByUrl(`/Linx/perfil/${account.linxname}`)
   }
 
 

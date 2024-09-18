@@ -46,9 +46,7 @@ export class MatchcarouselComponent implements OnInit {
 
   async setCandidateProfiles() {
     try {
-      console.log('entering shuffle .....')
       const response: IRestMessage = await this.restsvc.shuffleCandidateProfiles(this.userdata?.userid!);
-      console.log('RESPONSE SETTING CANDIDATE PROFILES : ', response)
       if (response.code === 0) {
         
         const _accountsArticles : IArticle[] = response.userdata as IArticle[];
