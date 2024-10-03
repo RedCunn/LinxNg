@@ -41,8 +41,6 @@ export class PickcontactsmodalComponent implements OnInit, OnDestroy{
         this.reqSent.set(true);
 
         this.setChainValues(this.chainName, this.user.userid, this.pickedContacts());
-
-        console.log('CHAIN TO SEND FROM PICKCONTACST : ', this.newChain)
   
         const res = await this.restsvc.createChain(this.user.userid, this.newChain)
   
@@ -160,7 +158,10 @@ export class PickcontactsmodalComponent implements OnInit, OnDestroy{
     }
     if(linxs){
       linxs.forEach(linx => {
-        this.contacts.update( cons => [...cons, linx])
+        const contactIdx = this.contacts().findIndex(user => user.userid === linx.userid);
+        if(contactIdx === -1){
+          this.contacts.update( cons => [...cons, linx])
+        }
       })
     }
 

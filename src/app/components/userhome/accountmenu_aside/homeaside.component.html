@@ -2,7 +2,7 @@
     @if(isMenuOpen()){
         <div class="menucontainer">
             <div class="linxs">    
-                <button (click)="toggleLinxModal()">
+                <button (click)="openLinxs()">
                     <p>🔗Linxs🔗</p>
                 </button>
             </div>
@@ -44,4 +44,5 @@
         </div>
     }
     <ng-container #connectionsCompoContainer></ng-container>
+    <ng-container #linxsCompoContainer></ng-container>
 </aside>

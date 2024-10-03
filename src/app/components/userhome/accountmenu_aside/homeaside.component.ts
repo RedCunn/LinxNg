@@ -5,6 +5,8 @@ import { Router } from '@angular/router';
 import { initDropdowns, initFlowbite } from 'flowbite';
 import { ConnectionsmodalComponent } from './connections/connectionsmodal.component';
 import { IConnection } from '../../../models/account/IConnection';
+import { IAccount } from '../../../models/account/IAccount';
+import { LinxmodalComponent } from './linxs/linxmodal.component';
 
 @Component({
   selector: 'app-homeaside',
@@ -17,12 +19,15 @@ export class HomeasideComponent implements OnInit{
   
   public isMenuOpen = signal(true);
   @Input() openArtModal = signal(false);
-  @Input() openLinxModal = signal(false);
-  @Input() userConnecions : IConnection[] = [];
+  @Input() userLinxs : IAccount[] = [];
+  public openLinxModal = signal(false);
+  @Input() userConnections : IConnection[] = [];
   public openConnectionsModal = signal(false);
 
   @ViewChild('connectionsCompoContainer', { read: ViewContainerRef, static: true })
   public connectionsCompoContainer!: ViewContainerRef;
+  @ViewChild('linxsCompoContainer', { read: ViewContainerRef, static: true })
+  public linxsCompoContainer!: ViewContainerRef;
 
   constructor(@Inject(PLATFORM_ID) private platformId: Object, private router : Router) { }
 
@@ -44,13 +49,28 @@ export class HomeasideComponent implements OnInit{
     this.openArtModal.set(true);
   }
 
+  loadLinxsComponent(){
+    const viewContainerRef = this.linxsCompoContainer;
+    viewContainerRef.clear();
+    const comporef = viewContainerRef.createComponent<LinxmodalComponent>(LinxmodalComponent);
+    comporef.setInput('isOpen', this.openLinxModal);
+    comporef.setInput('isMenuOpen', this.isMenuOpen);
+    comporef.setInput('linxs', this.userLinxs)
+  }
+
+  openLinxs(){
+    this.loadLinxsComponent();
+    this.isMenuOpen.set(false);
+    this.openLinxModal.set(true);
+  }
+
   loadConnectionsComponent() {
     const viewContainerRef = this.connectionsCompoContainer;
     viewContainerRef.clear();
     const comporef = viewContainerRef.createComponent<ConnectionsmodalComponent>(ConnectionsmodalComponent);
     comporef.setInput('isOpen', this.openConnectionsModal);
     comporef.setInput('isMenuOpen', this.isMenuOpen);
-    comporef.setInput('connections', this.userConnecions)
+    comporef.setInput('connections', this.userConnections)
   }
 
   openConnections(){
@@ -59,17 +79,4 @@ export class HomeasideComponent implements OnInit{
     this.openConnectionsModal.set(true);
   }
 
-
-
-  toggleLinxModal() {
-    // if(this.isUser()){
-    //   this.isMyChain.set(true);
-    //   this.isAdminChains.set(false);
-    //   this.isSharedChains.set(false);
-    // }else{
-    //   this.isMyChain.set(false);
-    //   this.isAdminChains.set(true);
-    // }
-    this.openLinxModal.update(v => !v);
-  }
 }

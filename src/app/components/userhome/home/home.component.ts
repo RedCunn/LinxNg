@@ -71,6 +71,7 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
   private roomkey!: string;
 
   public userConnections: IConnection[] = [];
+  public userLinxs : IAccount [] = [];
 
   private userRoutePattern: RegExp = new RegExp("/Linx/cuenta", "g");
   private candidateRoutePattern: RegExp = new RegExp("/Linx/perfil/[^/]+", "g");
@@ -210,6 +211,23 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
 
   //#region ------------------------ RETRIEVING ITEMS -------------------
 
+  async retrieveUserLinxs () {
+    try {
+      const res = await this.restSvc.getMyLinxs(this.userdata?.userid!, null);
+
+      if(res.code === 0){
+        const linxsaccounts : IAccount []= res.userdata;
+        this.userLinxs = linxsaccounts;
+        this.signalStoreSvc.StoreMyLinxs(linxsaccounts);
+      }else{
+        console.log('ERROR : ', res.error)
+      }
+
+    } catch (error) {
+      console.log('ERROR RETRIEVING USER LINXS AT HOME : ', error)
+    }
+  }
+
   async retrieveUserConnections() {
 
     try {
@@ -289,6 +307,7 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
     this.loadingArts.set(true);
     this.ref.detectChanges();
     this.loadingArts.set(false);
+    this.retrieveUserLinxs();
     this.retrieveUserConnections();
   }
 

@@ -1,20 +1,18 @@
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, inject, Input, OnDestroy, OnInit, signal, WritableSignal } from '@angular/core';
-import { IConnection } from '../../../../models/account/IConnection';
+import { ChangeDetectorRef, Component, inject, Input, OnDestroy, OnInit, signal, WritableSignal } from '@angular/core';
 import { Router } from '@angular/router';
-import { IAccount } from '../../../../models/account/IAccount';
 import { SignalStorageService } from '../../../../services/signal-storage.service';
-import { Subject, Subscription } from 'rxjs';
 import { WebsocketService } from '../../../../services/websocket.service';
+import { IAccount } from '../../../../models/account/IAccount';
+import { Subscription } from 'rxjs';
 
 @Component({
-  selector: 'app-connectionsmodal',
+  selector: 'app-linxmodal',
   standalone: true,
   imports: [],
-  templateUrl: './connectionsmodal.component.html',
-  styleUrl: './connectionsmodal.component.scss',
-  changeDetection: ChangeDetectionStrategy.OnPush
+  templateUrl: './linxmodal.component.html',
+  styleUrl: './linxmodal.component.scss'
 })
-export class ConnectionsmodalComponent implements OnDestroy, OnInit {
+export class LinxmodalComponent implements OnDestroy, OnInit {
 
   private router = inject(Router);
   private signalsvc = inject(SignalStorageService);
@@ -22,7 +20,7 @@ export class ConnectionsmodalComponent implements OnDestroy, OnInit {
 
   @Input() isOpen = signal(false);
   @Input() isMenuOpen = signal(true);
-  @Input() connections: IConnection[] = [];
+  @Input() linxs: IAccount[] = [];
 
   public contacts : WritableSignal<IAccount[]> = signal([]);
   private pongSubscription: Subscription = new Subscription();
@@ -59,11 +57,11 @@ export class ConnectionsmodalComponent implements OnDestroy, OnInit {
 
     this.contacts.set([]);
 
-    const connections = this.connections;
+    const connections = this.linxs;
 
     if(connections){
       connections.forEach(conn => {
-        this.contacts.update( cons => [...cons, conn.account])
+        this.contacts.update( cons => [...cons, conn])
       })
     }
 
@@ -78,7 +76,7 @@ export class ConnectionsmodalComponent implements OnDestroy, OnInit {
   }
 
   updateConnectionState(userid : string, isConnected : boolean){
-    const connection = this.connections.find(conn => conn.account.userid === userid);
+    const connection = this.linxs.find(conn => conn.userid === userid);
 
     if(connection){
       const userState = this.usersConnectionsState.find(u => u.userid === userid);
