@@ -5,5 +5,6 @@ export interface IArticle{
     title : string;
     body: string;
     img : string;
+    imgUrl : string;
     useAsProfilePic : boolean;
 }

@@ -7,8 +7,8 @@
         <p style="color: gray;"><small>{{this.formatDate(art.postedOn)}}</small></p>
         <p class="artbody">{{art.body}}</p>
         <div class="artimg">
-            @if(art.img && art.img !== ''){
-            <img [src]="'http://localhost:3000/api/Account/uploads/'+art.img" (error)="loadingArts.set(true)">
+            @if(art.img !== null){
+            <img [src]="art.imgUrl" (error)="loadingArts.set(true)">
             }
         </div>
     </article>

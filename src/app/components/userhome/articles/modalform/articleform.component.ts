@@ -23,6 +23,7 @@ export class ArticleformComponent implements OnChanges{
     this.articleCopy = {articleid : value.articleid, 
                         title: value.title, 
                         body: value.body, 
+                        imgUrl : value.imgUrl,
                         img: value.img, 
                         postedOn: value.postedOn, 
                         useAsProfilePic: value.useAsProfilePic};
@@ -33,7 +34,7 @@ export class ArticleformComponent implements OnChanges{
   private formData : FormData = new FormData();
   private artFile: File | null = null; 
   public currentDate : Date = new Date();
-  public articleCopy : IArticle = {articleid : '', title: '', body: '', img: '', postedOn: '', useAsProfilePic: false };
+  public articleCopy : IArticle = {articleid : '', title: '', body: '', img: '', imgUrl : '', postedOn: '', useAsProfilePic: false };
 
 
   constructor(){
